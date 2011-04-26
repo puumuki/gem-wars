@@ -1,5 +1,10 @@
 package gemwars;
 
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+
 /**
  * Tästä se lähtee.
  *
@@ -19,15 +24,36 @@ package gemwars;
  *  You should have received a copy of the GNU General Public License
  *  along with GemWars.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class Gemwars {
+public class Gemwars extends StateBasedGame {
+	
+    public static final int MAINMENUSTATE          = 0;
+    public static final int GAMEPLAYSTATE          = 1;
+    
+	public Gemwars() {
+		super("GemWars");
+		
+        this.addState(new MainMenuState(MAINMENUSTATE));
+        this.addState(new GameplayState(GAMEPLAYSTATE));
+        this.enterState(MAINMENUSTATE);
+	}
 
 	/**
 	 * Pääohjelma
 	 * @param args ei käytössä
 	 */
-	public static void main(String[] args) {
-		System.out.println("Hello world! Tästä tulloo Gemwarssia.");
+	public static void main(String[] args) throws SlickException {
+        AppGameContainer app = new AppGameContainer(new Gemwars());
+        
+        app.setDisplayMode(640, 480, false);
+        app.start();
 
+	}
+
+	@Override
+	public void initStatesList(GameContainer gameContainer) throws SlickException {
+        this.getState(MAINMENUSTATE).init(gameContainer, this);
+        this.getState(GAMEPLAYSTATE).init(gameContainer, this);
+		
 	}
 
 }
