@@ -23,9 +23,9 @@ public abstract class AEntity {
 	public int positionY;
 	
 	/**
-	 * Witch way object is moving
+	 * Witch way a object is moving or is it moving at all.
 	 */
-	public Direction direction;
+	public Direction direction = Direction.STATIONARY;
 	
 	/**
 	 * How fast entity is moving. If value is negative object is static.
