@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="D:/Teemu/Ohjelmointi/Java/lib/slick/src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Slick2D"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/slick2d"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
