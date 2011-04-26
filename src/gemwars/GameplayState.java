@@ -15,19 +15,19 @@ public class GameplayState extends BasicGameState {
        this.stateID = stateID;
     }
     
-	public void init(GameContainer arg0, StateBasedGame arg1)
+	public void init(GameContainer cont, StateBasedGame state)
 			throws SlickException {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2)
+	public void render(GameContainer cont, StateBasedGame state, Graphics graph)
 			throws SlickException {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void update(GameContainer arg0, StateBasedGame arg1, int arg2)
+	public void update(GameContainer cont, StateBasedGame state, int delta)
 			throws SlickException {
 		// TODO Auto-generated method stub
 
@@ -35,8 +35,6 @@ public class GameplayState extends BasicGameState {
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
 		return stateID;
 	}
-
 }
