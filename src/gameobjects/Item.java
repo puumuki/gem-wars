@@ -25,4 +25,7 @@ public class Item extends AEntity{
 	public void update(GameContainer cont, int delta) throws SlickException {
 		
 	}
+	
+	
+	
 }
