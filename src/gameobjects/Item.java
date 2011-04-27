@@ -6,6 +6,16 @@ import org.newdawn.slick.SlickException;
 
 public class Item extends AEntity{
 
+	/**
+	 * Tile number from left starting from index 0
+	 * Textures are loaded from windb.bmp
+	 */
+	public int itemType;
+	
+	public Item( int itemType ) {
+		this.itemType = itemType;
+	}
+	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
 	

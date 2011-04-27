@@ -1,4 +1,4 @@
-package gameobject.map;
+package gameobjects.map;
 
 import java.util.List;
 
@@ -11,6 +11,9 @@ import gameobjects.AEntity;
 public class Map extends AEntity {
 
 	private List<AEntity>gameObjects;
+	
+	private static final int MAX_WIDTH = 1024;
+	private static final int MAX_HEIGHT = 1024;
 	
 	public void loadMap() {
 		
