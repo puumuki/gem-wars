@@ -10,7 +10,7 @@ import org.newdawn.slick.SlickException;
  *
  * Base class for all game objects. 
  */
-public abstract class AEntity {
+public abstract class AEntity implements Comparable<AEntity> {
 	
 	/**
 	 * Tells witch tile entity is horizontally
@@ -59,4 +59,17 @@ public abstract class AEntity {
 	 */
 	public abstract void update(GameContainer cont, 
 								int delta) throws SlickException ;
+	
+	@Override
+	public int compareTo(AEntity o) {
+		
+		int compare = 0;
+		
+		if( o.layer > this.layer )
+			compare = 1;
+		else if( o.layer < this.layer )
+			compare = -1;
+		
+		return compare;
+	}
 }

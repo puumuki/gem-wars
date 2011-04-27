@@ -70,8 +70,7 @@ public class MainMenuState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-		
-		
+				
 		switch (selectedMenu) {
 		case 0: // new game
 			if(input.isKeyPressed(Input.KEY_UP)) {
