@@ -1,5 +1,7 @@
 package gameobjects;
 
+import gameobjects.map.ItemTypes;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -10,9 +12,9 @@ public class Item extends AEntity{
 	 * Tile number from left starting from index 0
 	 * Textures are loaded from windb.bmp
 	 */
-	public int itemType;
+	public ItemTypes itemType;
 	
-	public Item( int itemType ) {
+	public Item( ItemTypes itemType ) {
 		this.itemType = itemType;
 	}
 	
@@ -25,7 +27,4 @@ public class Item extends AEntity{
 	public void update(GameContainer cont, int delta) throws SlickException {
 		
 	}
-	
-	
-	
 }

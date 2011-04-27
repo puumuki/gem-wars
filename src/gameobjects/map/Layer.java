@@ -27,7 +27,7 @@ public class Layer extends AEntity {
 		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {				
-				tiles[x][y] = new Item(0);				
+				tiles[x][y] = new Item(ItemTypes.EMPTY);				
 			}
 		}
 	}
