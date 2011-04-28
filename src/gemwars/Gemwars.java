@@ -56,8 +56,6 @@ public class Gemwars extends StateBasedGame {
         app.setDisplayMode(640, 480, false);
         app.start();
 	}
-
-
 	
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
@@ -65,5 +63,4 @@ public class Gemwars extends StateBasedGame {
         this.getState(GAMEPLAYSTATE).init(gameContainer, this);
 		
 	}
-
 }

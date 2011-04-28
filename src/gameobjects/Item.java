@@ -29,11 +29,6 @@ public class Item extends AEntity {
 	 */
 	public ItemTypes itemType;
 	
-	/**
-	 * Filter color
-	 */
-	public static final Color filter = new Color(0xff00ff00);
-	
 	private static final int TILE_WIDTH = 56;
 	private static final int TILE_HEIGHT = 56;
 			
@@ -56,7 +51,7 @@ public class Item extends AEntity {
 	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
-		itemTextures.get(itemType).draw(positionX, positionY, filter);
+		itemTextures.get(itemType).draw(positionX, positionY);
 	}
 
 	@Override
