@@ -1,14 +1,9 @@
 package gameobjects.map;
 
-import java.io.InputStream;
 import java.util.List;
-import java.util.Scanner;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.util.ResourceLoader;
-
 import gameobjects.AEntity;
 
 public class Map extends AEntity {
