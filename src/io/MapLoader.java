@@ -136,12 +136,19 @@ public class MapLoader {
 										item = 0;
 									}
 									
-									l.setTile(x, y, new Item(ItemTypes.getType(item)));
+									Item tile = new Item(ItemTypes.getType(item));
+									
+									tile.positionX = x;
+									tile.positionY = y;
+									
+									l.setTile(x, y, tile);
 
 									start = end+1;
 								}
 							}
 						}
+						
+						//TODO: Throw SlickException :)
 						// else throw slickexception?
 					}
 				}

@@ -29,7 +29,9 @@ public class Map extends AEntity {
 	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
-				
+		groundLayer.render(cont, grap);
+		specialLayer.render(cont, grap);
+		objectLayer.render(cont, grap);
 	}
 
 	@Override
@@ -93,6 +95,10 @@ public class Map extends AEntity {
 	public void setCollision(int x, int y, boolean b) {
 		collisionLayer[y][x] = b;
 	}
+	
+	public boolean isColliding(int x, int y) {
+		return collisionLayer[y][x];
+	}
 
 	public boolean setLayer(Layer l) {
 		if (l.getType() == LayerTypes.LAYER_GROUND.ordinal()) {
@@ -109,5 +115,17 @@ public class Map extends AEntity {
 		}
 		return false;
 		
+	}
+	
+	public Layer getGroundLayer() {
+		return groundLayer;
+	}
+	
+	public Layer getSpecialLayer() {
+		return specialLayer;
+	}
+	
+	public Layer getObjectLayer() {
+		return objectLayer;
 	}
 }

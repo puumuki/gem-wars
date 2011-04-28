@@ -53,6 +53,10 @@ public class Layer extends AEntity {
 		
 	}
 
+	public Item getTile(int x, int y) {
+		return tiles[x][y];
+	}
+	
 	public int getType() {
 		return layerType.layerIndex();
 	}

@@ -37,21 +37,22 @@ public class Item extends AEntity {
 		
 		if( itemTextures.size() == 0 ) {
 			ResourceManager manager = ResourceManager.getInstance();	
-			Image textures = manager.getImage( Resources.ITEM_TEXTURES.name() );
-									
+			Image textures = manager.getImage( Resources.ITEM_TEXTURES.name() );					
 			
 			
-			for( ItemTypes type : ItemTypes.values() ) {				
-				Image texture = textures.getSubImage(TILE_WIDTH * (type.ordinal()), 0, 
-													 TILE_WIDTH , TILE_HEIGHT);						
-				itemTextures.put(type, texture) ;
+			for( ItemTypes type : ItemTypes.values() ) {
+				if( textures != null ) {
+					Image texture = textures.getSubImage(TILE_WIDTH * (type.ordinal()), 0, 
+														 TILE_WIDTH , TILE_HEIGHT);						
+					itemTextures.put(type, texture) ;
+				}
 			}
 		}
 	}
 	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
-		itemTextures.get(itemType).draw(positionX, positionY);
+		itemTextures.get(itemType).draw(positionX * TILE_WIDTH, positionY * TILE_HEIGHT);
 	}
 
 	@Override
