@@ -42,7 +42,7 @@ public class Gemwars extends StateBasedGame {
 		
         this.addState(new MainMenuState(MAINMENUSTATE));
         this.addState(new GameplayState(GAMEPLAYSTATE));
-        this.enterState(MAINMENUSTATE);
+        this.enterState(GAMEPLAYSTATE);
 	}
 
 	/**

@@ -1,5 +1,11 @@
 package gemwars;
 
+import java.io.File;
+import java.io.IOException;
+
+import gameobjects.map.Map;
+import io.MapLoader;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -15,21 +21,24 @@ public class GameplayState extends BasicGameState {
        this.stateID = stateID;
     }
     
-	public void init(GameContainer cont, StateBasedGame state)
-			throws SlickException {
-		// TODO Auto-generated method stub
-
+    private Map map;
+    
+	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
+		try {
+			map = MapLoader.loadMap(new File("src/resources/maps/e1l1.gem"));
+		} catch (IOException e) {
+			throw new SlickException("Can't load map file. ", e);
+		}		
 	}
 
 	public void render(GameContainer cont, StateBasedGame state, Graphics graph)
 			throws SlickException {
-		// TODO Auto-generated method stub
 
+		map.render(cont, graph);
 	}
 
 	public void update(GameContainer cont, StateBasedGame state, int delta)
 			throws SlickException {
-		// TODO Auto-generated method stub
 
 	}
 
