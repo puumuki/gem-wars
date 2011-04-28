@@ -110,6 +110,8 @@ public class MapLoader {
 									map.setCollision(x, y, true);
 								}
 								
+								start = end+1;
+								
 							}
 						}
 					}
