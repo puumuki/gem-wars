@@ -36,9 +36,12 @@ public class MainMenuState extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
-		background = new Image("data/menutaus.bmp");
 		
-		Image menuOptions = new Image("data/menu1.bmp");
+		//TODO: Use io.ResourceManager
+		background = new Image("src/resources/images/menutaus.bmp");
+		
+		//TODO: Use io.ResourceManager
+		Image menuOptions = new Image("src/resources/images/menu1.bmp");
 		
 		newGameOption = menuOptions.getSubImage(0, 0, 151, 201);
 		multiplayerOption = menuOptions.getSubImage(152, 0, 151, 201);

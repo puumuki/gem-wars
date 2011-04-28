@@ -32,7 +32,7 @@ public class MapLoader {
 			
 			while (f.hasNextLine()) {
 				// read the file one line at a time
-				
+			
 				// we make the new map
 				map = new Map();
 				
