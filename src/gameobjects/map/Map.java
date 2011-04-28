@@ -18,6 +18,9 @@ public class Map extends AEntity {
 	private static final int MAX_WIDTH = 1024;
 	private static final int MAX_HEIGHT = 1024;
 	
+	private int width;
+	private int height;
+	
 	private String name;
 	private String creator;
 	private int gemCount;
@@ -83,6 +86,44 @@ public class Map extends AEntity {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
 	
+	public void setWidth(int width) {
+		this.width = width;
+	}
 	
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
 }

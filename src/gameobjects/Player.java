@@ -26,6 +26,11 @@ public class Player extends AEntity {
 	 */
 	public int scores;
 	
+	/**
+	 * How many gems the player have collected.
+	 */
+	public int collectedGemCount;
+	
 	private Map<Direction, Animation> animations = new HashMap<Direction, Animation>();
 
 	@Override
