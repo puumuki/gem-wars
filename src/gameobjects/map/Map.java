@@ -94,7 +94,8 @@ public class Map extends AEntity {
 
 	public void createCollision(int layerWidth, int layerHeight) {
 		this.collisionLayer = new boolean[layerHeight][layerWidth];
-		
+		setWidth(layerWidth);
+		setHeight(layerHeight);
 	}
 
 	public void setCollision(int x, int y, boolean b) {
