@@ -125,7 +125,7 @@ public class MapLoader {
 								StringBuffer line = new StringBuffer(f.nextLine());
 								int start = 0, end = 0;
 								for (int x = 0; x < layerWidth; x++) {
-									end = line.indexOf(" ");
+									end = line.indexOf(" ", start);
 									if(end == -1)
 										end = line.length();
 									
@@ -137,6 +137,8 @@ public class MapLoader {
 									}
 									
 									l.setTile(x, y, new Item(ItemTypes.getType(item)));
+
+									start = end+1;
 								}
 							}
 						}
