@@ -1,6 +1,13 @@
 package gemwars;
 
+import gameobjects.Item;
+import gameobjects.map.ItemTypes;
+
+import io.ResourceManager;
+
 import java.awt.Font;
+import java.io.File;
+import java.io.FileInputStream;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -30,12 +37,22 @@ public class MainMenuState extends BasicGameState {
 
 	int selectedMenu = 0;
 	
+	private Item item;
+	
 	public MainMenuState(int stateID) {
 		this.stateID = stateID;
 	}
 	
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
+		
+		try {
+			File file = new File("src/resources/resources.xml"); 
+			FileInputStream fileStream = new FileInputStream(file);		
+			ResourceManager.getInstance().loadResources(fileStream, true); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 		
 		//TODO: Use io.ResourceManager
 		background = new Image("src/resources/images/menutaus.bmp");
@@ -50,7 +67,12 @@ public class MainMenuState extends BasicGameState {
 		
         Font font = new Font("Arial", Font.BOLD, 20);
         fontti = new UnicodeFont(font);
-
+       
+        item = new Item(ItemTypes.DARK_BOULDER);
+        item.positionX = 200;
+        item.positionY = 30;
+        
+    	
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
@@ -67,7 +89,7 @@ public class MainMenuState extends BasicGameState {
 		newGameOption.setAlpha(1);
 		
 		//fontti.drawString(250, 250, "UlTimAaTtinnen"); // miksei tämä piirry?
-		
+		item.render(gc, g);
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta)
@@ -128,8 +150,14 @@ public class MainMenuState extends BasicGameState {
 			break;
 		
 		}
+	
+		
+		
+		 
 		
 	}
+	
+	
 
 	@Override
 	public int getID() {

@@ -29,14 +29,11 @@ public class Map extends AEntity {
 	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override
-	public void update(GameContainer cont, int delta) throws SlickException {
-		// TODO Auto-generated method stub
-		
+	public void update(GameContainer cont, int delta) throws SlickException {		
 	}
 
 	public String getName() {

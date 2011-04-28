@@ -50,26 +50,14 @@ public class Gemwars extends StateBasedGame {
 	 * @param args ei käytössä
 	 * @throws  
 	 */
-	public static void main(String[] args) throws SlickException {
-		
-		initializeResourceLoading();
-		
+	public static void main(String[] args) throws SlickException {		
         AppGameContainer app = new AppGameContainer(new Gemwars());
         
         app.setDisplayMode(640, 480, false);
         app.start();
-
 	}
 
-	public static void initializeResourceLoading() {
-		try {
-			File file = new File("src/resources/resources.xml"); 
-			FileInputStream fileStream = new FileInputStream(file);		
-			ResourceManager.getInstance().loadResources(fileStream, true); 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
+
 	
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {

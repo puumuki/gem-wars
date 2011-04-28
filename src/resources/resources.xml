@@ -3,7 +3,7 @@
 <!-- GAMEPLAY -->
   <!-- Background -->  
   <!-- HUD -->
-  <resource type="image" id="ITEM_TEXTURES">resources\images\winbd.bmp</resource>
+  <resource type="image" id="ITEM_TEXTURES">resources\images\windb.png</resource>
   <!--  Player Animations -->  
   <!-- Blade animation -->  
   <!-- SOUNDS -->

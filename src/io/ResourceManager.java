@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
  
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -120,7 +121,7 @@ public class ResourceManager {
 		if(spriteSheetPath == null || spriteSheetPath.length() == 0)
 			throw new SlickException("Image resource [" + id + "] has invalid path");
  
-		loadImage( SPRITE_SHEET_REF + id, spriteSheetPath);
+		loadImage( SPRITE_SHEET_REF + id, spriteSheetPath, null );
  
 		animationMap.put(id, new ResourceAnimationData(SPRITE_SHEET_REF+id, tw, th, duration));
 	}
@@ -179,16 +180,34 @@ public class ResourceManager {
  
  
 	private final void addElementAsImage(Element resourceElement) throws SlickException {
-		loadImage(resourceElement.getAttribute("id"), resourceElement.getTextContent());
+		loadImage(resourceElement.getAttribute("id"), 
+				  resourceElement.getTextContent(), 
+				  resourceElement.getAttribute("filter"));
 	}
  
-	public Image loadImage(String id, String path) throws SlickException{
+	public Image loadImage(String id, String path, String transparentColor) throws SlickException{
 		if(path == null || path.length() == 0)
 			throw new SlickException("Image resource [" + id + "] has invalid path");
- 
+ 	
+		Integer filterValue = null;
+		
+		try {					
+			if( transparentColor != null && transparentColor.length() > 0 ) {
+				Long value = Long.parseLong(transparentColor, 16);						
+				filterValue = value.intValue();
+			}
+		} catch (NumberFormatException e) {
+			throw new SlickException("Can't parse image filter color number. Resource ID " + id , e);
+		}
+		
 		Image image = null;
 		try{
-			image = new Image(path);
+			if( filterValue != null ) {					
+				Color color = new Color(filterValue);
+				image = new Image(path, color);
+			} else {			
+				image = new Image(path);
+			}
 		} catch (SlickException e) {
 			throw new SlickException("Could not load image", e);
 		}
@@ -201,15 +220,7 @@ public class ResourceManager {
 	public final Image getImage(String ID){
 		return imageMap.get(ID);
 	}
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
 	private class ResourceAnimationData{
 		int duration;
 		int tw;
