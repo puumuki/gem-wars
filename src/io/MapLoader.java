@@ -117,25 +117,28 @@ public class MapLoader {
 					{
 						// other layers
 						Layer l = new Layer(layerWidth, layerHeight, LayerTypes.valueOf(layerName));
-						
-						for (int y = 0; y < layerHeight; y++) {
-							StringBuffer line = new StringBuffer(f.nextLine());
-							int start = 0, end = 0;
-							for (int x = 0; x < layerWidth; x++) {
-								end = line.indexOf(" ");
-								if(end == -1)
-									end = line.length();
-								
-								int item = 0;
-								try {
-									item = Integer.parseInt(line.substring(start, end));
-								} catch (NumberFormatException e) {
-									item = 0;
+						if (map.setLayer(l)) {
+							
+							for (int y = 0; y < layerHeight; y++) {
+								StringBuffer line = new StringBuffer(f.nextLine());
+								int start = 0, end = 0;
+								for (int x = 0; x < layerWidth; x++) {
+									end = line.indexOf(" ");
+									if(end == -1)
+										end = line.length();
+									
+									int item = 0;
+									try {
+										item = Integer.parseInt(line.substring(start, end));
+									} catch (NumberFormatException e) {
+										item = 0;
+									}
+									
+									l.setTile(x, y, new Item(ItemTypes.getType(item)));
 								}
-								
-								l.setTile(x, y, new Item(ItemTypes.getType(item)));
 							}
 						}
+						// else throw slickexception?
 					}
 				}
 				

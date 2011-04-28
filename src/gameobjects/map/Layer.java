@@ -56,6 +56,10 @@ public class Layer extends AEntity {
 		
 	}
 
+	public int getType() {
+		return layerType.layerIndex();
+	}
+
 	
 	
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import io.MapLoader;
 
 import org.junit.Test;
+import org.newdawn.slick.SlickException;
 
 public class TestMapLoader {
 
@@ -13,7 +14,7 @@ public class TestMapLoader {
 	
 	
 	@Test
-	public void loadMaps() throws IOException {
+	public void loadMaps() throws IOException, SlickException {
 		MapLoader.loadMap(new File("src/resources/maps/e1l1.gem"));
 		
 		

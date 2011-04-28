@@ -100,4 +100,21 @@ public class Map extends AEntity {
 	public void setCollision(int x, int y, boolean b) {
 		collisionLayer[y][x] = b;
 	}
+
+	public boolean setLayer(Layer l) {
+		if (l.getType() == LayerTypes.LAYER_GROUND.ordinal()) {
+			groundLayer = l;
+			return true;
+		}
+		if (l.getType() == LayerTypes.LAYER_OBJECTS.ordinal()) {
+			objectLayer = l;
+			return true;
+		}
+		if (l.getType() == LayerTypes.LAYER_SPECIAL.ordinal()) {
+			specialLayer = l;
+			return true;
+		}
+		return false;
+		
+	}
 }
