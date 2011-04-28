@@ -32,4 +32,17 @@ public enum ItemTypes {
 	public int textureIndex() {
 		return textureIndex;
 	}
+	
+	public ItemTypes getType( int typeNumber ) {
+		ItemTypes type = ItemTypes.EMPTY;
+		
+		for (ItemTypes element : values()) {
+			if( element.ordinal() == typeNumber ) {
+				type = element;
+				break;
+			}
+		}
+		
+		return type;
+	}
 }
