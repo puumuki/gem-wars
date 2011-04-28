@@ -17,11 +17,16 @@ public class Layer extends AEntity {
 	private int height = 0;
 	
 	private Item[][] tiles;
+
+	private LayerTypes layerType;
 	
-	public Layer( int width, int height ) {
+	public Layer( int width, int height , LayerTypes type ) {
 		
 		this.width = width;
 		this.height = height;
+		
+		this.layerType = type;
+		
 		
 		tiles = new Item[width][height];
 		

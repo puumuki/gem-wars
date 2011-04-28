@@ -33,7 +33,7 @@ public enum ItemTypes {
 		return textureIndex;
 	}
 	
-	public ItemTypes getType( int typeNumber ) {
+	public static ItemTypes getType( int typeNumber ) {
 		ItemTypes type = ItemTypes.EMPTY;
 		
 		for (ItemTypes element : values()) {

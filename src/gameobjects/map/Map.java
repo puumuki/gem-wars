@@ -26,54 +26,11 @@ public class Map extends AEntity {
 	private int gemCount;
 	private int time;
 	
-	public void loadMap(String mapName) throws SlickException {
-		Scanner f = null;
-		
-		try {
-			InputStream in = ResourceLoader.getResourceAsStream("resources/maps/" + mapName);
-			f = new Scanner(in);
-			
-			while (f.hasNextLine()) {
-				// read the file one line at a time
-				
-				// first the map name
-				name = f.nextLine();
-				
-				// creator name
-				creator = f.nextLine();
-				
-				// gem count
-				int gems = 0;
-				try {
-					gems = Integer.parseInt(f.nextLine());
-				} catch (NumberFormatException e) {
-					gems = 0;
-				}
-				gemCount = gems;
-				
-				// time
-				int time = 60;
-				try {
-					time = Integer.parseInt(f.nextLine());
-				} catch (NumberFormatException e) {
-					time = 60;
-				}
-				this.time = time;
-				
-				// TODO: Then layers, one at a time
-				// also: what to do, if map is incomplete? 
-			}
-			
-			
-		} catch (RuntimeException e) {
-			throw new SlickException("Error loading map file", e); 
-		}
-		finally {
-			if (f != null)
-				f.close();
-		}
-		
-	}
+	private boolean[][] collisionLayer;
+	
+	private Layer groundLayer;
+	private Layer specialLayer;
+	private Layer objectLayer;
 	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
@@ -125,5 +82,22 @@ public class Map extends AEntity {
 	
 	public int getHeight() {
 		return height;
+	}
+
+	public void setGemCount(int gems) {
+		this.gemCount = gems;
+	}
+	
+	public int getGemCount() {
+		return gemCount;
+	}
+
+	public void createCollision(int layerWidth, int layerHeight) {
+		this.collisionLayer = new boolean[layerHeight][layerWidth];
+		
+	}
+
+	public void setCollision(int x, int y, boolean b) {
+		collisionLayer[y][x] = b;
 	}
 }
