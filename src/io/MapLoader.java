@@ -22,6 +22,8 @@ public class MapLoader {
 	
 	public static Map loadMap( File file ) throws IOException, SlickException {
 		
+		Log.info("Loading level from a file : " + file.getName());
+		
 		Map map = null;
 		
 		if( file.isFile() == false ) {

@@ -3,6 +3,7 @@ package gemwars;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 import gameobjects.map.Map;
 import io.MapLoader;
@@ -17,6 +18,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 /**
  * The Gameplay state is the one where the game itself happens.
@@ -36,14 +38,21 @@ public class GameplayState extends BasicGameState {
        this.stateID = stateID;
     }
     
+    private List<File> availableMaps;
+    
+    private int currentMapIndex = 0;
+    
     private Map map;
     
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
+		
+		availableMaps = MapLoader.findAvailableMaps(new File("src/resources/maps/"));
+		
 		try {
-			map = MapLoader.loadMap(new File("src/resources/maps/e4l1.gem"));
+			map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
 		} catch (IOException e) {
 			throw new SlickException("Can't load map file. ", e);
-		}
+		}	
 		
 		try {
 			File file = new File("src/resources/resources.xml"); 
@@ -94,6 +103,38 @@ public class GameplayState extends BasicGameState {
 		
 		if( input.isKeyDown(Input.KEY_DOWN)) {
 			cameraPositionY -= increment * delta;
+		}
+		
+		if( input.isKeyDown(Input.KEY_LCONTROL)) {
+			
+			boolean isChanged = false;
+			
+			if( input.isKeyPressed(Input.KEY_LEFT) ) {
+				currentMapIndex--;
+				isChanged=true;
+			}
+			
+			if( input.isKeyPressed(Input.KEY_RIGHT) ) {
+				currentMapIndex++;
+				isChanged=true;
+			}
+			
+			if( currentMapIndex < 0 ) {
+				currentMapIndex = availableMaps.size() - 1;
+			}
+			
+			else if( currentMapIndex >= availableMaps.size() ) {
+				currentMapIndex = 0;
+			}		
+
+			if( isChanged ) {
+				try {
+					
+					map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
+				} catch (IOException e) {
+					Log.error(e);
+				}
+			}
 		}
 		
 		//Screen Capture
