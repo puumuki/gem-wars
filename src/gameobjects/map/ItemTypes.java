@@ -1,5 +1,9 @@
 package gameobjects.map;
 
+/**
+ * Enum for the different item types available to create the levels.
+ *
+ */
 public enum ItemTypes {
 
 	EMPTY(0), 

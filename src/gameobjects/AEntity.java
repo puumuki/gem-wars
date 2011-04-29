@@ -5,30 +5,29 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 /**
- * 
  * @author Teemuki
  *
- * Base class for all game objects. 
+ * Base class for all the objects of the game. 
  */
 public abstract class AEntity implements Comparable<AEntity> {
 	
 	/**
-	 * Tells witch tile entity is horizontally
+	 * The horizontal position of the tile entity (in tiles!)
 	 */
 	public int positionX;
 	
 	/**
-	 * Tells witch tile entity is vertically
+	 * The vertical position of the tile entity (in tiles!) 
 	 */
 	public int positionY;
 	
 	/**
-	 * Witch way a object is moving or is it moving at all.
+	 * Which way the object is moving or if it is moving at all
 	 */
 	public Direction direction = Direction.STATIONARY;
 	
 	/**
-	 * How fast entity is moving. If value is negative object is static.
+	 * How fast the entity is moving. If the value is negative the object is stationary.
 	 */
 	public double speed;
 	
@@ -39,23 +38,23 @@ public abstract class AEntity implements Comparable<AEntity> {
 	public int layer;
 	
 	/**
-	 * Entity is rendered to a screen when this method is called.
+	 * The entity is rendered to the screen when this method is called.
 	 * 
 	 * @param cont Don't read any input or update physics in this method.
 	 * @param grap Use this Graphics object to draw the entity so the drawing order is right.
-	 * @throws SlickException
+	 * @throws SlickException if something goes wrong
 	 */
 	public abstract void render(GameContainer cont, 					    
 					   			Graphics grap) 
 					    		throws SlickException;
 	
 	/**
-	 * In this method a entity physics are updated. Input from user
+	 * In this method an entity's physics are updated, input from user
 	 * are handled and so on. 
 	 * 
-	 * @param cont
-	 * @param delta
-	 * @throws SlickException
+	 * @param cont the container of the game, can give us the input of the player for example
+	 * @param delta 
+	 * @throws SlickException if something goes wrong
 	 */
 	public abstract void update(GameContainer cont, 
 								int delta) throws SlickException ;

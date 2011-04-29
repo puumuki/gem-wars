@@ -9,10 +9,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 /**
- * 
  * @author Teemuki
- *
- * Player class holds a implementation of human controller entity.
+ * 
+ * The Player class holds an implementation of human controller entity.
  */
 public class Player extends AEntity {
 	
@@ -22,12 +21,12 @@ public class Player extends AEntity {
 	public int lives;
 	
 	/**
-	 * Player scores from the collected gems.
+	 * Player score from the collected gems.
 	 */
-	public int scores;
+	public int score;
 	
 	/**
-	 * How many gems the player have collected.
+	 * How many gems the player has collected.
 	 */
 	public int collectedGemCount;
 	

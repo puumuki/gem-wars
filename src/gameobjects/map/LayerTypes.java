@@ -1,5 +1,12 @@
 package gameobjects.map;
 
+/**
+ * Enum for the four different layer types used in the game,
+ * from the lowest layer to the highest one.
+ * 
+ * The collision layer is treated separately in the game though.
+ *
+ */
 public enum LayerTypes {
 	
 	LAYER_GROUND(0),

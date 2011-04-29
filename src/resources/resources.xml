@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+<!-- MENU -->
+	<resource type="image" id="MENU_BG">resources\images\menutaus.png</resource>
+	<resource type="image" id="MENU_OPTIONS">resources\images\menu1.png</resource>
 <!-- GAMEPLAY -->
-  <!-- Background -->  
-  <!-- HUD -->
-  <resource type="image" id="ITEM_TEXTURES">resources\images\winbd_all.png</resource>
-  <!--  Player Animations -->  
-  <!-- Blade animation -->  
-  <!-- SOUNDS -->
+	<!-- tiles -->
+	<resource type="image" id="ITEM_TEXTURES">resources\images\winbd_all.png</resource>
 </resources>
 
 

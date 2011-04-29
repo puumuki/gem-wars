@@ -18,6 +18,10 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Main menu state for the main menu
+ *
+ */
 public class MainMenuState extends BasicGameState {
 
 	int stateID = -1;
@@ -54,11 +58,9 @@ public class MainMenuState extends BasicGameState {
 			e.printStackTrace();
 		}		
 		
-		//TODO: Use io.ResourceManager
-		background = new Image("src/resources/images/menutaus.bmp");
+		background = ResourceManager.getInstance().getImage("MENU_BG");
 		
-		//TODO: Use io.ResourceManager
-		Image menuOptions = new Image("src/resources/images/menu1.bmp");
+		Image menuOptions = ResourceManager.getInstance().getImage("MENU_OPTIONS");
 		
 		newGameOption = menuOptions.getSubImage(0, 0, 151, 201);
 		multiplayerOption = menuOptions.getSubImage(152, 0, 151, 201);
@@ -80,13 +82,9 @@ public class MainMenuState extends BasicGameState {
 		background.draw(0,0);
 
 		newGameOption.draw(menuX, menuY);
-		newGameOption.setAlpha(1);
 		multiplayerOption.draw(menuX, menuY);
-		newGameOption.setAlpha(1);
 		optionsOption.draw(menuX, menuY);
-		newGameOption.setAlpha(1);
 		exitOption.draw(menuX, menuY);
-		newGameOption.setAlpha(1);
 		
 		//fontti.drawString(250, 250, "UlTimAaTtinnen"); // miksei tämä piirry?
 		item.render(gc, g);
@@ -95,62 +93,6 @@ public class MainMenuState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
 		Input input = gc.getInput();
-				
-		switch (selectedMenu) {
-		case 0: // new game
-			if(input.isKeyPressed(Input.KEY_UP)) {
-				exitOption.setAlpha(0);
-				selectedMenu = 3;
-				newGameOption.setAlpha(1);
-			}
-			else if(input.isKeyPressed(Input.KEY_DOWN)){
-				multiplayerOption.setAlpha(0);
-				selectedMenu = 1;
-				newGameOption.setAlpha(1);
-			}
-			break;
-		case 1: // multiplayer
-			if(input.isKeyPressed(Input.KEY_UP)) {
-				newGameOption.setAlpha(0);
-				selectedMenu = 1;
-				multiplayerOption.setAlpha(1);
-			}
-			else if(input.isKeyPressed(Input.KEY_DOWN)){
-				optionsOption.setAlpha(0);
-				selectedMenu = 2;
-				multiplayerOption.setAlpha(1);
-			}
-			break;
-		case 2: // options
-			if(input.isKeyPressed(Input.KEY_UP)) {
-				multiplayerOption.setAlpha(0);
-				selectedMenu = 1;
-				optionsOption.setAlpha(1);
-			}
-			else if(input.isKeyPressed(Input.KEY_DOWN)){
-				exitOption.setAlpha(0);
-				selectedMenu = 3;
-				optionsOption.setAlpha(1);
-			}
-			break;
-		case 3: // exit
-			if(input.isKeyPressed(Input.KEY_UP)) {
-				optionsOption.setAlpha(0);
-				selectedMenu = 2;
-				exitOption.setAlpha(1);
-			}
-			else if(input.isKeyPressed(Input.KEY_DOWN)){
-				newGameOption.setAlpha(0);
-				selectedMenu = 0;
-				exitOption.setAlpha(1);
-			}
-			break;
-			
-		default:
-			break;
-		
-		}
-	
 		
 		
 		 

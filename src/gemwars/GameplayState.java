@@ -12,6 +12,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * The Gameplay state is the one where the game itself happens.
+ *
+ */
 public class GameplayState extends BasicGameState {
 
     int stateID = -1;

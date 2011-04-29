@@ -24,8 +24,8 @@ public class Item extends AEntity {
 	private static Map<ItemTypes, Image> itemTextures = new HashMap<ItemTypes, Image>();  
 	
 	/**
-	 * Tile number from left starting from index 0
-	 * Textures are loaded from windb.bmp
+	 * Tile number from the left starting from index 0
+	 * Textures are loaded from windb_all.png
 	 */
 	public ItemTypes itemType;
 	

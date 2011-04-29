@@ -4,7 +4,7 @@ package gameobjects;
  * 
  * @author Teemuki
  *
- * Enumeration to indicate direction where a entity is moving.
+ * Enumeration to indicate the direction where an entity is moving.
  */
 public enum Direction {
 	STATIONARY, LEFT, 
