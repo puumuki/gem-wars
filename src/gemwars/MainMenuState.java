@@ -19,6 +19,8 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 /**
  * Main menu state for the main menu
@@ -77,7 +79,6 @@ public class MainMenuState extends BasicGameState {
 		menusound = ResourceManager.getInstance().getSound("MENU_SOUND");
 		menumusic = ResourceManager.getInstance().getMusic("MENU_MUSIC");
 		gamemusic = ResourceManager.getInstance().getMusic("GAME_MUSIC");
-		menumusic.loop();
 		
         Font font = new Font("Arial", Font.BOLD, 20);
         fontti = new UnicodeFont(font);
@@ -87,6 +88,22 @@ public class MainMenuState extends BasicGameState {
         item.positionY = 30;
         
     	
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game)	throws SlickException {
+		// TODO Auto-generated method stub
+		super.enter(container, game);
+		
+		menumusic.loop();
+	}
+	
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+	
+		super.leave(container, game);
+		
+		menumusic.stop();
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
@@ -114,24 +131,27 @@ public class MainMenuState extends BasicGameState {
 
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
-		//Input input = gc.getInput();
+		
+		Input input = gc.getInput();
 
-		switch (selected) {
-		case 1: // single player
-			menusound.play();
-			menumusic.stop();
-			gamemusic.loop();
-			game.enterState(Gemwars.GAMEPLAYSTATE);
-			break;
-		case 2: // multiplayer
-			break;
-		case 3: // options
-			break;
-		case 4: // exit
-			System.exit(0);
-			break;
-		default:
-			break;
+		if( input.isKeyPressed(Input.KEY_ENTER)) {
+			switch (selected) {
+			case 1: // single player
+				game.enterState(Gemwars.GAMEPLAYSTATE);
+				break;
+			case 2: // multiplayer
+				break;
+			case 3: // options
+				game.enterState(Gemwars.GONFIGURATION_MENU_STATE, 
+								new FadeOutTransition(), 
+								new FadeInTransition());
+				break;
+			case 4: // exit			
+				gc.exit();
+				break;
+			default:
+				break;
+			}
 		}
 
 	}

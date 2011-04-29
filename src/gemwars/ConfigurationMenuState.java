@@ -11,10 +11,15 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.command.KeyControl;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.RotateTransition;
 
 
 import gameobjects.GearPair;
@@ -31,8 +36,10 @@ public class ConfigurationMenuState extends BasicGameState  {
 			
 	private ArrayList<GearPair> gearPairs = new ArrayList<GearPair>();
 	
+	
+	
 	public ConfigurationMenuState( int id ) {
-		this.stateID = id;
+		this.stateID = id;				
 	}
 	
 	@Override
@@ -53,7 +60,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 	public int getID() {
 		return stateID;
 	};
-	
+		
 	/**
 	 * This is called when this game state are entered
 	 */
@@ -70,6 +77,9 @@ public class ConfigurationMenuState extends BasicGameState  {
 		for( GearPair pair : gearPairs ) {
 			pair.render(cont, g);
 		}
+		
+		g.setColor(Color.black);
+		g.drawString("To return to the main menu, try to press the 'Escape'-key", 50, 50);
 	}
 	
 	@Override
@@ -77,5 +87,13 @@ public class ConfigurationMenuState extends BasicGameState  {
 		for( GearPair pair : gearPairs ) {
 			pair.update(cont, delta);
 		}
+		
+		Input intput = cont.getInput();
+		
+		if( intput.isKeyPressed(Input.KEY_ESCAPE) ) {
+			
+							
+			state.enterState(Gemwars.MAINMENUSTATE, new FadeOutTransition(), new FadeInTransition());
+		}			
 	}
 }
