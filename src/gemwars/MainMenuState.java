@@ -19,6 +19,8 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.BlobbyTransition;
+import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
@@ -85,9 +87,7 @@ public class MainMenuState extends BasicGameState {
        
         item = new Item(ItemTypes.DARK_BOULDER);
         item.positionX = 200;
-        item.positionY = 30;
-        
-    	
+        item.positionY = 30;          	
 	}
 	
 	@Override
@@ -137,7 +137,9 @@ public class MainMenuState extends BasicGameState {
 		if( input.isKeyPressed(Input.KEY_ENTER)) {
 			switch (selected) {
 			case 1: // single player
-				game.enterState(Gemwars.GAMEPLAYSTATE);
+				game.enterState(Gemwars.GAMEPLAYSTATE, 								
+								new EmptyTransition(), 
+								new BlobbyTransition());
 				break;
 			case 2: // multiplayer
 				break;

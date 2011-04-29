@@ -10,8 +10,11 @@ import io.ResourceManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -22,6 +25,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class GameplayState extends BasicGameState {
 
     int stateID = -1;
+    
+    private double cameraPositionX = 0;
+    private double cameraPositionY = 0;
     
     Music gamemusic = null;
     
@@ -52,13 +58,55 @@ public class GameplayState extends BasicGameState {
 	public void render(GameContainer cont, StateBasedGame state, Graphics graph)
 			throws SlickException {
 
+		graph.translate((float)cameraPositionX, 
+						(float)cameraPositionY);
+		
 		map.render(cont, graph);
+		
+		graph.resetTransform();
+		
 	}
 
 	public void update(GameContainer cont, StateBasedGame state, int delta)
 			throws SlickException {
+		
+		Input input = cont.getInput();
+		
+		final double increment = 0.2; 
+		
+		//If we want a friction to movement we need to change logic here.
+		//final double friction = 0.2; 
+		
+		//By multiplying increment value with delta we keep camera movement
+		//speed constant with every platform.
+		
+		if( input.isKeyDown(Input.KEY_LEFT) ) {
+			cameraPositionX += increment * delta;
+		}
+		
+		if( input.isKeyDown(Input.KEY_RIGHT)) {
+			cameraPositionX -= increment * delta;
+		}
 
+		if( input.isKeyDown(Input.KEY_UP)) {
+			cameraPositionY += increment * delta;
+		}
+		
+		if( input.isKeyDown(Input.KEY_DOWN)) {
+			cameraPositionY -= increment * delta;
+		}
+		
+		//Screen Capture
+		//TODO: Make this save each capture to separate files ;)
+		if (input.isKeyPressed( Input.KEY_F10)) {
+			Image target = new Image(cont.getWidth(), cont.getHeight());
+			cont.getGraphics().copyArea(target, 0, 0);
+			ImageOut.write( target.getFlippedCopy(false, true), "screenshot.png", false);
+			target.destroy();
+		}
 	}
+	
+	
 
 	@Override
 	public int getID() {

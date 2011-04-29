@@ -3,10 +3,13 @@ package io;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.ResourceLoader;
 
 import gameobjects.Item;
@@ -169,5 +172,38 @@ public class MapLoader {
 		
 	}
 	
+	/**
+	 * Finds all available map files from directory and it sub directories.
+	 * Search is made recursively.
+	 * 
+	 * @param path Directory that where searching commit
+	 * @return All files that name ends with ".gem"
+	 */
+	public static List<File> findAvailableMaps( File path ) {		
+		
+		List<File> maps = new ArrayList<File>();
+					
+		searchRecursivelyForMapFiles( maps, path );
+		
+		return maps;
+	}
 	
+	private static void searchRecursivelyForMapFiles( List<File>maps, File path ) {
+		for( File file : path.listFiles() ) {
+			
+			if( file.isDirectory() ) {
+				searchRecursivelyForMapFiles( maps, file );				
+			}
+			
+			if( file.isFile() ) {
+				String fileName = file.getName();
+				
+				
+				//TODO: Should we have some kind validation for the map format?
+				if( fileName.endsWith(".gem") ) {
+					maps.add(file);
+				}
+			}
+		}
+	}
 }

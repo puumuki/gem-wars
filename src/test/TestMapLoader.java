@@ -3,6 +3,7 @@ package test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 
 
@@ -49,7 +50,7 @@ public class TestMapLoader {
 		
 		Assert.assertEquals( ItemTypes.METAL_WALL, map.getGroundLayer().getTile(22, 10).itemType);
 		
-		Assert.assertEquals( ItemTypes.GROUND, map.getGroundLayer().getTile(2,2).itemType);
+		Assert.assertEquals( ItemTypes.BROWN_WALL, map.getGroundLayer().getTile(2,2).itemType);
 	}
 	
 	@Test
@@ -63,5 +64,33 @@ public class TestMapLoader {
 			}
 		}
 		
+	}
+	
+	@Test
+	public void testFindingMaps() {
+		List<File> files = MapLoader.findAvailableMaps( new File("src/resources/maps/"));
+				 
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e1l1.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e1l2.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e1l3.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e1l4.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e2l1.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e2l2.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e2l3.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e2l4.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e3l1.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e3l2.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e3l3.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e3l4.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e4l1.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e4l2.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e4l3.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e4l4.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e5l1.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e5l2.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e5l3.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e5l4.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\e6l1.gem")));
+		Assert.assertTrue( files.contains( new File("src\\resources\\maps\\race1.gem")));
 	}
 }

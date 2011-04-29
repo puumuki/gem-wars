@@ -1,6 +1,7 @@
 package gemwars;
 
 
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.command.KeyControl;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.GradientEffect;
+import org.newdawn.slick.font.effects.ShadowEffect;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -20,6 +23,8 @@ import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.RotateTransition;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 
 import gameobjects.GearPair;
@@ -35,8 +40,8 @@ public class ConfigurationMenuState extends BasicGameState  {
 	private int stateID;
 			
 	private ArrayList<GearPair> gearPairs = new ArrayList<GearPair>();
-	
-	
+			
+	private UnicodeFont font;
 	
 	public ConfigurationMenuState( int id ) {
 		this.stateID = id;				
@@ -44,6 +49,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 	
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {		
+		
 		gearPairs.add( new GearPair( 30f, new Vector2f(100,100), 0.5f));
 		gearPairs.add( new GearPair( 10f, new Vector2f(50,50), 0.3f));
 		gearPairs.add( new GearPair( 15f, new Vector2f(400,350), 0.1f));
@@ -51,7 +57,22 @@ public class ConfigurationMenuState extends BasicGameState  {
 		gearPairs.add( new GearPair( 12f, new Vector2f(380,500), 1f));
 		gearPairs.add( new GearPair( 5f, new Vector2f(500,600), 0.7f));
 		gearPairs.add( new GearPair( 14f, new Vector2f(780,100), 0.3f));
-		gearPairs.add( new GearPair( 25f, new Vector2f(680,200), 0.2f));			
+		gearPairs.add( new GearPair( 25f, new Vector2f(680,200), 0.2f));
+		
+		//This the way to customize a font.
+		java.awt.Font awtFont = new java.awt.Font("Ariel", java.awt.Font.PLAIN, 20);
+        font = new UnicodeFont(awtFont);
+        font.addAsciiGlyphs();       
+        
+        java.awt.Color topColor = new java.awt.Color( 0x00000ff );
+        java.awt.Color bottomColor = new java.awt.Color( 0xbbff00 );
+        
+        font.getEffects().add(new GradientEffect(topColor, bottomColor, 1f));
+        font.loadGlyphs();
+        
+                
+        
+        
 	}		
 
 	/**
@@ -72,13 +93,13 @@ public class ConfigurationMenuState extends BasicGameState  {
 	@Override
 	public void render(GameContainer cont, StateBasedGame state, Graphics g) throws SlickException {
 		
-		g.setBackground(Color.white);	
+		g.setBackground(Color.white);
+		g.setFont(font);
 		
 		for( GearPair pair : gearPairs ) {
 			pair.render(cont, g);
 		}
 		
-		g.setColor(Color.black);
 		g.drawString("To return to the main menu, try to press the 'Escape'-key", 50, 50);
 	}
 	
@@ -90,10 +111,10 @@ public class ConfigurationMenuState extends BasicGameState  {
 		
 		Input intput = cont.getInput();
 		
-		if( intput.isKeyPressed(Input.KEY_ESCAPE) ) {
-			
-							
-			state.enterState(Gemwars.MAINMENUSTATE, new FadeOutTransition(), new FadeInTransition());
+		if( intput.isKeyPressed(Input.KEY_ESCAPE) ) {								
+			state.enterState(Gemwars.MAINMENUSTATE, 
+							new FadeOutTransition(), 
+							new FadeInTransition());
 		}			
 	}
 }
