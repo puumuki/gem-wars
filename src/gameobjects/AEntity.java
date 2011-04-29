@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
  *
  * Base class for all the objects of the game. 
  */
-public abstract class AEntity implements Comparable<AEntity> {
+public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	
 	/**
 	 * The horizontal position of the tile entity (in tiles!)

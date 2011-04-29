@@ -36,13 +36,16 @@ public class Gemwars extends StateBasedGame {
 	
     public static final int MAINMENUSTATE          = 0;
     public static final int GAMEPLAYSTATE          = 1;
+    public static final int GONFIGURATION_MENU_STATE = 2;
     
 	public Gemwars() {
 		super("GemWars");
 		
         this.addState(new MainMenuState(MAINMENUSTATE));
         this.addState(new GameplayState(GAMEPLAYSTATE));
-        this.enterState(MAINMENUSTATE);
+        this.addState(new ConfigurationMenuState(GONFIGURATION_MENU_STATE));
+        
+        this.enterState(GONFIGURATION_MENU_STATE);
 	}
 
 	/**
@@ -51,9 +54,8 @@ public class Gemwars extends StateBasedGame {
 	 * @throws  
 	 */
 	public static void main(String[] args) throws SlickException {		
-        AppGameContainer app = new AppGameContainer(new Gemwars());
-        
-        app.setDisplayMode(640, 480, false);
+        AppGameContainer app = new AppGameContainer(new Gemwars());        
+        app.setDisplayMode(1024, 768, false);
         app.start();
 	}
 	
@@ -64,3 +66,4 @@ public class Gemwars extends StateBasedGame {
 		
 	}
 }
+

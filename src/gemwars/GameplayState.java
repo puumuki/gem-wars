@@ -34,7 +34,7 @@ public class GameplayState extends BasicGameState {
     
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
 		try {
-			map = MapLoader.loadMap(new File("src/resources/maps/e1l1.gem"));
+			map = MapLoader.loadMap(new File("src/resources/maps/e4l1.gem"));
 		} catch (IOException e) {
 			throw new SlickException("Can't load map file. ", e);
 		}
