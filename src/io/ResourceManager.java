@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
@@ -36,12 +37,14 @@ public class ResourceManager {
 	private static ResourceManager _instance = new ResourceManager();
  
 	private Map<String, Sound> soundMap;
+	private Map<String, Music> musicMap;
 	private Map<String, Image> imageMap;
 	private Map<String, ResourceAnimationData> animationMap;
 	private Map<String, String> textMap;
  
 	private ResourceManager(){
 		soundMap 	 = new HashMap<String, Sound>();
+		musicMap	 = new HashMap<String, Music>();
 		imageMap 	 = new HashMap<String, Image>();
 		animationMap = new HashMap<String, ResourceAnimationData>();
 		textMap 	 = new HashMap<String, String>();
@@ -97,6 +100,8 @@ public class ResourceManager {
         			addElementAsImage(resourceElement);
         		}else if(type.equals("sound")){
         			addElementAsSound(resourceElement);
+        		}else if(type.equals("music")){
+        			addElementAsMusic(resourceElement);
         		}else if(type.equals("text")){
         			addElementAsText(resourceElement);
         		}else if(type.equals("font")){
@@ -178,6 +183,30 @@ public class ResourceManager {
 		return soundMap.get(ID);
 	}
  
+	private void addElementAsMusic(Element resourceElement) throws SlickException {
+		loadMusic(resourceElement.getAttribute("id"), resourceElement.getTextContent());
+	}
+	
+	public Music loadMusic(String id, String path) throws SlickException{
+		if(path == null || path.length() == 0)
+			throw new SlickException("Music resource [" + id + "] has invalid path");
+ 
+		Music music = null;
+ 
+		try {
+			music = new Music(path);
+		} catch (SlickException e) {
+			throw new SlickException("Could not load music", e);
+		}
+ 
+		this.musicMap.put(id, music);
+ 
+		return music;
+	}
+	
+	public final Music getMusic(String ID){
+		return musicMap.get(ID);
+	}
  
 	private final void addElementAsImage(Element resourceElement) throws SlickException {
 		loadImage(resourceElement.getAttribute("id"), 

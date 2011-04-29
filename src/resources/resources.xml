@@ -3,9 +3,24 @@
 <!-- MENU -->
 	<resource type="image" id="MENU_BG">resources\images\menutaus.png</resource>
 	<resource type="image" id="MENU_OPTIONS">resources\images\menu1.png</resource>
+	<resource type="image" id="MENU_LVL_BG">resources\images\lvltaus.png</resource>
+	<resource type="image" id="MENU_PASS_BG">resources\images\passtaus.png</resource>
+	<resource type="image" id="MENU_PASSWORD_BUTTONS">resources\images\pwordnapit.png</resource>
+	<resource type="image" id="MENU_START">resources\images\startb.png</resource>
+	<resource type="animation" id="MENU_ANIMATION" tw="136" th="136" duration="42">resources\images\menuani.png</resource>
+	
+	<!-- menu sounds -->
+	<resource type="sound" id="MENU_SOUND">resources\sounds\menu.wav</resource>
+	<resource type="music" id="MENU_MUSIC">resources\music\menu.xm</resource>
+	
 <!-- GAMEPLAY -->
 	<!-- tiles -->
 	<resource type="image" id="ITEM_TEXTURES">resources\images\winbd_all.png</resource>
+	
+	<!-- gameplay sounds -->
+	<resource type="sound" id="GAME_COLLECT">resources\sounds\collect.wav</resource>
+	<resource type="music" id="GAME_MUSIC">resources\music\peli.xm</resource>
+	
 </resources>
 
 
