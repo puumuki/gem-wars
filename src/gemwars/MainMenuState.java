@@ -39,7 +39,8 @@ public class MainMenuState extends BasicGameState {
 	
 	float alpha = 0;
 
-	int selectedMenu = 0;
+	int currentSelection = 1;
+	int selected = 0;
 	
 	private Item item;
 	
@@ -80,11 +81,22 @@ public class MainMenuState extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 			throws SlickException {
 		background.draw(0,0);
-
-		newGameOption.draw(menuX, menuY);
-		multiplayerOption.draw(menuX, menuY);
-		optionsOption.draw(menuX, menuY);
-		exitOption.draw(menuX, menuY);
+		
+		switch (currentSelection) {
+		case 2:
+			multiplayerOption.draw(menuX, menuY);
+			break;
+		case 3:
+			optionsOption.draw(menuX, menuY);
+			break;
+		case 4:
+			exitOption.draw(menuX, menuY);
+			break;
+		default:
+			currentSelection = 1;
+			newGameOption.draw(menuX, menuY);
+			break;
+		}
 		
 		//fontti.drawString(250, 250, "UlTimAaTtinnen"); // miksei tämä piirry?
 		item.render(gc, g);
@@ -92,14 +104,42 @@ public class MainMenuState extends BasicGameState {
 
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
-		Input input = gc.getInput();
-		
-		
-		 
-		
+		//Input input = gc.getInput();
+
+		switch (selected) {
+		case 1: // single player
+			game.enterState(Gemwars.GAMEPLAYSTATE);
+			break;
+		case 2: // multiplayer
+			break;
+		case 3: // options
+			break;
+		case 4: // exit
+			System.exit(0);
+			break;
+		default:
+			break;
+		}
+
 	}
 	
-	
+	@Override
+	public void keyPressed(int key, char c) {
+		if (key == Input.KEY_UP) {
+			currentSelection--;
+			if(currentSelection < 1)
+				currentSelection = 4;
+		}
+		if (key == Input.KEY_DOWN) {
+			currentSelection++;
+			if(currentSelection > 4)
+				currentSelection = 1;
+		}
+		
+		if (key == Input.KEY_ENTER) {
+			selected = currentSelection;
+		}
+	}
 
 	@Override
 	public int getID() {
