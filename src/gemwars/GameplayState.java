@@ -7,6 +7,7 @@ import java.util.List;
 
 import gameobjects.map.Map;
 import io.MapLoader;
+import io.Options;
 import io.ResourceManager;
 
 import org.newdawn.slick.GameContainer;

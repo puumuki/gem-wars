@@ -3,6 +3,7 @@ package gemwars;
 import gameobjects.Item;
 import gameobjects.map.ItemTypes;
 
+import io.Options;
 import io.ResourceManager;
 
 import java.awt.Font;

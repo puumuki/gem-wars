@@ -1,4 +1,5 @@
-package gemwars;
+package io;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -96,9 +97,9 @@ public class Options {
 	}
 	
 	public void load(File file) throws NumberFormatException, 
-							  IllegalArgumentException, 
-							  IllegalAccessException, 
-							  IOException {
+									  IllegalArgumentException, 
+									  IllegalAccessException, 
+									  IOException {
 					
 		if( file.isFile() ) {
 			FileInputStream stream = new FileInputStream(file);

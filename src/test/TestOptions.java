@@ -1,11 +1,12 @@
 package test;
 
+import io.Options;
+
 import java.io.File;
 import java.io.IOException;
 
 import junit.framework.Assert;
 
-import gemwars.Options;
 
 import org.junit.Test;
 
