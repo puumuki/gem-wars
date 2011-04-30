@@ -36,14 +36,14 @@ public class Gemwars extends StateBasedGame {
 	
     public static final int MAINMENUSTATE          = 0;
     public static final int GAMEPLAYSTATE          = 1;
-    public static final int GONFIGURATION_MENU_STATE = 2;
+    public static final int CONFIGURATION_MENU_STATE = 2;
     
 	public Gemwars() {
 		super("GemWars");
 		
         this.addState(new MainMenuState(MAINMENUSTATE));
         this.addState(new GameplayState(GAMEPLAYSTATE));
-        this.addState(new ConfigurationMenuState(GONFIGURATION_MENU_STATE));
+        this.addState(new ConfigurationMenuState(CONFIGURATION_MENU_STATE));
         
         this.enterState(MAINMENUSTATE);
 	}

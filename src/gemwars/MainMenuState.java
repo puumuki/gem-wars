@@ -8,7 +8,9 @@ import io.ResourceManager;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -42,10 +44,15 @@ public class MainMenuState extends BasicGameState {
 	Music menumusic = null;
 	Music gamemusic = null;
 	
+	HashMap<String, Animation> menuanimations = new HashMap<String, Animation>();
+	
 	UnicodeFont fontti = null;
 	
 	private static int menuX = 38;
 	private static int menuY = 240;
+	
+	private static int menuAnimX = 43;
+	private static int menuAnimY = 40;
 	
 	float alpha = 0;
 
@@ -84,6 +91,11 @@ public class MainMenuState extends BasicGameState {
 		menusound = ResourceManager.getInstance().getSound("MENU_SOUND");
 		menumusic = ResourceManager.getInstance().getMusic("MENU_MUSIC");
 		
+		menuanimations.put("single", ResourceManager.getInstance().getAnimation("MENUANI_SP"));
+		menuanimations.put("multi", ResourceManager.getInstance().getAnimation("MENUANI_MP"));
+		menuanimations.put("options", ResourceManager.getInstance().getAnimation("MENUANI_OPTIONS"));
+		menuanimations.put("exit", ResourceManager.getInstance().getAnimation("MENUANI_EXIT"));
+		
         Font font = new Font("Arial", Font.BOLD, 20);
         fontti = new UnicodeFont(font);
        
@@ -100,6 +112,7 @@ public class MainMenuState extends BasicGameState {
 		super.enter(container, game);
 		
 		menumusic.loop((float)1.0, (float)0.8); // TODO: get rid of hardcoded values and throw these into an options class
+		
 	}
 	
 	/**
@@ -117,18 +130,23 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		background.draw(0,0);
 		
+		
 		switch (currentSelection) {
 		case 2:
+			menuanimations.get("multi").draw(menuAnimX, menuAnimY);
 			multiplayerOption.draw(menuX, menuY);
 			break;
 		case 3:
+			menuanimations.get("options").draw(menuAnimX, menuAnimY);
 			optionsOption.draw(menuX, menuY);
 			break;
 		case 4:
+			menuanimations.get("exit").draw(menuAnimX, menuAnimY);
 			exitOption.draw(menuX, menuY);
 			break;
 		default:
 			currentSelection = 1;
+			menuanimations.get("single").draw(menuAnimX, menuAnimY);
 			newGameOption.draw(menuX, menuY);
 			break;
 		}
@@ -151,7 +169,7 @@ public class MainMenuState extends BasicGameState {
 			case 2: // multiplayer
 				break;
 			case 3: // options
-				game.enterState(Gemwars.GONFIGURATION_MENU_STATE, 
+				game.enterState(Gemwars.CONFIGURATION_MENU_STATE, 
 								new FadeOutTransition(), 
 								new FadeInTransition());
 				break;
@@ -162,6 +180,9 @@ public class MainMenuState extends BasicGameState {
 				break;
 			}
 		}
+		
+		if (input.isKeyPressed(Input.KEY_ESCAPE))
+			gc.exit();
 
 	}
 	

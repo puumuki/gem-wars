@@ -7,12 +7,16 @@
 	<resource type="image" id="MENU_PASS_BG">resources\images\passtaus.png</resource>
 	<resource type="image" id="MENU_PASSWORD_BUTTONS">resources\images\pwordnapit.png</resource>
 	<resource type="image" id="MENU_START">resources\images\startb.png</resource>
-	<resource type="animation" id="MENU_ANIMATION" tw="136" th="136" duration="42">resources\images\menuani.png</resource>
 	<resource type="image" id="SMALL_GEAR">resources\images\smallgear.png</resource>
 	<resource type="image" id="BIG_GEAR">resources\images\biggear.png</resource>
 	<resource type="image" id="BUTTON_UP">resources\images\button.png</resource>
 	<resource type="image" id="BUTTON_DOWN">resources\images\button_background.jpg</resource>
 	
+	<!-- animations use 24 fps at the moment (42 ms) -->
+	<resource type="animation" id="MENUANI_SP" tw="136" th="136" duration="42">resources\images\menuani_singleplayer.png</resource>
+	<resource type="animation" id="MENUANI_MP" tw="136" th="136" duration="42">resources\images\menuani_multiplayer.png</resource>
+	<resource type="animation" id="MENUANI_OPTIONS" tw="136" th="136" duration="42">resources\images\menuani_options.png</resource>
+	<resource type="animation" id="MENUANI_EXIT" tw="136" th="136" duration="42">resources\images\menuani_exit.png</resource>
 	
 	<!-- menu sounds -->
 	<resource type="sound" id="MENU_SOUND">resources\sounds\menu.wav</resource>
