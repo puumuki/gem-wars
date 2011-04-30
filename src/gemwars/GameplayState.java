@@ -56,16 +56,7 @@ public class GameplayState extends BasicGameState {
 			map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
 		} catch (IOException e) {
 			throw new SlickException("Can't load map file. ", e);
-		}	
-		
-		try {
-			File file = new File("src/resources/resources.xml"); 
-			FileInputStream fileStream = new FileInputStream(file);		
-			ResourceManager.getInstance().loadResources(fileStream, false); 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		}		
 
 		gamemusic = ResourceManager.getInstance().getMusic("GAME_MUSIC");
 		
