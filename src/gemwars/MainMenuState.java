@@ -111,7 +111,7 @@ public class MainMenuState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game)	throws SlickException {
 		super.enter(container, game);
 		
-		menumusic.loop((float)1.0, (float)0.8); // TODO: get rid of hardcoded values and throw these into an options class
+		menumusic.loop((float)1.0, Options.getInstance().getMusicVolume());
 		
 	}
 	

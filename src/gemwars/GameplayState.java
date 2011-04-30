@@ -75,7 +75,7 @@ public class GameplayState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game)	throws SlickException {
 		super.enter(container, game);
 		
-		gamemusic.loop((float)1.0, (float)0.8); // TODO: get rid of hardcoded values and throw these into an options class
+		gamemusic.loop((float)1.0, Options.getInstance().getMusicVolume());
 	}
 	
 	@Override
