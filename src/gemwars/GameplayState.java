@@ -166,7 +166,7 @@ public class GameplayState extends BasicGameState {
 		if (input.isKeyPressed( Input.KEY_F10)) {
 			Image target = new Image(cont.getWidth(), cont.getHeight());
 			cont.getGraphics().copyArea(target, 0, 0);
-			ImageOut.write( target.getFlippedCopy(false, true), "screenshot.png", false);
+			ImageOut.write( target, "screenshot.png", false);
 			target.destroy();
 		}
 		
