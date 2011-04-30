@@ -21,6 +21,8 @@ import org.newdawn.slick.util.Log;
  * Only field that have @Property annotation are considered as a property.
  * If you have not set any value for @Property() then the field name is used as a key. 
  * 
+ * Supported data types are: Boolean, Byte, String, Integer, Long, Float, Double
+ * 
  * When adding a new property do next steps:
  * 
  * 1. Create a field for property

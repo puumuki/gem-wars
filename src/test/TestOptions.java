@@ -37,7 +37,7 @@ public class TestOptions {
 		Options options = Options.getInstance();
 		options.setMusicVolume(3f);
 		options.setSoundVolume(2.1f);		
-		
+		options.setFullscreen(false);
 		
 		options.save( new File("testGemwars.properties"));
 		
@@ -47,6 +47,7 @@ public class TestOptions {
 		
 		properties.setProperty("screenwidth", "999");
 		properties.setProperty("screenheight", "888");
+		
 		FileOutputStream stream = new FileOutputStream(new File("testGemwars.properties"));
 		properties.store(stream, "");
 		
@@ -57,6 +58,7 @@ public class TestOptions {
 		
 		Assert.assertEquals( new Integer(999), options.getScreenWitdh());
 		Assert.assertEquals( new Integer(888), options.getScreenHeight());
+		Assert.assertEquals( new Boolean(false), options.getFullscreen());
 		
 		stream.close();
 	}
