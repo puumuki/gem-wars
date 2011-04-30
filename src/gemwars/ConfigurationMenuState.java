@@ -28,6 +28,7 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 
 
 import gameobjects.GearPair;
+import gameobjects.Player;
 import gemwars.ui.components.*;
 
 /**
@@ -37,6 +38,8 @@ import gemwars.ui.components.*;
  */
 public class ConfigurationMenuState extends BasicGameState  {
 
+	private Player player;
+	
 	private int stateID;
 			
 	private ArrayList<GearPair> gearPairs = new ArrayList<GearPair>();
@@ -71,8 +74,7 @@ public class ConfigurationMenuState extends BasicGameState  {
         font.loadGlyphs();
         
                 
-        
-        
+        player = new Player();
 	}		
 
 	/**
@@ -101,6 +103,8 @@ public class ConfigurationMenuState extends BasicGameState  {
 		}
 		
 		g.drawString("To return to the main menu, try to press the 'Escape'-key", 50, 50);
+		
+		player.render(cont, g);
 	}
 	
 	@Override

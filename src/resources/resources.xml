@@ -22,10 +22,10 @@
 	<resource type="sound" id="MENU_SOUND">resources\sounds\menu.wav</resource>
 	<resource type="music" id="MENU_MUSIC">resources\music\menu.xm</resource>
 	
-<!-- GAMEPLAY -->
+	<!-- GAMEPLAY -->
 	<!-- tiles -->
 	<resource type="image" id="ITEM_TEXTURES">resources\images\winbd_all.png</resource>
-	
+	<resource type="image" id="UKOT">resources\images\ukot.png</resource>
 	<!-- gameplay sounds -->
 	<resource type="sound" id="GAME_COLLECT">resources\sounds\collect.wav</resource>
 	<resource type="music" id="GAME_MUSIC">resources\music\peli.xm</resource>
