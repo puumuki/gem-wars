@@ -30,7 +30,7 @@ public class TestOptions {
 	}
 	
 	
-	@Test
+
 	public void testLoadingOptions() throws IllegalArgumentException, IllegalAccessException, IOException {			
 		
 		
@@ -60,6 +60,34 @@ public class TestOptions {
 		Assert.assertEquals( new Integer(888), options.getScreenHeight());
 		Assert.assertEquals( new Boolean(false), options.getFullscreen());
 		
+		stream.close();
+	}
+	
+	/**
+	 * When conversion from a string type to a number fails,
+	 * NumberFormatException is thrown wrapped in a RuntimeException 
+	 * 
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws IOException
+	 */
+	@Test( expected=RuntimeException.class)
+	public void testLoadingInvalidValue() throws IllegalArgumentException, IllegalAccessException, IOException {			
+		Options options = Options.getInstance();
+
+		options.save( new File("testGemwars.properties"));
+		
+		Properties properties = new Properties();
+		
+		properties.load( new FileInputStream("testGemwars.properties"));
+		
+		properties.setProperty("screenwidth", "asfedasf");
+
+		FileOutputStream stream = new FileOutputStream(new File("testGemwars.properties"));
+		properties.store(stream, "");
+		
+		options.load(new File("testGemwars.properties"));
+
 		stream.close();
 	}
 }

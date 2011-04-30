@@ -3,7 +3,11 @@ package gemwars;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
+import javax.swing.text.html.Option;
+
+import io.Options;
 import io.ResourceManager;
 
 import org.newdawn.slick.AppGameContainer;
@@ -40,12 +44,6 @@ public class Gemwars extends StateBasedGame {
     
 	public Gemwars() {
 		super("GemWars");
-		
-        this.addState(new MainMenuState(MAINMENUSTATE));
-        this.addState(new GameplayState(GAMEPLAYSTATE));
-        this.addState(new ConfigurationMenuState(CONFIGURATION_MENU_STATE));
-        
-        this.enterState(MAINMENUSTATE);
 	}
 
 	/**
@@ -53,17 +51,47 @@ public class Gemwars extends StateBasedGame {
 	 * @param args ei käytössä
 	 * @throws  
 	 */
-	public static void main(String[] args) throws SlickException {		
+	public static void main(String[] args) throws SlickException {	
+		
+		Options properties = loadConfigurations();
+		
         AppGameContainer app = new AppGameContainer(new Gemwars());        
-        app.setDisplayMode(640, 480, false);
+        
+        app.setDisplayMode(properties.getScreenWitdh(), 
+        				   properties.getScreenHeight(), 
+        				   properties.getFullscreen());
+        
+        app.setTargetFrameRate(properties.getTargetFrameRate());
+        app.setMusicVolume(properties.getMusicVolume());
+        app.setSoundVolume(properties.getSoundVolume());
+        
         app.start();
+	}
+	
+	private static Options loadConfigurations() throws SlickException {
+		Options properties = Options.getInstance();
+		
+		try {
+			properties.load( new File(Options.CONFIGURATION_FILE));
+		} catch (NumberFormatException e) {
+			throw new SlickException("Can't parse number from the string.", e);
+		} catch (IllegalArgumentException e) {
+			throw new SlickException("General error",e);
+		} catch (IllegalAccessException e) {
+			throw new SlickException("General error",e);
+		} catch (IOException e) {
+			throw new SlickException("Can't read confguration file. ",e);
+		}
+		
+		return properties;
 	}
 	
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException {
-        this.getState(MAINMENUSTATE).init(gameContainer, this);
-        this.getState(GAMEPLAYSTATE).init(gameContainer, this);
-		
+        this.addState(new MainMenuState(MAINMENUSTATE));
+        this.addState(new GameplayState(GAMEPLAYSTATE));
+        this.addState(new ConfigurationMenuState(CONFIGURATION_MENU_STATE));
+        this.enterState(MAINMENUSTATE);
 	}
 }
 
