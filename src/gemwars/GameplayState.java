@@ -18,6 +18,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.BlobbyTransition;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.Log;
 
 /**
@@ -62,6 +66,24 @@ public class GameplayState extends BasicGameState {
 			e.printStackTrace();
 		}
 		
+
+		gamemusic = ResourceManager.getInstance().getMusic("GAME_MUSIC");
+		
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game)	throws SlickException {
+		super.enter(container, game);
+		
+		gamemusic.loop((float)1.0, (float)0.8); // TODO: get rid of hardcoded values and throw these into an options class
+	}
+	
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+	
+		super.leave(container, game);
+		
+		gamemusic.stop();
 	}
 
 	public void render(GameContainer cont, StateBasedGame state, Graphics graph)
@@ -105,7 +127,8 @@ public class GameplayState extends BasicGameState {
 			cameraPositionY -= increment * delta;
 		}
 		
-		if( input.isKeyDown(Input.KEY_LCONTROL)) {
+		if( input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) {
+			// TODO: change it so it does not change the map at simply pressing R/LCONTROL when the camera has been moved 
 			
 			boolean isChanged = false;
 			
@@ -129,7 +152,8 @@ public class GameplayState extends BasicGameState {
 
 			if( isChanged ) {
 				try {
-					
+					cameraPositionX = 0;
+					cameraPositionY = 0;
 					map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
 				} catch (IOException e) {
 					Log.error(e);
@@ -145,6 +169,12 @@ public class GameplayState extends BasicGameState {
 			ImageOut.write( target.getFlippedCopy(false, true), "screenshot.png", false);
 			target.destroy();
 		}
+		
+		if( input.isKeyPressed(Input.KEY_ESCAPE) ) {								
+			state.enterState(Gemwars.MAINMENUSTATE, 								
+					new EmptyTransition(), 
+					new BlobbyTransition());
+		}	
 	}
 	
 	

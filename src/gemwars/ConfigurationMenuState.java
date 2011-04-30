@@ -109,9 +109,9 @@ public class ConfigurationMenuState extends BasicGameState  {
 			pair.update(cont, delta);
 		}
 		
-		Input intput = cont.getInput();
+		Input input = cont.getInput();
 		
-		if( intput.isKeyPressed(Input.KEY_ESCAPE) ) {								
+		if( input.isKeyPressed(Input.KEY_ESCAPE) ) {								
 			state.enterState(Gemwars.MAINMENUSTATE, 
 							new FadeOutTransition(), 
 							new FadeInTransition());

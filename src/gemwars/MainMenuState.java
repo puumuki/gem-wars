@@ -58,6 +58,9 @@ public class MainMenuState extends BasicGameState {
 		this.stateID = stateID;
 	}
 	
+	/**
+	 * Initialisation of the main menu (loading resources etc)
+	 */
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		
@@ -80,7 +83,6 @@ public class MainMenuState extends BasicGameState {
 		
 		menusound = ResourceManager.getInstance().getSound("MENU_SOUND");
 		menumusic = ResourceManager.getInstance().getMusic("MENU_MUSIC");
-		gamemusic = ResourceManager.getInstance().getMusic("GAME_MUSIC");
 		
         Font font = new Font("Arial", Font.BOLD, 20);
         fontti = new UnicodeFont(font);
@@ -90,14 +92,19 @@ public class MainMenuState extends BasicGameState {
         item.positionY = 30;          	
 	}
 	
+	/**
+	 * What do we do when we enter this state
+	 */
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)	throws SlickException {
-		// TODO Auto-generated method stub
 		super.enter(container, game);
 		
-		menumusic.loop();
+		menumusic.loop((float)1.0, (float)0.8); // TODO: get rid of hardcoded values and throw these into an options class
 	}
 	
+	/**
+	 * What do we do when we leave this state
+	 */
 	@Override
 	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
 	
