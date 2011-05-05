@@ -28,7 +28,7 @@ public class Layer extends AEntity {
 	/**
 	 * Layer tiles. One item per tile.
 	 */
-	private Item[][] tiles;
+	public Item[][] tiles;
 
 	/**
 	 * Type of the layer, according to the enum LayerTypes
@@ -101,6 +101,12 @@ public class Layer extends AEntity {
 		return layerType.layerIndex();
 	}
 
+	public int getWidth() {
+		return width;
+	}
 	
+	public int getHeight() {
+		return height;
+	}
 	
 }

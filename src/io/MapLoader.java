@@ -159,7 +159,8 @@ public class MapLoader {
 				}
 				
 			}
-			
+		
+			map.initPlayers();
 			
 		} catch (NoSuchElementException e) {
 			throw new SlickException("Error loading map file", e);
@@ -170,6 +171,9 @@ public class MapLoader {
 			if (f != null)
 				f.close();
 		}
+		
+		
+		
 		return map;
 		
 	}

@@ -2,13 +2,11 @@ package gameobjects;
 
 import io.ResourceManager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -17,6 +15,13 @@ import org.newdawn.slick.SlickException;
  * The Player class holds an implementation of human controller entity.
  */
 public class Player extends AEntity {
+		
+	private static int __staticPlayerNumber = 0;
+	
+	/**
+	 * Player number starting from index 1
+	 */
+	public int playerNumber;
 	
 	/**
 	 * Lives that the player has left.
@@ -32,7 +37,11 @@ public class Player extends AEntity {
 	 * How many gems the player has collected.
 	 */
 	public int collectedGemCount;
+		
+	
+	private double distance;
 
+	private Image stationary;
 	private Animation walkingRight;
 	private Animation walkingLeft;
 	private Animation walkingUp;
@@ -40,27 +49,67 @@ public class Player extends AEntity {
 	private Animation pushLeft;
 	private Animation pushRight;
 	
+	/**
+	 * Flag that indicates is the player pushing something.
+	 */	
+	public boolean pushingStone = false;
+	
 	public Player() {
+		playerNumber = __staticPlayerNumber++;		
 		postProcessAnimations();
+	}
+	
+	public Player( int positionX, int positionY ) {
+		this();
+		this.positionX = positionX;
+		this.positionY = positionY;
 	}
 	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
-		final int startX = 50;
-		final int startY = 50;
-		
-		walkingRight.draw(startX, startY );
-		walkingLeft.draw( startX + 56, startY ); 
-		walkingUp.draw( startX + 56 *2, startY);
-		walkingDown.draw( startX + 56 *3, startY );
-		pushLeft.draw( startX + 56 *4, startY );
-		pushRight.draw( startX + 56 *5, startY );
+		if( direction == Direction.UP ) {
+			grap.drawAnimation(walkingUp, positionX, (int)(positionY - distance) );
+		}
+		if( direction == Direction.DOWN ) {
+			grap.drawAnimation(walkingDown, positionX, (int) (positionY + distance ));
+		}
+		if( direction == Direction.LEFT ) {
+			grap.drawAnimation(walkingLeft, (int)(positionX - distance), positionY);
+		}
+		if( direction == Direction.RIGHT ) {
+			grap.drawAnimation(walkingRight, (int)(positionX + distance), positionY);			
+		}
+		if( direction == Direction.STATIONARY ) {
+			grap.drawImage(stationary, positionX, positionY);	
+		}
+	
+		grap.drawString( "" + distance, 200, 200 );
 	}
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
-		walkingRight.update(delta);
-		walkingLeft.update(delta);
+		Input input = cont.getInput();
+		
+		//If no any key pressed is going to be stationary
+		direction = Direction.STATIONARY;
+		
+		if( input.isKeyDown(Input.KEY_DOWN )) {
+			direction = Direction.DOWN;
+		}
+		
+		if( input.isKeyDown(Input.KEY_UP)) {
+			direction = Direction.UP;
+		}
+		
+		if( input.isKeyDown(Input.KEY_LEFT)) {
+			direction = Direction.LEFT;
+		}
+		
+		if( input.isKeyDown(Input.KEY_RIGHT)) {
+			direction = Direction.RIGHT;
+		}
+		
+		distance += speed * delta;
 	}
 	
 	private void postProcessAnimations() {
@@ -96,5 +145,7 @@ public class Player extends AEntity {
 			sub = image.getSubImage(i, frameHeight*5, farmeWidth, frameHeight);
 			pushLeft.addFrame(sub, duration);
 		}
+		
+		stationary = walkingDown.getImage(0);
 	}
 }

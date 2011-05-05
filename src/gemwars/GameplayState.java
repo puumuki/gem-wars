@@ -3,8 +3,10 @@ package gemwars;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import gameobjects.Player;
 import gameobjects.map.Map;
 import io.MapLoader;
 import io.Options;
@@ -46,7 +48,7 @@ public class GameplayState extends BasicGameState {
     private List<File> availableMaps;
     
     private int currentMapIndex = 0;
-    
+
     private Map map;
     
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
@@ -95,6 +97,8 @@ public class GameplayState extends BasicGameState {
 	public void update(GameContainer cont, StateBasedGame state, int delta)
 			throws SlickException {
 		
+		map.update(cont, delta);
+		
 		Input input = cont.getInput();
 		
 		final double increment = 0.2; 
@@ -105,22 +109,7 @@ public class GameplayState extends BasicGameState {
 		//By multiplying increment value with delta we keep camera movement
 		//speed constant with every platform.
 		
-		if( input.isKeyDown(Input.KEY_LEFT) ) {
-			cameraPositionX += increment * delta;
-		}
-		
-		if( input.isKeyDown(Input.KEY_RIGHT)) {
-			cameraPositionX -= increment * delta;
-		}
 
-		if( input.isKeyDown(Input.KEY_UP)) {
-			cameraPositionY += increment * delta;
-		}
-		
-		if( input.isKeyDown(Input.KEY_DOWN)) {
-			cameraPositionY -= increment * delta;
-		}
-		
 		if( input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) {
 			// TODO: change it so it does not change the map at simply pressing R/LCONTROL when the camera has been moved 
 			

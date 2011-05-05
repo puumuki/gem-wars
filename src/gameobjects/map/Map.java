@@ -1,10 +1,13 @@
 package gameobjects.map;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import gameobjects.AEntity;
+import gameobjects.Player;
 
 /**
  * The Map class is used to save all the data the game needs
@@ -12,11 +15,6 @@ import gameobjects.AEntity;
  * 
  */
 public class Map extends AEntity {
-
-	/**
-	 * ???
-	 */
-	private List<AEntity>gameObjects;
 	
 	// TODO: are these needed?
 	private static final int MAX_WIDTH = 1024;
@@ -71,17 +69,72 @@ public class Map extends AEntity {
 	 */
 	private Layer objectLayer;
 	
+	/**
+	 * The player objects are in this list
+	 */
+    private List<Player> players = new ArrayList<Player>();
+    
+	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
 		groundLayer.render(cont, grap);
 		specialLayer.render(cont, grap);
 		objectLayer.render(cont, grap);
+				
+		for( Player player : players ) {
+			player.render(cont, grap);
+		}
 	}
 
 	@Override
-	public void update(GameContainer cont, int delta) throws SlickException {		
+	public void update(GameContainer cont, int delta) throws SlickException {
+		for( Player player : players ) {
+			player.update(cont, delta);
+		}
 	}
-
+	
+	/**
+	 * Find he starting positions from the map and 
+	 * creates Player-objects to those starting positions.
+	 */
+	public void initPlayers() {
+		for( Point startingPosition : getStartingPositions() ) {
+			Player player = new Player(startingPosition.x, startingPosition.y);
+			players.add(player);
+		}
+	}
+	
+	/**
+	 * Return starting positions from the map. There can be
+	 * multiple starting positions in multiplayer maps.
+	 * 
+	 * @return List<Point> all starting positions
+	 */
+	public List<Point> getStartingPositions() {
+		return findItemPositions(specialLayer, ItemTypes.START );
+	}
+	
+	/**
+	 * @return all ending points from map.  
+	 */
+	public List<Point> findEndingPoint() {
+		return findItemPositions( specialLayer, ItemTypes.GOAL ); 
+	}
+	
+	private List<Point> findItemPositions( Layer layer, ItemTypes type ) {
+		List<Point> positions = new ArrayList<Point>();
+		
+		for (int x = 0; x < specialLayer.getWidth(); x++) {
+			for (int y = 0; y < specialLayer.getHeight(); y++) {
+				if( specialLayer.tiles[x][y].itemType == type) {
+					positions.add( new Point(x,y));
+				}
+			}
+		}
+		
+		return positions;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -93,7 +146,7 @@ public class Map extends AEntity {
 	public String getCreator() {
 		return creator;
 	}
-
+	
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
