@@ -1,5 +1,6 @@
 package gameobjects;
 
+
 import io.ResourceManager;
 
 import org.newdawn.slick.Animation;
@@ -49,7 +50,7 @@ public class Player extends AEntity {
 	private Animation walkingDown;
 	private Animation pushLeft;
 	private Animation pushRight;
-	
+		
 	/**
 	 * Flag that indicates is the player pushing something.
 	 */	
@@ -64,6 +65,8 @@ public class Player extends AEntity {
 		this();
 		this.positionX = positionX;
 		this.positionY = positionY;
+		
+		//Tweak this if you want to player to go faster
 		this.speed = 0.04;
 	}
 	
@@ -151,7 +154,7 @@ public class Player extends AEntity {
 		walkingUp = new Animation();
 		walkingDown = new Animation();
 		pushRight = new Animation();
-		pushLeft = new Animation();
+		pushLeft = new Animation();		
 		
 		for (int i = 0; i < image.getWidth(); i += farmeWidth ) {
 			Image sub = image.getSubImage(i, 0, farmeWidth, frameHeight);
