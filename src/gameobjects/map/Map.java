@@ -6,6 +6,8 @@ import java.util.List;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
+
 import gameobjects.AEntity;
 import gameobjects.Player;
 
@@ -98,7 +100,8 @@ public class Map extends AEntity {
 	 * creates Player-objects to those starting positions.
 	 */
 	public void initPlayers() {
-		for( Point startingPosition : getStartingPositions() ) {
+		for(Point startingPosition : getStartingPositions() ) {
+			Log.debug("Creating player to position: " + startingPosition );
 			Player player = new Player(startingPosition.x, startingPosition.y);
 			players.add(player);
 		}

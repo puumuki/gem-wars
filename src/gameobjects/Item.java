@@ -29,8 +29,8 @@ public class Item extends AEntity {
 	 */
 	public ItemTypes itemType;
 	
-	private static final int TILE_WIDTH = 56;
-	private static final int TILE_HEIGHT = 56;
+	public static final int TILE_WIDTH = 56;
+	public static final int TILE_HEIGHT = 56;
 			
 	public Item( ItemTypes itemType ) {
 		this.itemType = itemType;

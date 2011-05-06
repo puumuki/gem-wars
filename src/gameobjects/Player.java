@@ -38,6 +38,7 @@ public class Player extends AEntity {
 	 */
 	public int collectedGemCount;
 		
+	boolean areWeMoving = false;
 	
 	private double distance;
 
@@ -63,53 +64,79 @@ public class Player extends AEntity {
 		this();
 		this.positionX = positionX;
 		this.positionY = positionY;
+		this.speed = 0.04;
 	}
 	
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
+		
+		int drawX = positionX * Item.TILE_WIDTH;
+		int drawY = positionY * Item.TILE_HEIGHT;
+		
 		if( direction == Direction.UP ) {
-			grap.drawAnimation(walkingUp, positionX, (int)(positionY - distance) );
+			grap.drawAnimation(walkingUp, drawX, (int)(drawY - distance) );
 		}
 		if( direction == Direction.DOWN ) {
-			grap.drawAnimation(walkingDown, positionX, (int) (positionY + distance ));
+			grap.drawAnimation(walkingDown, drawX, (int) (drawY + distance ));
 		}
 		if( direction == Direction.LEFT ) {
-			grap.drawAnimation(walkingLeft, (int)(positionX - distance), positionY);
+			grap.drawAnimation(walkingLeft, (int)(drawX - distance), drawY);
 		}
 		if( direction == Direction.RIGHT ) {
-			grap.drawAnimation(walkingRight, (int)(positionX + distance), positionY);			
+			grap.drawAnimation(walkingRight, (int)(drawX + distance), drawY);			
 		}
 		if( direction == Direction.STATIONARY ) {
-			grap.drawImage(stationary, positionX, positionY);	
+			grap.drawImage(stationary, drawX, drawY);	
 		}
 	
 		grap.drawString( "" + distance, 200, 200 );
+		grap.drawString( direction.name(), 200, 230 );		
 	}
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
 		Input input = cont.getInput();
 		
-		//If no any key pressed is going to be stationary
-		direction = Direction.STATIONARY;
-		
-		if( input.isKeyDown(Input.KEY_DOWN )) {
-			direction = Direction.DOWN;
+		//If no any key pressed is going to be stationary		
+		if(direction == Direction.STATIONARY ) {
+			if( input.isKeyDown(Input.KEY_DOWN )) {
+				direction = Direction.DOWN;
+			}
+			
+			if( input.isKeyDown(Input.KEY_UP)) {
+				direction = Direction.UP;
+			}
+			
+			if( input.isKeyDown(Input.KEY_LEFT)) {
+				direction = Direction.LEFT;
+			}
+			
+			if( input.isKeyDown(Input.KEY_RIGHT)) {
+				direction = Direction.RIGHT;
+			}						
 		}
 		
-		if( input.isKeyDown(Input.KEY_UP)) {
-			direction = Direction.UP;
+		if( direction != Direction.STATIONARY 
+			&& distance <= Item.TILE_HEIGHT ) {
+			
+			distance += speed * delta;
+		} else {
+			if( direction == Direction.LEFT ) {
+				positionX--;
+			}
+			if( direction == Direction.RIGHT ) {
+				positionX++;
+			}
+			if( direction == Direction.UP ) {
+				positionY--;
+			}
+			if( direction == Direction.DOWN ) {
+				positionY++;
+			}
+			
+			distance = 0;						
+			direction = Direction.STATIONARY;
 		}
-		
-		if( input.isKeyDown(Input.KEY_LEFT)) {
-			direction = Direction.LEFT;
-		}
-		
-		if( input.isKeyDown(Input.KEY_RIGHT)) {
-			direction = Direction.RIGHT;
-		}
-		
-		distance += speed * delta;
 	}
 	
 	private void postProcessAnimations() {
@@ -134,10 +161,10 @@ public class Player extends AEntity {
 			walkingLeft.addFrame(sub, duration);
 			
 			sub = image.getSubImage(i, frameHeight*2, farmeWidth, frameHeight);
-			walkingUp.addFrame(sub, duration);
+			walkingDown.addFrame(sub, duration);
 			
 			sub = image.getSubImage(i, frameHeight*3, farmeWidth, frameHeight);
-			walkingDown.addFrame(sub, duration);
+			walkingUp.addFrame(sub, duration);
 			
 			sub = image.getSubImage(i, frameHeight*4, farmeWidth, frameHeight);
 			pushRight.addFrame(sub, duration);
