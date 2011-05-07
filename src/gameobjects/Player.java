@@ -62,7 +62,9 @@ public class Player extends AEntity {
 	}
 	
 	public Player( int positionX, int positionY ) {
+		
 		this();
+		
 		this.positionX = positionX;
 		this.positionY = positionY;
 		
