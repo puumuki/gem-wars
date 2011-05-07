@@ -32,7 +32,7 @@ public class NyanState extends BasicGameState{
 		
 		nyanAnimated = new Animation();
 		
-		int duration = 85;
+		int duration = 150;
 		int frameWidth = 400;
 		
 		for (int i = 0; i < frames.getWidth(); i += frameWidth ) {
@@ -68,8 +68,8 @@ public class NyanState extends BasicGameState{
 		
 		Input input = container.getInput();
 		
-		if( input.isKeyDown(Input.KEY_ESCAPE)) {
-			
+		if( input.isKeyDown(Input.KEY_ENTER)) {
+			game.enterState(Gemwars.MAINMENUSTATE);
 		}
 		
 		nyanAnimated.update(delta);
