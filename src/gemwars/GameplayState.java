@@ -35,8 +35,6 @@ public class GameplayState extends BasicGameState {
 
     int stateID = -1;
     
-    private double cameraPositionX = 0;
-    private double cameraPositionY = 0;
     
     Music gamemusic = null;
     
@@ -84,13 +82,8 @@ public class GameplayState extends BasicGameState {
 
 	public void render(GameContainer cont, StateBasedGame state, Graphics graph)
 			throws SlickException {
-
-		graph.translate((float)cameraPositionX, 
-						(float)cameraPositionY);
 		
 		map.render(cont, graph);
-		
-		graph.resetTransform();
 		
 	}
 
@@ -113,16 +106,16 @@ public class GameplayState extends BasicGameState {
 		if( input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) {
 			// TODO: change it so it does not change the map at simply pressing R/LCONTROL when the camera has been moved 
 			
-			boolean isChanged = false;
+			boolean isMapChanged = false;
 			
 			if( input.isKeyPressed(Input.KEY_LEFT) ) {
 				currentMapIndex--;
-				isChanged=true;
+				isMapChanged=true;
 			}
 			
 			if( input.isKeyPressed(Input.KEY_RIGHT) ) {
 				currentMapIndex++;
-				isChanged=true;
+				isMapChanged=true;
 			}
 			
 			if( currentMapIndex < 0 ) {
@@ -133,11 +126,10 @@ public class GameplayState extends BasicGameState {
 				currentMapIndex = 0;
 			}		
 
-			if( isChanged ) {
+			if( isMapChanged ) {
 				try {
-					cameraPositionX = 0;
-					cameraPositionY = 0;
 					map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
+					
 				} catch (IOException e) {
 					Log.error(e);
 				}

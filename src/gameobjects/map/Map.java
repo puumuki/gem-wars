@@ -9,6 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
 import gameobjects.AEntity;
+import gameobjects.Item;
 import gameobjects.Player;
 
 /**
@@ -76,16 +77,27 @@ public class Map extends AEntity {
 	 */
     private List<Player> players = new ArrayList<Player>();
     
+    
+    private double cameraPositionX = 0;
+    private double cameraPositionY = 0;
+    
 	
 	@Override
-	public void render(GameContainer cont, Graphics grap) throws SlickException {
-		groundLayer.render(cont, grap);
-		specialLayer.render(cont, grap);
-		objectLayer.render(cont, grap);
+	public void render(GameContainer cont, Graphics graph) throws SlickException {
+		
+
+		graph.translate((float)cameraPositionX, 
+						(float)cameraPositionY);
+		
+		groundLayer.render(cont, graph);
+		specialLayer.render(cont, graph);
+		objectLayer.render(cont, graph);
 				
 		for( Player player : players ) {
-			player.render(cont, grap);
+			player.render(cont, graph);
 		}
+
+		graph.resetTransform();
 	}
 
 	@Override
@@ -93,6 +105,8 @@ public class Map extends AEntity {
 		for( Player player : players ) {
 			player.update(cont, delta);
 		}
+		cameraPositionX = -1 * players.get(0).positionX * Item.TILE_WIDTH + cont.getWidth() / 2 - Item.TILE_WIDTH / 2;
+		cameraPositionY = -1 * players.get(0).positionY * Item.TILE_HEIGHT + cont.getHeight() / 2 - Item.TILE_HEIGHT / 2;
 	}
 	
 	/**
@@ -216,8 +230,7 @@ public class Map extends AEntity {
 	public boolean isColliding(int x, int y) {
 		if (x >= 0 && x < collisionLayer[y].length && y >= 0 && y < collisionLayer.length)
 			return collisionLayer[y][x];
-		else
-			return true;
+		return true;
 	}
 
 	/**
