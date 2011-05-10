@@ -114,6 +114,7 @@ public class MainMenuState extends BasicGameState {
 		
 		menumusic.loop((float)1.0, Options.getInstance().getMusicVolume());
 		
+		
 	}
 	
 	/**
@@ -193,15 +194,18 @@ public class MainMenuState extends BasicGameState {
 			currentSelection--;
 			if(currentSelection < 1)
 				currentSelection = 4;
+			menusound.play((float)1.0, Options.getInstance().getSoundVolume());
 		}
 		if (key == Input.KEY_DOWN) {
 			currentSelection++;
 			if(currentSelection > 4)
 				currentSelection = 1;
+			menusound.play((float)1.0, Options.getInstance().getSoundVolume());
 		}
 		
 		if (key == Input.KEY_ENTER) {
 			selected = currentSelection;
+			menusound.play((float)1.0, Options.getInstance().getSoundVolume());
 		}
 	}
 
