@@ -190,4 +190,8 @@ public class Player extends AEntity {
 		
 		stationary = walkingDown.getImage(0);
 	}
+	
+	public double getDistance() {
+		return distance;
+	}
 }

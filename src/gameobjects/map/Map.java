@@ -9,6 +9,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
 import gameobjects.AEntity;
+import gameobjects.Direction;
 import gameobjects.Item;
 import gameobjects.Player;
 
@@ -105,8 +106,24 @@ public class Map extends AEntity {
 		for( Player player : players ) {
 			player.update(cont, delta);
 		}
-		cameraPositionX = -1 * players.get(0).positionX * Item.TILE_WIDTH + cont.getWidth() / 2 - Item.TILE_WIDTH / 2;
-		cameraPositionY = -1 * players.get(0).positionY * Item.TILE_HEIGHT + cont.getHeight() / 2 - Item.TILE_HEIGHT / 2;
+		Player p = players.get(0);
+		if (p.direction != Direction.STATIONARY) {
+			centerCameraToPlayer(cont, p);
+		}
+	}
+
+	private void centerCameraToPlayer(GameContainer cont, Player p) {
+		cameraPositionX = -1 * p.positionX * Item.TILE_WIDTH + cont.getWidth() / 2 - Item.TILE_WIDTH / 2;
+		cameraPositionY = -1 * p.positionY * Item.TILE_HEIGHT + cont.getHeight() / 2 - Item.TILE_HEIGHT / 2;
+		
+		if (p.direction == Direction.DOWN)
+			cameraPositionY -= p.getDistance();
+		if (p.direction == Direction.UP)
+			cameraPositionY += p.getDistance();
+		if (p.direction == Direction.LEFT)
+			cameraPositionX += p.getDistance();
+		if (p.direction == Direction.RIGHT)
+			cameraPositionX -= p.getDistance();
 	}
 	
 	/**
@@ -265,5 +282,9 @@ public class Map extends AEntity {
 	
 	public Layer getObjectLayer() {
 		return objectLayer;
+	}
+
+	public void enter(GameContainer cont) {
+		centerCameraToPlayer(cont, players.get(0));
 	}
 }

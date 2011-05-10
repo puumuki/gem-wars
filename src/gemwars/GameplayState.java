@@ -70,6 +70,8 @@ public class GameplayState extends BasicGameState {
 		super.enter(container, game);
 		
 		gamemusic.loop((float)1.0, Options.getInstance().getMusicVolume());
+		
+		map.enter(container);
 	}
 	
 	@Override
@@ -129,7 +131,7 @@ public class GameplayState extends BasicGameState {
 			if( isMapChanged ) {
 				try {
 					map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
-					
+					map.enter(cont);
 				} catch (IOException e) {
 					Log.error(e);
 				}
