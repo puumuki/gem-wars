@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -188,8 +189,10 @@ public class MapLoader {
 	public static List<File> findAvailableMaps( File path ) {		
 		
 		List<File> maps = new ArrayList<File>();
-					
+		
 		searchRecursivelyForMapFiles( maps, path );
+		
+		Collections.sort(maps);
 		
 		return maps;
 	}

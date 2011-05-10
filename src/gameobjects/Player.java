@@ -1,6 +1,7 @@
 package gameobjects;
 
 
+import gameobjects.map.Map;
 import io.ResourceManager;
 
 import org.newdawn.slick.Animation;
@@ -50,6 +51,8 @@ public class Player extends AEntity {
 	private Animation walkingDown;
 	private Animation pushLeft;
 	private Animation pushRight;
+	
+	private Map map;
 		
 	/**
 	 * Flag that indicates is the player pushing something.
@@ -69,7 +72,12 @@ public class Player extends AEntity {
 		this.positionY = positionY;
 		
 		//Tweak this if you want to player to go faster
-		this.speed = 0.04;
+		this.speed = 0.08;
+	}
+	
+	public Player(int posX, int posY, Map map) {
+		this(posX, posY);
+		this.map = map;
 	}
 	
 	@Override
@@ -105,20 +113,25 @@ public class Player extends AEntity {
 		//If no any key pressed is going to be stationary		
 		if(direction == Direction.STATIONARY ) {
 			if( input.isKeyDown(Input.KEY_DOWN )) {
-				direction = Direction.DOWN;
+				if (!map.isColliding(positionX, positionY + 1))
+					direction = Direction.DOWN;
 			}
 			
 			if( input.isKeyDown(Input.KEY_UP)) {
-				direction = Direction.UP;
+				if (!map.isColliding(positionX, positionY - 1))
+					direction = Direction.UP;
 			}
 			
 			if( input.isKeyDown(Input.KEY_LEFT)) {
-				direction = Direction.LEFT;
+				if (!map.isColliding(positionX - 1 , positionY))
+					direction = Direction.LEFT;
 			}
 			
 			if( input.isKeyDown(Input.KEY_RIGHT)) {
-				direction = Direction.RIGHT;
-			}						
+				if (!map.isColliding(positionX + 1, positionY))
+					direction = Direction.RIGHT;
+			}
+			
 		}
 		
 		if( direction != Direction.STATIONARY 

@@ -102,7 +102,7 @@ public class Map extends AEntity {
 	public void initPlayers() {
 		for(Point startingPosition : getStartingPositions() ) {
 			Log.debug("Creating player to position: " + startingPosition );
-			Player player = new Player(startingPosition.x, startingPosition.y);
+			Player player = new Player(startingPosition.x, startingPosition.y, this);
 			players.add(player);
 		}
 	}
@@ -214,7 +214,10 @@ public class Map extends AEntity {
 	 * @return true, if unwalkable, false, if can be walked on
 	 */
 	public boolean isColliding(int x, int y) {
-		return collisionLayer[y][x];
+		if (x >= 0 && x < collisionLayer[y].length && y >= 0 && y < collisionLayer.length)
+			return collisionLayer[y][x];
+		else
+			return true;
 	}
 
 	/**

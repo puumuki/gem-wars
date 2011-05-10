@@ -12,8 +12,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import sun.font.FontManager.FamilyDescription;
-
 public class NyanState extends BasicGameState{
 
 	private int stateID = 0;

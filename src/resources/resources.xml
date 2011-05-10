@@ -11,7 +11,7 @@
 	<resource type="image" id="BIG_GEAR">resources\images\biggear.png</resource>
 	<resource type="image" id="BUTTON_UP">resources\images\button.png</resource>
 	<resource type="image" id="BUTTON_DOWN">resources\images\button_background.jpg</resource>
-	<resource type="image" id="NYAN">resources\images\nyannami.png</resource>
+	<!--<resource type="image" id="NYAN">resources\images\nyannami.png</resource>-->
 	
 	<!-- animations use 24 fps at the moment (42 ms) -->
 	<resource type="animation" id="MENUANI_SP" tw="136" th="136" duration="42">resources\images\menuani_singleplayer.png</resource>
@@ -29,7 +29,7 @@
 	<resource type="image" id="UKOT">resources\images\ukot.png</resource>
 	<!-- gameplay sounds -->
 	<resource type="sound" id="GAME_COLLECT">resources\sounds\collect.wav</resource>
-	<resource type="music" id="GAME_MUSIC">resources\music\peli.xm</resource>
+	<resource type="music" id="GAME_MUSIC">resources\music\peli.XM</resource>
 	
 </resources>
 
