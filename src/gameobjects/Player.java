@@ -157,17 +157,17 @@ public class Player extends AEntity {
 	private void postProcessAnimations() {
 		Image image = ResourceManager.getInstance().getImage("UKOT");
 		
-		int duration = 25;
+/*		int duration = 25;
 		
 		int frameHeight = 56, farmeWidth = 56;
-		
-		walkingRight = new Animation();
-		walkingLeft = new Animation();
-		walkingUp = new Animation();
-		walkingDown = new Animation();
-		pushRight = new Animation();
-		pushLeft = new Animation();		
-		
+	*/	
+		walkingRight = ResourceManager.getInstance().getAnimation("PLAYER_RIGHT");
+		walkingLeft = ResourceManager.getInstance().getAnimation("PLAYER_LEFT");
+		walkingUp = ResourceManager.getInstance().getAnimation("PLAYER_UP");
+		walkingDown = ResourceManager.getInstance().getAnimation("PLAYER_DOWN");
+		pushRight = ResourceManager.getInstance().getAnimation("PLAYER_PUSH_RIGHT");
+		pushLeft = ResourceManager.getInstance().getAnimation("PLAYER_PUSH_LEFT");
+		/*
 		for (int i = 0; i < image.getWidth(); i += farmeWidth ) {
 			Image sub = image.getSubImage(i, 0, farmeWidth, frameHeight);
 			walkingRight.addFrame(sub, duration);
@@ -187,7 +187,7 @@ public class Player extends AEntity {
 			sub = image.getSubImage(i, frameHeight*5, farmeWidth, frameHeight);
 			pushLeft.addFrame(sub, duration);
 		}
-		
+		*/
 		stationary = walkingDown.getImage(0);
 	}
 	
