@@ -3,14 +3,18 @@ package utils;
 import org.newdawn.slick.Animation;
 
 public class GemwarsUtils {
-	public static Animation reverseAnimation( Animation mation ) {			
-		Animation reversedAnimation = new Animation();
-		
-		for (int i = mation.getFrameCount(); i > 0 ; i--) {
-			reversedAnimation.addFrame(mation.getImage(i), mation.getDuration(i)); 
+	
+	/**
+	 * Helps to reverse an animation (gem moving to the right -> gem moving to the left)
+	 * @param a animation that has to be reversed
+	 * @return the new, reversed animation
+	 */
+	public static Animation reverseAnimation(Animation a) {
+		Animation newAnimation = new Animation();
+		for (int i = a.getFrameCount()-1; i >= 0; i--) {
+			newAnimation.addFrame(a.getImage(i), a.getDuration(i));
 		}
-		
-		return reversedAnimation;
+		return newAnimation;
 	}
 	
 }
