@@ -287,4 +287,13 @@ public class Map extends AEntity {
 	public void enter(GameContainer cont) {
 		centerCameraToPlayer(cont, players.get(0));
 	}
+	
+	/**
+	 * returns the player for example to draw the score etc.
+	 * @param number the player number
+	 * @return the player we want
+	 */
+	public Player getPlayer(int number) {
+		return players.get(number);
+	}
 }
