@@ -1,5 +1,6 @@
 package gemwars;
 
+import gameobjects.Gem;
 import gameobjects.Item;
 import gameobjects.map.ItemTypes;
 
@@ -72,6 +73,7 @@ public class MainMenuState extends BasicGameState {
 		this.stateID = stateID;
 	}
 	
+	
 	/**
 	 * Initialisation of the main menu (loading resources etc)
 	 */
@@ -108,7 +110,8 @@ public class MainMenuState extends BasicGameState {
        
         item = new Item(ItemTypes.DARK_BOULDER);
         item.positionX = 200;
-        item.positionY = 30;          	
+        item.positionY = 30;
+        
 	}
 	
 	/**

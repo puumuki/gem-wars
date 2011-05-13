@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.ResourceLoader;
 
+import gameobjects.Gem;
 import gameobjects.Item;
 import gameobjects.map.ItemTypes;
 import gameobjects.map.Layer;
@@ -142,7 +143,21 @@ public class MapLoader {
 										item = 0;
 									}
 									
-									Item tile = new Item(ItemTypes.getType(item));
+									// Depending of item type we create different objects
+									
+									Item tile;
+									if(item == ItemTypes.BLUE_GEM.ordinal()) {
+										tile = new Gem(ItemTypes.BLUE_GEM);
+									}
+									else if(item == ItemTypes.GREEN_GEM.ordinal()) {
+										tile = new Gem(ItemTypes.GREEN_GEM);
+									}
+									else if(item == ItemTypes.RED_GEM.ordinal()) {
+										tile = new Gem(ItemTypes.RED_GEM);
+									}
+									else {
+										tile = new Item(ItemTypes.getType(item));
+									}
 									
 									tile.positionX = x;
 									tile.positionY = y;
