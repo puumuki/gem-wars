@@ -34,6 +34,12 @@
 	<resource type="animation" id="PLAYER_PUSH_LEFT" tw="56" th="56" duration="42">resources\images\player_push_left.png</resource>
 	<resource type="animation" id="PLAYER_PUSH_RIGHT" tw="56" th="56" duration="42">resources\images\player_push_right.png</resource>
 	
+	<!-- rocks -->
+	<resource type="animation" id="ROCK_WHITE_DOWN" tw="56" th="56" duration="42">resources\images\rock_white_down.png</resource>
+	<resource type="animation" id="ROCK_WHITE_LEFT" tw="56" th="56" duration="42">resources\images\rock_white_left.png</resource>
+	<resource type="animation" id="ROCK_DARK_DOWN" tw="56" th="56" duration="42">resources\images\rock_dark_down.png</resource>
+	<resource type="animation" id="ROCK_DARK_LEFT" tw="56" th="56" duration="42">resources\images\rock_dark_left.png</resource>
+	
 	<!-- gameplay sounds -->
 	<resource type="sound" id="GAME_COLLECT">resources\sounds\collect.wav</resource>
 	<resource type="music" id="GAME_MUSIC">resources\music\peli.XM</resource>
