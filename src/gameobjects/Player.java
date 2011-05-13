@@ -175,4 +175,12 @@ public class Player extends AEntity {
 	public double getDistance() {
 		return distance;
 	}
+	
+	/**
+	 * Returns the player's score for UI etc.
+	 * @return player score
+	 */
+	public int getScore() {
+		return score;
+	}
 }
