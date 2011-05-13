@@ -36,17 +36,17 @@
 	
 	<!-- rocks -->
 	<resource type="animation" id="ROCK_WHITE_DOWN" tw="56" th="56" duration="42">resources\images\rock_white_down.png</resource>
-	<resource type="animation" id="ROCK_WHITE_LEFT" tw="56" th="56" duration="42">resources\images\rock_white_left.png</resource>
+	<resource type="animation" id="ROCK_WHITE_RIGHT" tw="56" th="56" duration="42">resources\images\rock_white_right.png</resource>
 	<resource type="animation" id="ROCK_DARK_DOWN" tw="56" th="56" duration="42">resources\images\rock_dark_down.png</resource>
-	<resource type="animation" id="ROCK_DARK_LEFT" tw="56" th="56" duration="42">resources\images\rock_dark_left.png</resource>
+	<resource type="animation" id="ROCK_DARK_RIGHT" tw="56" th="56" duration="42">resources\images\rock_dark_right.png</resource>
 	
 	<!-- gems -->
 	<resource type="animation" id="GEM_BLUE_DOWN" tw="56" th="56" duration="42">resources\images\gem_blue_down.png</resource>
-	<resource type="animation" id="GEM_BLUE_LEFT" tw="56" th="56" duration="42">resources\images\gem_blue_left.png</resource>
+	<resource type="animation" id="GEM_BLUE_RIGHT" tw="56" th="56" duration="42">resources\images\gem_blue_right.png</resource>
 	<resource type="animation" id="GEM_GREEN_DOWN" tw="56" th="56" duration="42">resources\images\gem_green_down.png</resource>
-	<resource type="animation" id="GEM_GREEN_LEFT" tw="56" th="56" duration="42">resources\images\gem_green_left.png</resource>
+	<resource type="animation" id="GEM_GREEN_RIGHT" tw="56" th="56" duration="42">resources\images\gem_green_right.png</resource>
 	<resource type="animation" id="GEM_RED_DOWN" tw="56" th="56" duration="42">resources\images\gem_red_down.png</resource>
-	<resource type="animation" id="GEM_RED_LEFT" tw="56" th="56" duration="42">resources\images\gem_red_left.png</resource>
+	<resource type="animation" id="GEM_RED_RIGHT" tw="56" th="56" duration="42">resources\images\gem_red_right.png</resource>
 	
 	<!-- gameplay sounds -->
 	<resource type="sound" id="GAME_COLLECT">resources\sounds\collect.wav</resource>
