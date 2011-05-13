@@ -18,8 +18,15 @@ import org.newdawn.slick.state.StateBasedGame;
 
 
 /**
- * Tästä se lähtee.
- *
+ * Jumalallisen suojeluksen saattelema aloitamme tämän pelin saattamisen
+ * pelattavaksi, suojelkoon meitä matkallamme suopeat tuulet, jotka johdattavat
+ * meidät rauhan satamaan.
+ * 
+ * Antakaa toisillenne koodaamisen rauha ja oikeus omanlaiseen tulkintaansa tällä
+ * tiellä. Jokainen kunniottakoon toisen koodia ja antakoot siitä palautetta sen toteutuksesta,
+ * jos hän sitä pyytää
+ * 
+ * --Javapapumies
  *
  *  This file is part of GemWars.
  *

@@ -60,9 +60,6 @@ public class GameplayState extends BasicGameState {
 		}		
 
 		gamemusic = ResourceManager.getInstance().getMusic("GAME_MUSIC");
-		
-		System.out.println( "INIIIT");
-		
 	}
 	
 	@Override

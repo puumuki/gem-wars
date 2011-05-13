@@ -93,8 +93,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 	}
 	
 	@Override
-	public void render(GameContainer cont, StateBasedGame state, Graphics g) throws SlickException {
-		
+	public void render(GameContainer cont, StateBasedGame state, Graphics g) throws SlickException {			
 		g.setBackground(Color.white);
 		g.setFont(font);
 		

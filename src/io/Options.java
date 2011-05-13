@@ -54,6 +54,9 @@ public class Options {
 	@Property("targetFrameRate")
 	private Integer targetFrameRate = 60;
 
+	@Property("gemwarsFormUrl")
+	private String gemwarsFormUrl = "http://teemuki.eu/gemwars/";
+	
 	private Options() {}
 
 	/**
@@ -219,5 +222,13 @@ public class Options {
 	
 	public void setTargetFrameRate(Integer targetFrameRate) {
 		this.targetFrameRate = targetFrameRate;
+	}
+	
+	public String getGemwarsFormUrl() {
+		return gemwarsFormUrl;
+	}
+	
+	public void setGemwarsFormUrl(String gemwarsFormUrl) {
+		this.gemwarsFormUrl = gemwarsFormUrl;
 	}
 }

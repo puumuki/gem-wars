@@ -6,9 +6,14 @@ import gameobjects.map.ItemTypes;
 import io.Options;
 import io.ResourceManager;
 
+import java.awt.Desktop;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
@@ -26,6 +31,7 @@ import org.newdawn.slick.state.transition.BlobbyTransition;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.util.Log;
 
 /**
  * Main menu state for the main menu
@@ -169,6 +175,25 @@ public class MainMenuState extends BasicGameState {
 								new BlobbyTransition());
 				break;
 			case 2: // multiplayer
+				if( Desktop.isDesktopSupported() ) {
+					Desktop desktop = Desktop.getDesktop();
+					
+					if( desktop.isSupported(Desktop.Action.BROWSE)) {
+				        
+						URI uri = null;
+				        
+				        try {
+				            uri = new URI( Options.getInstance().getGemwarsFormUrl() );
+				            desktop.browse(uri);
+				        }
+				        catch(IOException ioe) {
+				            Log.error("Can't open open gemwars url, oh pleas borwser manually to url: " + uri.toString() );
+				        }
+				        catch(URISyntaxException use) {
+				        	Log.error("Can't open open gemwars url, oh pleas borwser manually to url: " + uri.toString() );
+				        }
+					}
+				}				
 				break;
 			case 3: // options
 				game.enterState(Gemwars.CONFIGURATION_MENU_STATE, 

@@ -213,6 +213,22 @@ public class ResourceManager {
 				  resourceElement.getTextContent(), 
 				  resourceElement.getAttribute("filter"));
 	}
+	
+	public static Sound fetchSound( String id ) {
+		return getInstance().getSound(id);
+	}
+	
+	public static Music fetchMusic( String id ) {
+		return getInstance().getMusic(id);
+	}
+	
+	public static Animation fetchAnimation( String id ) {
+		return getInstance().getAnimation(id);
+	}
+	
+	public static Image fetchImage( String id ) {
+		return getInstance().getImage(id);
+	}
  
 	public Image loadImage(String id, String path, String transparentColor) throws SlickException{
 		if(path == null || path.length() == 0)
