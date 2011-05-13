@@ -15,6 +15,5 @@ public class GemwarsUtils {
 			newAnimation.addFrame(a.getImage(i), a.getDuration(i));
 		}
 		return newAnimation;
-	}
-	
+	}	
 }

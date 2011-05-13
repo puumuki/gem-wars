@@ -14,8 +14,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
 
+import utils.GemwarsUtils;
+
 public class Boulder extends Item implements IDynamic{
 		
+	private Image staticStone;
+	
 	private Animation falling;
 	private Animation movingLeft, movingRight;	
 	
@@ -28,18 +32,23 @@ public class Boulder extends Item implements IDynamic{
 	
 	private void init() throws SlickException {
 						
-		if( itemType == ItemTypes.WHITE_BOULDER ) {
-			Animation falling = ResourceManager.fetchAnimation("ROCK_WHITE_DOWN");
-			Animation movingRight = ResourceManager.fetchAnimation("ROCK_WHITE_RIGHT");
+		if( itemType == ItemTypes.WHITE_BOULDER ) {			
+			falling = ResourceManager.fetchAnimation("ROCK_WHITE_DOWN");
+			movingRight = ResourceManager.fetchAnimation("ROCK_WHITE_RIGHT");
+			movingLeft = GemwarsUtils.reverseAnimation(movingRight);
+			
 		}		
 		else if( itemType == ItemTypes.DARK_BOULDER ) {
-			
+			falling = ResourceManager.fetchAnimation("ROCK_DARK_DOWN");
+			movingRight = ResourceManager.fetchAnimation("ROCK_DARK_RIGHT");
+			movingLeft = GemwarsUtils.reverseAnimation(movingRight);
 		}
 		else {
 			throw new SlickException("Invalid item type can boulder be " +
 									 "this kinda? ItemType." + itemType.name() );
-		}
+		}	
 		
+		staticStone = falling.getImage(0);
 	}
 	
 
