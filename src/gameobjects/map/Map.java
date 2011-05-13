@@ -11,6 +11,7 @@ import org.newdawn.slick.util.Log;
 import gameobjects.AEntity;
 import gameobjects.Direction;
 import gameobjects.Item;
+import gameobjects.Monster;
 import gameobjects.Player;
 
 /**
@@ -78,6 +79,8 @@ public class Map extends AEntity {
 	 */
     private List<Player> players = new ArrayList<Player>();
     
+    private List<Monster> monsters = new ArrayList<Monster>();
+    
     
     private double cameraPositionX = 0;
     private double cameraPositionY = 0;
@@ -97,6 +100,10 @@ public class Map extends AEntity {
 		for( Player player : players ) {
 			player.render(cont, graph);
 		}
+		
+		for ( Monster m : monsters ) {
+			m.render(cont, graph);
+		}
 
 		graph.resetTransform();
 	}
@@ -109,6 +116,10 @@ public class Map extends AEntity {
 		Player p = players.get(0);
 		if (p.direction != Direction.STATIONARY) {
 			centerCameraToPlayer(cont, p);
+		}
+		
+		for (Monster m : monsters) {
+			m.update(cont, delta);
 		}
 	}
 
@@ -295,5 +306,9 @@ public class Map extends AEntity {
 	 */
 	public Player getPlayer(int number) {
 		return players.get(number);
+	}
+
+	public void add(Monster monster) {
+		monsters.add(monster);
 	}
 }

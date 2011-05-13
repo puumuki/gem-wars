@@ -15,6 +15,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import gameobjects.Gem;
 import gameobjects.Item;
+import gameobjects.Monster;
 import gameobjects.map.ItemTypes;
 import gameobjects.map.Layer;
 import gameobjects.map.LayerTypes;
@@ -145,7 +146,7 @@ public class MapLoader {
 									
 									// Depending of item type we create different objects
 									
-									Item tile;
+									Item tile = null;
 									if(item == ItemTypes.BLUE_GEM.ordinal()) {
 										tile = new Gem(ItemTypes.BLUE_GEM);
 									}
@@ -155,14 +156,19 @@ public class MapLoader {
 									else if(item == ItemTypes.RED_GEM.ordinal()) {
 										tile = new Gem(ItemTypes.RED_GEM);
 									}
+									else if(item == ItemTypes.MONSTER.ordinal()) {
+										map.add(new Monster(x, y, map));
+									}
 									else {
 										tile = new Item(ItemTypes.getType(item));
 									}
 									
-									tile.positionX = x;
-									tile.positionY = y;
-									
-									l.setTile(x, y, tile);
+									if (tile != null) {
+										tile.positionX = x;
+										tile.positionY = y;
+										
+										l.setTile(x, y, tile);
+									}
 
 									start = end+1;
 								}

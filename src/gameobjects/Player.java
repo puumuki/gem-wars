@@ -100,7 +100,7 @@ public class Player extends AEntity {
 		}
 		if( direction == Direction.STATIONARY ) {
 			grap.drawImage(stationary, drawX, drawY);	
-		}		
+		}
 	}
 
 	@Override
