@@ -84,6 +84,8 @@ public class GameplayState extends BasicGameState {
 		
 		map.render(cont, graph);
 		
+		graph.drawString("SCORE: " + map.getPlayer(0).getScore(), 500, 0);
+		
 	}
 
 	public void update(GameContainer cont, StateBasedGame state, int delta)
