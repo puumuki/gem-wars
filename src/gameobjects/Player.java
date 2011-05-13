@@ -154,43 +154,24 @@ public class Player extends AEntity {
 		}
 	}
 	
+	/**
+	 * Processes the animations before using the player
+	 */
 	private void postProcessAnimations() {
-		Image image = ResourceManager.getInstance().getImage("UKOT");
-		
-/*		int duration = 25;
-		
-		int frameHeight = 56, farmeWidth = 56;
-	*/	
 		walkingRight = ResourceManager.getInstance().getAnimation("PLAYER_RIGHT");
 		walkingLeft = ResourceManager.getInstance().getAnimation("PLAYER_LEFT");
 		walkingUp = ResourceManager.getInstance().getAnimation("PLAYER_UP");
 		walkingDown = ResourceManager.getInstance().getAnimation("PLAYER_DOWN");
 		pushRight = ResourceManager.getInstance().getAnimation("PLAYER_PUSH_RIGHT");
 		pushLeft = ResourceManager.getInstance().getAnimation("PLAYER_PUSH_LEFT");
-		/*
-		for (int i = 0; i < image.getWidth(); i += farmeWidth ) {
-			Image sub = image.getSubImage(i, 0, farmeWidth, frameHeight);
-			walkingRight.addFrame(sub, duration);
-			
-			sub = image.getSubImage(i, frameHeight, farmeWidth, frameHeight);
-			walkingLeft.addFrame(sub, duration);
-			
-			sub = image.getSubImage(i, frameHeight*2, farmeWidth, frameHeight);
-			walkingDown.addFrame(sub, duration);
-			
-			sub = image.getSubImage(i, frameHeight*3, farmeWidth, frameHeight);
-			walkingUp.addFrame(sub, duration);
-			
-			sub = image.getSubImage(i, frameHeight*4, farmeWidth, frameHeight);
-			pushRight.addFrame(sub, duration);
-			
-			sub = image.getSubImage(i, frameHeight*5, farmeWidth, frameHeight);
-			pushLeft.addFrame(sub, duration);
-		}
-		*/
+
 		stationary = walkingDown.getImage(0);
 	}
 	
+	/**
+	 * Used to move the camera with the player
+	 * @return distance traveled when moving
+	 */
 	public double getDistance() {
 		return distance;
 	}
