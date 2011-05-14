@@ -262,6 +262,56 @@ public class Map extends AEntity {
 	}
 	
 	/**
+	 * Check is tile containing a gem in the given coordinates.
+	 * 
+	 * @param x 
+	 * @param y 
+	 * @return true if tile is containing a gem, false if not.
+	 */
+	public boolean isTileContainingGem(int x, int y ) {
+		Item item = objectLayer.getTile(x, y);
+		
+		if( item.itemType == ItemTypes.RED_GEM 
+			|| item.itemType == ItemTypes.BLUE_GEM 
+			|| item.itemType == ItemTypes.GREEN_GEM ) {
+		
+			return true;			
+		}
+		
+		return false;
+	}
+	
+	
+	
+	public boolean isTileContainingDirt(int x, int y) {
+		Item item = groundLayer.getTile(x, y);
+		
+		if( item.itemType == ItemTypes.SAND ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean destroyDirt(int x, int y) {
+		
+		if(isTileContainingDirt(x, y)) {
+			Item item = new Item(ItemTypes.GROUND);						
+			groundLayer.setTile(x, y, item);
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void destroyGem(int x, int y) {
+		if(isTileContainingGem(x, y)) {
+			objectLayer.setTile(x, y, new Item(ItemTypes.EMPTY));
+		}
+	}
+	
+	/**
 	 * Returns if the specific tile can be walked on by a monster
 	 * @param x horizontal position of the tile
 	 * @param y vertical position of the tile

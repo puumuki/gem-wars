@@ -1,6 +1,8 @@
 package gameobjects;
 
 
+import java.awt.Point;
+
 import gameobjects.map.Map;
 import io.ResourceManager;
 
@@ -10,6 +12,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 /**
  * @author Teemuki
@@ -44,6 +47,8 @@ public class Player extends AEntity {
 	
 	private double distance;
 
+	private Sound gemCollectedSound;
+	
 	private Image stationary;
 	private Animation walkingRight;
 	private Animation walkingLeft;
@@ -62,6 +67,7 @@ public class Player extends AEntity {
 	public Player() {
 		playerNumber = __staticPlayerNumber++;		
 		postProcessAnimations();
+		initSounds();
 	}
 	
 	public Player( int positionX, int positionY ) {
@@ -78,6 +84,10 @@ public class Player extends AEntity {
 	public Player(int posX, int posY, Map map) {
 		this(posX, posY);
 		this.map = map;
+	}
+	
+	private void initSounds() {
+		gemCollectedSound = ResourceManager.fetchSound("GAME_COLLECT");
 	}
 	
 	@Override
@@ -132,8 +142,7 @@ public class Player extends AEntity {
 		}
 		
 		if( direction != Direction.STATIONARY 
-			&& distance <= Item.TILE_HEIGHT ) {
-			
+			&& distance <= Item.TILE_HEIGHT ) {			
 			distance += speed * delta;
 		} else {
 			if( direction == Direction.LEFT ) {
@@ -150,7 +159,31 @@ public class Player extends AEntity {
 			}
 			
 			distance = 0;						
-			direction = Direction.STATIONARY;
+			direction = Direction.STATIONARY;					
+		}
+		
+		collectDiamonds();
+		dig();
+	}
+	
+	private void dig() {
+		Point point = Direction.scanDirection(direction);		
+		map.destroyDirt(positionX + point.x, positionY + point.y);		
+	}
+	
+
+	
+	private void collectDiamonds() {						
+		Point point = Direction.scanDirection(direction);
+		
+		boolean isCollected = map.isTileContainingGem(positionX + point.x, positionY + point.y);
+		map.destroyGem(positionX + point.x, positionY + point.y);
+		
+		if( isCollected ) {
+			score += 100;
+			collectedGemCount++;
+			gemCollectedSound.play();
+			
 		}
 	}
 	

@@ -59,12 +59,16 @@ public class Layer extends AEntity {
 	}
 	
 	/**
-	 * Sets a tile into a specific position
 	 * @param posX horizontal position
+	 * Sets a tile into a specific position
 	 * @param posY vertical position
 	 * @param tile type of the tile
 	 */
 	public void setTile( int posX, int posY, Item tile ) {
+		
+		tile.positionX = posX;
+		tile.positionY = posY;
+		
 		tiles[posX][posY] = tile;
 	}
 	
