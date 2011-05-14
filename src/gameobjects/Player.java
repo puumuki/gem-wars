@@ -118,6 +118,9 @@ public class Player extends AEntity {
 		if( direction == Direction.STATIONARY ) {
 			grap.drawImage(stationaryTemp, drawX, drawY);	
 		}
+		
+		// to debug, uncomment
+		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
 	}
 
 	@Override
@@ -264,5 +267,9 @@ public class Player extends AEntity {
 
 	public void setDead(boolean b) {
 		dead = b;
+	}
+
+	public boolean isDead() {
+		return dead;
 	}
 }

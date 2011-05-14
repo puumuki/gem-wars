@@ -123,9 +123,11 @@ public class GameplayState extends BasicGameState {
 		
 		// has the player died?
 		for (Player p : map.getPlayers()) {
-			if (map.hasPlayerDied(p)) {
+			if (map.hasPlayerDied(p)) // checks for monster killing 
 				p.kill();
-				
+			
+			if (p.isDead()) // has the player died in some other manner?
+			{
 				map.drawDiamondMatrix(p.positionX, p.positionY);
 				
 				// TODO: pause here

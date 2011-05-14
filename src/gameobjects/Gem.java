@@ -143,6 +143,16 @@ public class Gem extends Item implements IDynamic {
 				positionY++;
 				map.getObjectLayer().setTile(positionX, positionY, this);
 				
+				for (Player p : map.getPlayers()) {
+					if(p.positionX == positionX && p.positionY == positionY)
+						p.kill();
+				}
+				for (Monster m: map.getMonsters()) {
+					if(m.positionX == positionX && m.positionY == positionY)
+						m.kill();
+				}
+				
+				
 			} else if (lastDirection == Direction.DOWN && isRollingRight()) {
 				direction = Direction.RIGHT;
 				map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
