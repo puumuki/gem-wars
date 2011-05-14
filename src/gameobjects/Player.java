@@ -183,4 +183,12 @@ public class Player extends AEntity {
 	public int getScore() {
 		return score;
 	}
+	
+	/**
+	 * Returns the player's gem count for UI etc.
+	 * @return how many gems the player has collected
+	 */
+	public int getGems() {
+		return collectedGemCount;
+	}
 }
