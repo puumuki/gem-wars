@@ -16,6 +16,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import gameobjects.Gem;
 import gameobjects.Item;
 import gameobjects.Monster;
+import gameobjects.Player;
 import gameobjects.map.ItemTypes;
 import gameobjects.map.Layer;
 import gameobjects.map.LayerTypes;
@@ -24,7 +25,10 @@ import gameobjects.map.Map;
 public class MapLoader {
 	
 	public static Map loadMap( File file ) throws IOException, SlickException {
-		
+		return loadMap(file, null);
+	}
+	
+	public static Map loadMap(File file, List<Player> players) throws IOException, SlickException {
 		Log.info("Loading level from a file : " + file.getName());
 		
 		Map map = null;
@@ -43,6 +47,9 @@ public class MapLoader {
 			
 				// we make the new map
 				map = new Map();
+				
+				// set the filename
+				map.setFilename(file.getName());
 				
 				// first the map name
 				map.setName(f.nextLine());
@@ -181,8 +188,8 @@ public class MapLoader {
 				}
 				
 			}
-		
-			map.initPlayers();
+			
+			map.initPlayers(players);
 			
 		} catch (NoSuchElementException e) {
 			throw new SlickException("Error loading map file", e);

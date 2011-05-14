@@ -4,6 +4,7 @@ package gameobjects;
 import java.awt.Point;
 
 import gameobjects.map.Map;
+import io.MapLoader;
 import io.ResourceManager;
 
 import org.newdawn.slick.Animation;
@@ -31,7 +32,7 @@ public class Player extends AEntity {
 	/**
 	 * Lives that the player has left.
 	 */
-	public int lives;
+	public int lives = 3;
 	
 	/**
 	 * Player score from the collected gems.
@@ -115,6 +116,7 @@ public class Player extends AEntity {
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
+		
 		Input input = cont.getInput();
 		
 		//If no any key pressed is going to be stationary		
@@ -223,5 +225,21 @@ public class Player extends AEntity {
 	 */
 	public int getGems() {
 		return collectedGemCount;
+	}
+	
+	/**
+	 * Returns the player's life count for UI etc.
+	 * @return player lives
+	 */
+	public int getLives() {
+		return lives;
+	}
+	
+	/**
+	 * Kills the player
+	 */
+	public void kill() {
+		lives--;
+		
 	}
 }

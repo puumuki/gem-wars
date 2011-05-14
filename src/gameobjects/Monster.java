@@ -26,8 +26,8 @@ public class Monster extends AEntity {
 	
 	private double distance;
 	
-	private int positionX;
-	private int positionY;
+	public int positionX;
+	public int positionY;
 	
 	private Map map;
 	

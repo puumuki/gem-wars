@@ -85,7 +85,8 @@ public class GameplayState extends BasicGameState {
 		map.render(cont, graph);
 		
 		graph.drawString("SCORE: " + map.getPlayer(0).getScore(), 500, 0);
-		graph.drawString("GEMS: " + map.getPlayer(0).getGems() + "/" + map.getGemCount(), 500, 15);
+		graph.drawString(" GEMS: " + map.getPlayer(0).getGems() + "/" + map.getGemCount(), 500, 15);
+		graph.drawString("LIVES: " + map.getPlayer(0).getLives(), 500, 30);
 		
 	}
 
@@ -93,6 +94,32 @@ public class GameplayState extends BasicGameState {
 			throws SlickException {
 		
 		map.update(cont, delta);
+		
+		// has the player died?
+		for (Player p : map.getPlayers()) {
+			if(map.hasPlayerDied(p)) {
+				p.kill();
+				
+				if (map.getPlayer(0).lives <= 0) {
+					
+					state.enterState(Gemwars.GAMEOVERSTATE, 								
+							new EmptyTransition(), 
+							new BlobbyTransition());
+				}
+				else
+				{
+					// TODO: set path somewhere else
+					Map reloadedmap;
+					try {
+						reloadedmap = MapLoader.loadMap(new File("src/resources/maps/" + map.getFilename()), map.getPlayers());
+
+						reloadedmap.enter(cont);
+					} catch (IOException e) {
+						throw new SlickException(e.getMessage());
+					}
+				}
+			}
+		}
 		
 		Input input = cont.getInput();
 		
@@ -151,7 +178,9 @@ public class GameplayState extends BasicGameState {
 			state.enterState(Gemwars.MAINMENUSTATE, 								
 					new EmptyTransition(), 
 					new BlobbyTransition());
-		}	
+		}
+		
+
 	}
 	
 	

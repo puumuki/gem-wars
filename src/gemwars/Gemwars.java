@@ -48,7 +48,7 @@ public class Gemwars extends StateBasedGame {
     public static final int MAINMENUSTATE          = 0;
     public static final int GAMEPLAYSTATE          = 1;
     public static final int CONFIGURATION_MENU_STATE = 2;
-    //public static final int NYAN_STATE = 3;
+    public static final int GAMEOVERSTATE = 3;
     
 	public Gemwars() {
 		super("GemWars");
@@ -99,7 +99,7 @@ public class Gemwars extends StateBasedGame {
         this.addState(new MainMenuState(MAINMENUSTATE));
         this.addState(new GameplayState(GAMEPLAYSTATE));
         this.addState(new ConfigurationMenuState(CONFIGURATION_MENU_STATE));
-        //this.addState(new NyanState(NYAN_STATE));
+        this.addState(new GameOverState(GAMEOVERSTATE));
         this.enterState(MAINMENUSTATE);
 	}
 }

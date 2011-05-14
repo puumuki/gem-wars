@@ -1,6 +1,7 @@
 package gameobjects.map;
 
 import java.awt.Point;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;
@@ -21,9 +22,7 @@ import gameobjects.Player;
  */
 public class Map extends AEntity {
 	
-	// TODO: are these needed?
-	private static final int MAX_WIDTH = 1024;
-	private static final int MAX_HEIGHT = 1024;
+	private String filename; 
 	
 	/**
 	 * Width of the map. Taken from the collision layer.
@@ -142,11 +141,29 @@ public class Map extends AEntity {
 	 * creates Player-objects to those starting positions.
 	 */
 	public void initPlayers() {
-		for(Point startingPosition : getStartingPositions() ) {
-			Log.debug("Creating player to position: " + startingPosition );
-			Player player = new Player(startingPosition.x, startingPosition.y, this);
-			players.add(player);
+		initPlayers(null);
+	}
+	
+	public void initPlayers(List<Player> players) {
+		if(players == null)
+		{
+			for(Point startingPosition : getStartingPositions() ) {
+				Log.debug("Creating player to position: " + startingPosition );
+				Player player = new Player(startingPosition.x, startingPosition.y, this);
+				this.players.add(player);
+			}
+			return;
 		}
+		
+		for(Player p : players) {
+			for(Point startingPosition : getStartingPositions() ) {
+				this.players.clear();
+				this.players.add(p);
+				p.positionX = startingPosition.x;
+				p.positionY = startingPosition.y;
+			}
+		}
+
 	}
 	
 	/**
@@ -178,6 +195,15 @@ public class Map extends AEntity {
 		}
 		
 		return positions;
+	}
+	
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public String getFilename() {
+		return filename;
 	}
 	
 	public String getName() {
@@ -386,5 +412,17 @@ public class Map extends AEntity {
 
 	public void add(Monster monster) {
 		monsters.add(monster);
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public boolean hasPlayerDied(Player player) {
+		for (Monster m : monsters) {
+			if(m.positionX == player.positionX && m.positionY == player.positionY)
+				return true;
+		}
+		return false;
 	}
 }
