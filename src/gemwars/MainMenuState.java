@@ -82,6 +82,11 @@ public class MainMenuState extends BasicGameState {
 		
 		try {
 			File file = new File("src/resources/resources.xml"); 
+			
+			if( file.exists() == false ) {
+				file = new File("resources/resources.xml");
+			}
+			
 			FileInputStream fileStream = new FileInputStream(file);		
 			ResourceManager.getInstance().loadResources(fileStream, false); 
 		} catch (Exception e) {

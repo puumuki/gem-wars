@@ -52,7 +52,13 @@ public class GameplayState extends BasicGameState {
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
 		
-		availableMaps = MapLoader.findAvailableMaps(new File("src/resources/maps/"));
+		File file = new File("src/resources/maps/");
+		
+		if( file.exists() == false ) {
+			file = new File("resources/maps/");
+		}
+		
+		availableMaps = MapLoader.findAvailableMaps(file);
 		
 		try {
 			map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
