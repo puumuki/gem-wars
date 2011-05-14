@@ -160,12 +160,12 @@ public class MapLoader {
 										|| item == ItemTypes.GREEN_GEM.ordinal() 
 										|| item == ItemTypes.RED_GEM.ordinal() ) {
 										
-										tile = new Gem(ItemTypes.getType(item));
+										tile = new Gem(ItemTypes.getType(item), map);
 									}
 									else if(item == ItemTypes.DARK_BOULDER.ordinal() 
 											|| item == ItemTypes.WHITE_BOULDER.ordinal() ) {
 										
-										tile = new Boulder(ItemTypes.getType(item));
+										tile = new Boulder(ItemTypes.getType(item), map);
 									}									
 									else if(item == ItemTypes.MONSTER.ordinal()) {
 										map.add(new Monster(x, y, map));
