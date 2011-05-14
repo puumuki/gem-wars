@@ -53,6 +53,7 @@ public class Player extends AEntity {
 	private Sound gemCollectedSound;
 	
 	private Image stationary;
+	private Image stationaryTemp;
 	private Animation walkingRight;
 	private Animation walkingLeft;
 	private Animation walkingUp;
@@ -84,7 +85,7 @@ public class Player extends AEntity {
 		this.positionY = positionY;
 		
 		//Tweak this if you want to player to go faster
-		this.speed = 0.08;
+		this.speed = 0.1;
 	}
 	
 	public Player(int posX, int posY, Map map) {
@@ -115,7 +116,7 @@ public class Player extends AEntity {
 			grap.drawAnimation(walkingRight, (int)(drawX + distance), drawY);			
 		}
 		if( direction == Direction.STATIONARY ) {
-			grap.drawImage(stationary, drawX, drawY);	
+			grap.drawImage(stationaryTemp, drawX, drawY);	
 		}
 	}
 
@@ -146,7 +147,7 @@ public class Player extends AEntity {
 					if (!map.isColliding(positionX + 1, positionY))
 						direction = Direction.RIGHT;
 				}
-				
+				stationaryTemp = stationary;
 			}
 			
 			if( direction != Direction.STATIONARY 
@@ -155,15 +156,19 @@ public class Player extends AEntity {
 			} else {
 				if( direction == Direction.LEFT ) {
 					positionX--;
+					stationaryTemp = walkingLeft.getCurrentFrame();
 				}
 				if( direction == Direction.RIGHT ) {
 					positionX++;
+					stationaryTemp = walkingRight.getCurrentFrame();
 				}
 				if( direction == Direction.UP ) {
 					positionY--;
+					stationaryTemp = walkingUp.getCurrentFrame();
 				}
 				if( direction == Direction.DOWN ) {
 					positionY++;
+					stationaryTemp = walkingDown.getCurrentFrame();
 				}
 				
 				distance = 0;						
@@ -211,6 +216,7 @@ public class Player extends AEntity {
 		pushLeft = ResourceManager.getInstance().getAnimation("PLAYER_PUSH_LEFT");
 
 		stationary = walkingDown.getImage(0);
+		stationaryTemp = stationary;
 		
 		deadImage = ResourceManager.fetchImage("ITEM_TEXTURES").getSubImage(0, 0, Item.TILE_WIDTH, Item.TILE_HEIGHT);
 	}

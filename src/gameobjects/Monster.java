@@ -44,7 +44,7 @@ public class Monster extends AEntity {
 		
 		this.map = map;
 		
-		this.speed = 0.08;
+		this.speed = 0.1;
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import io.MapLoader;
 import io.Options;
 import io.ResourceManager;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -28,6 +30,7 @@ import org.newdawn.slick.state.transition.BlobbyTransition;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
 /**
@@ -193,8 +196,11 @@ public class GameplayState extends BasicGameState {
 			}		
 		}
 		if( isMapChanged ) {
+			
+			
 			try {
 				map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
+				
 				map.enter(cont);
 				isMapChanged = false;
 			} catch (IOException e) {

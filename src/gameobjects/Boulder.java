@@ -45,7 +45,7 @@ public class Boulder extends Item implements IDynamic{
 		}
 		else {
 			throw new SlickException("Invalid item type can boulder be " +
-									 "this kinda? ItemType." + itemType.name() );
+									 "this kinda? ItemType." + itemType.name() ); // Excellent error message :D
 		}	
 		
 		staticStone = falling.getImage(0);
