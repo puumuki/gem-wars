@@ -64,4 +64,8 @@ public class Gem extends Item implements IDynamic {
 		gemDown.update(delta);
 		gemLeft.update(delta);
 	}
+	
+	public int getValue() {
+		return this.itemType.ordinal() * 10;
+	}
 }

@@ -72,7 +72,9 @@ public class GameplayState extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)	throws SlickException {
 		super.enter(container, game);
-		
+
+		gamemusic.setVolume(0);
+		gamemusic.fade(1000, Options.getInstance().getMusicVolume(), false);
 		gamemusic.loop((float)1.0, Options.getInstance().getMusicVolume());
 		
 		map.enter(container);
@@ -82,8 +84,8 @@ public class GameplayState extends BasicGameState {
 	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
 	
 		super.leave(container, game);
-		
-		gamemusic.stop();
+		gamemusic.fade(500, 0, true);
+		//gamemusic.stop();
 	}
 
 	public void render(GameContainer cont, StateBasedGame state, Graphics graph)
@@ -136,11 +138,12 @@ public class GameplayState extends BasicGameState {
 				}
 				else
 				{
-					// TODO: set path somewhere else
 					try {
-						this.map = MapLoader.loadMap(new File("src/resources/maps/" + map.getFilename()), map.getPlayers());
+						
+						Map tempMap = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
+						this.map = tempMap;
 
-						map.enter(cont);
+						tempMap.enter(cont);
 					} catch (IOException e) {
 						throw new SlickException(e.getMessage());
 					}

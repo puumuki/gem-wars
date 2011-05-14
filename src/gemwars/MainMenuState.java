@@ -121,6 +121,8 @@ public class MainMenuState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game)	throws SlickException {
 		super.enter(container, game);
 		
+		menumusic.setVolume(0);
+		menumusic.fade(1000, Options.getInstance().getMusicVolume(), false);
 		menumusic.loop((float)1.0, Options.getInstance().getMusicVolume());
 		
 		
@@ -133,8 +135,8 @@ public class MainMenuState extends BasicGameState {
 	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
 	
 		super.leave(container, game);
-		
-		menumusic.stop();
+		menumusic.fade(500, 0, true);
+		//menumusic.stop();
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
