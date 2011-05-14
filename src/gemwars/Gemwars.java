@@ -4,9 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.text.html.Option;
 
+import gemwars.event.GemwarsEvent;
+import gemwars.event.GemwarsEventType;
+import gemwars.event.GemwarsListener;
 import io.Options;
 import io.ResourceManager;
 
@@ -49,6 +54,8 @@ public class Gemwars extends StateBasedGame {
     public static final int GAMEPLAYSTATE          = 1;
     public static final int CONFIGURATION_MENU_STATE = 2;
     public static final int GAMEOVERSTATE = 3;
+    
+    private static List<GemwarsListener> gemwarsListeners = new ArrayList<GemwarsListener>();
     
 	public Gemwars() {
 		super("GemWars");
@@ -101,6 +108,20 @@ public class Gemwars extends StateBasedGame {
         this.addState(new ConfigurationMenuState(CONFIGURATION_MENU_STATE));
         this.addState(new GameOverState(GAMEOVERSTATE));
         this.enterState(MAINMENUSTATE);
+	}
+	
+	public static void addGemwarsListener( GemwarsListener listener ) {
+		gemwarsListeners.add(listener);
+	}
+	
+	public static void fireGemwarsEvent( GemwarsEventType event ) {
+		for( GemwarsListener listener : gemwarsListeners ) {
+			listener.gemwarsEventPerformed( new GemwarsEvent(event));
+		}
+	}
+	
+	public void removeGemwarsListener( GemwarsListener listener ) {
+		gemwarsListeners.remove(listener);
 	}
 }
 
