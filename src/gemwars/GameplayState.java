@@ -2,10 +2,7 @@ package gemwars;
 
 import java.awt.Point;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.List;
 
 import gameobjects.Monster;
@@ -16,7 +13,6 @@ import io.MapLoader;
 import io.Options;
 import io.ResourceManager;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -28,9 +24,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.BlobbyTransition;
 import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
 /**
@@ -56,6 +49,7 @@ public class GameplayState extends BasicGameState {
 
     private Map map;
     
+	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
 		
 		availableMaps = MapLoader.findAvailableMaps(new File("src/resources/maps/"));
@@ -88,6 +82,7 @@ public class GameplayState extends BasicGameState {
 		//gamemusic.stop();
 	}
 
+	@Override
 	public void render(GameContainer cont, StateBasedGame state, Graphics graph)
 			throws SlickException {
 		
@@ -100,6 +95,7 @@ public class GameplayState extends BasicGameState {
 		
 	}
 
+	@Override
 	public void update(GameContainer cont, StateBasedGame state, int delta)
 			throws SlickException {
 		

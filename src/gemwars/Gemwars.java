@@ -1,20 +1,14 @@
 package gemwars;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.text.html.Option;
 
 import gemwars.event.GemwarsEvent;
 import gemwars.event.GemwarsEventType;
 import gemwars.event.GemwarsListener;
 import io.Options;
-import io.ResourceManager;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;

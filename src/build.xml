@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project gemwars">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="C:/Users/Yaamboo/Documents/Ohjelmointia/gemwars/src/gemwars-0.1.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="gemwars.Gemwars"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="C:/Users/Yaamboo/Documents/Ohjelmointia/gemwars/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/Yaamboo/Documents/slick.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/Yaamboo/Documents/lwjgl-2.6/jar/lwjgl.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Users/Yaamboo/Documents/ibxm.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.junit_4.8.1.v4_8_1_v20100427-1100/junit.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Program Files/eclipse/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+        </jar>
+    </target>
+</project>

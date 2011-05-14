@@ -44,6 +44,7 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	 * @param grap Use this Graphics object to draw the entity so the drawing order is right.
 	 * @throws SlickException if something goes wrong
 	 */
+	@Override
 	public abstract void render(GameContainer cont, 					    
 					   			Graphics grap) 
 					    		throws SlickException;
@@ -56,6 +57,7 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	 * @param delta 
 	 * @throws SlickException if something goes wrong
 	 */
+	@Override
 	public abstract void update(GameContainer cont, 
 								int delta) throws SlickException ;
 	

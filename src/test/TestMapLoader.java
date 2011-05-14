@@ -1,7 +1,6 @@
 package test;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -12,10 +11,7 @@ import gameobjects.map.ItemTypes;
 import gameobjects.map.Map;
 
 import io.MapLoader;
-import io.ResourceManager;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.newdawn.slick.SlickException;
 

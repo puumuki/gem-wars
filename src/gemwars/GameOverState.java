@@ -24,16 +24,19 @@ public class GameOverState extends BasicGameState {
 	}
 	
 	
+	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		
 	}
 	
+	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.drawString("Game Over :(\n\nPress enter.", 100, 100);
 	}
 
+	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
 		Input input = gc.getInput();

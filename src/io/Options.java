@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
-import javax.management.RuntimeErrorException;
-
 import org.newdawn.slick.util.Log;
 
 /**

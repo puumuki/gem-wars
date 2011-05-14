@@ -1,35 +1,21 @@
 package gemwars;
 
 
-import java.awt.Font;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.command.KeyControl;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.font.effects.GradientEffect;
-import org.newdawn.slick.font.effects.ShadowEffect;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.state.transition.RotateTransition;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
-
 import gameobjects.GearPair;
 import gameobjects.Player;
-import gemwars.ui.components.*;
 
 /**
  * OptionState is a game state where user can change setting like key setting, and sound music volume.
@@ -80,6 +66,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 	/**
 	 * Game state id
 	 */
+	@Override
 	public int getID() {
 		return stateID;
 	};

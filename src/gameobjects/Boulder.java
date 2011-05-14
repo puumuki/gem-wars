@@ -2,9 +2,6 @@ package gameobjects;
 
 import io.ResourceManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import gameobjects.map.ItemTypes;
 import gameobjects.map.Map;
 

@@ -3,9 +3,7 @@ package gameobjects;
 
 import java.awt.Point;
 
-import gameobjects.map.ItemTypes;
 import gameobjects.map.Map;
-import io.MapLoader;
 import io.Options;
 import io.ResourceManager;
 

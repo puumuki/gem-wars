@@ -1,7 +1,6 @@
 package gameobjects.map;
 
 import java.awt.Point;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.newdawn.slick.GameContainer;

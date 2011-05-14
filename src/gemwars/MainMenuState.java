@@ -1,6 +1,5 @@
 package gemwars;
 
-import gameobjects.Gem;
 import gameobjects.Item;
 import gameobjects.map.ItemTypes;
 
@@ -77,6 +76,7 @@ public class MainMenuState extends BasicGameState {
 	/**
 	 * Initialisation of the main menu (loading resources etc)
 	 */
+	@Override
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		
@@ -139,6 +139,7 @@ public class MainMenuState extends BasicGameState {
 		//menumusic.stop();
 	}
 
+	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g)
 			throws SlickException {
 		background.draw(0,0);
@@ -167,6 +168,7 @@ public class MainMenuState extends BasicGameState {
 		item.render(gc, g);
 	}
 
+	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
 		
