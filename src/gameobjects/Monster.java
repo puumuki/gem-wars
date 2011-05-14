@@ -62,53 +62,72 @@ public class Monster extends AEntity {
 			walkingLeft.draw((int)(drawX - distance), drawY);
 		}
 		if( direction == Direction.RIGHT ) {
-			walkingRight.draw((int)(drawX + distance), drawY);			
+			walkingRight.draw((int)(drawX + distance), drawY);
 		}
-		
 
-		grap.drawString(direction + " "+distance, drawX, drawY);
+		grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
 	}
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
 		if( direction != Direction.STATIONARY 
-				&& distance <= Item.TILE_HEIGHT) {
+			&& distance <= Item.TILE_HEIGHT) {
 				
-				distance += speed * delta;
-			}
+			distance += speed * delta;
+			
+		}
 		else
 		{
 
 			distance = 0;
-			if(direction == Direction.STATIONARY) // corrects the problem on start
+			if(direction == Direction.STATIONARY) // corrects a bug on start
 				direction = Direction.RIGHT;
 
 			if( direction == Direction.RIGHT ) {
-				if (!map.isColliding(positionX + 1, positionY))
+				if (!map.isColliding(positionX, positionY - 1)) { // can it turn left
+					positionY--;
+					direction = Direction.UP;
+				}
+				else if (!map.isColliding(positionX + 1, positionY)) // can it move forwards
 					positionX++;
 				else
-					direction = Direction.UP;
-			}
-			if( direction == Direction.UP ) {
-				if (!map.isColliding(positionX, positionY - 1))
-					positionY--;
-				else
-					direction = Direction.LEFT;
-			}
-			if( direction == Direction.LEFT ) {
-				if (!map.isColliding(positionX - 1 , positionY))
-					positionX--;
-				else
-					direction = Direction.DOWN;
-			}
-			if( direction == Direction.DOWN ) {
-				if (!map.isColliding(positionX, positionY + 1))
-					positionY++;
-				else
-					direction = Direction.RIGHT;
+					direction = Direction.UP; // giving up, testing another direction
 			}
 			
+			if( direction == Direction.UP ) {
+				if (!map.isColliding(positionX - 1, positionY)) { // can it turn left
+					positionX--;
+					direction = Direction.LEFT;
+				}
+				else if (!map.isColliding(positionX, positionY - 1)) // can it move forwards
+					positionY--;
+				else
+					direction = Direction.LEFT; // giving up, testing another direction
+			}
+			
+			if( direction == Direction.LEFT ) {
+				if (!map.isColliding(positionX, positionY + 1)) { // can it turn left
+					positionY++;
+					direction = Direction.DOWN;
+				}
+				else if (!map.isColliding(positionX - 1 , positionY)) // can it move forwards
+					positionX--;
+				else
+					direction = Direction.DOWN; // giving up, testing another direction
+			}
+			
+			if( direction == Direction.DOWN ) {
+				if (!map.isColliding(positionX + 1, positionY)) { // can it turn left
+					positionX++;
+					direction = Direction.RIGHT;
+				}
+				else if (!map.isColliding(positionX, positionY + 1)) // can it move forwards
+					positionY++;
+				else
+					direction = Direction.RIGHT; // giving up, testing another direction
+			}
 		}
+
 		walkingRight.update(delta);
 		walkingLeft.update(delta);
 		walkingUp.update(delta);
