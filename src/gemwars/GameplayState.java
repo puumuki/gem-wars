@@ -167,7 +167,7 @@ public class GameplayState extends BasicGameState {
 		
 		
 		
-		final double increment = 0.2; 
+		//final double increment = 0.2; 
 		
 		//If we want a friction to movement we need to change logic here.
 		//final double friction = 0.2; 

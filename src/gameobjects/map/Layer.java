@@ -83,8 +83,11 @@ public class Layer extends AEntity {
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
-		// TODO Auto-generated method stub
-		
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				tiles[x][y].update(cont, delta);
+			}
+		}
 	}
 
 	/**

@@ -111,6 +111,9 @@ public class Map extends AEntity {
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
+		
+		objectLayer.update(cont, delta);
+		
 		for( Player player : players ) {
 			player.update(cont, delta);
 
