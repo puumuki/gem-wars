@@ -13,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.ResourceLoader;
 
+import gameobjects.Boulder;
 import gameobjects.Gem;
 import gameobjects.Item;
 import gameobjects.Monster;
@@ -154,15 +155,18 @@ public class MapLoader {
 									// Depending of item type we create different objects
 									
 									Item tile = null;
-									if(item == ItemTypes.BLUE_GEM.ordinal()) {
-										tile = new Gem(ItemTypes.BLUE_GEM);
+									
+									if(item == ItemTypes.BLUE_GEM.ordinal() 
+										|| item == ItemTypes.GREEN_GEM.ordinal() 
+										|| item == ItemTypes.RED_GEM.ordinal() ) {
+										
+										tile = new Gem(ItemTypes.getType(item));
 									}
-									else if(item == ItemTypes.GREEN_GEM.ordinal()) {
-										tile = new Gem(ItemTypes.GREEN_GEM);
-									}
-									else if(item == ItemTypes.RED_GEM.ordinal()) {
-										tile = new Gem(ItemTypes.RED_GEM);
-									}
+									else if(item == ItemTypes.DARK_BOULDER.ordinal() 
+											|| item == ItemTypes.WHITE_BOULDER.ordinal() ) {
+										
+										tile = new Boulder(ItemTypes.getType(item));
+									}									
 									else if(item == ItemTypes.MONSTER.ordinal()) {
 										map.add(new Monster(x, y, map));
 									}
