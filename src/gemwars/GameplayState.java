@@ -1,12 +1,15 @@
 package gemwars;
 
+import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import gameobjects.Monster;
 import gameobjects.Player;
+import gameobjects.map.ItemTypes;
 import gameobjects.map.Map;
 import io.MapLoader;
 import io.Options;
@@ -46,6 +49,7 @@ public class GameplayState extends BasicGameState {
     private List<File> availableMaps;
     
     private int currentMapIndex = 0;
+	boolean isMapChanged = false;
 
     private Map map;
     
@@ -96,9 +100,25 @@ public class GameplayState extends BasicGameState {
 		
 		map.update(cont, delta);
 		
+
+		Input input = cont.getInput();
+		
+
+		// FIXME: for debug only
+		if (input.isKeyPressed(Input.KEY_0)) {
+			for (Monster m : map.getMonsters())
+				m.kill();
+		}
+		// are there dead monsters?
+		for (Monster m : map.getMonsters()) {
+			if (m.isDead()) {
+				map.drawDiamondMatrix(m.positionX, m.positionY);
+			}
+		}
+		
 		// has the player died?
 		for (Player p : map.getPlayers()) {
-			if(map.hasPlayerDied(p)) {
+			if (map.hasPlayerDied(p)) {
 				p.kill();
 				
 				map.drawDiamondMatrix(p.positionX, p.positionY);
@@ -123,9 +143,22 @@ public class GameplayState extends BasicGameState {
 					}
 				}
 			}
+			
+			
+
+			// is the player in the goal?
+			if (map.isGoalOpen()) {
+				List<Point> goals = map.findItemPositions(map.getSpecialLayer(), ItemTypes.GOAL);
+				Point point = goals.get(0);
+				if (p.positionX == point.x && p.positionY == point.y) {
+					// TODO: show level ending screen and change level
+					currentMapIndex++;
+					isMapChanged = true;
+				}
+			}
 		}
 		
-		Input input = cont.getInput();
+		
 		
 		
 		final double increment = 0.2; 
@@ -140,7 +173,6 @@ public class GameplayState extends BasicGameState {
 		if( input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) {
 			// TODO: change it so it does not change the map at simply pressing R/LCONTROL when the camera has been moved 
 			
-			boolean isMapChanged = false;
 			
 			if( input.isKeyPressed(Input.KEY_LEFT) ) {
 				currentMapIndex--;
@@ -159,14 +191,14 @@ public class GameplayState extends BasicGameState {
 			else if( currentMapIndex >= availableMaps.size() ) {
 				currentMapIndex = 0;
 			}		
-
-			if( isMapChanged ) {
-				try {
-					map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
-					map.enter(cont);
-				} catch (IOException e) {
-					Log.error(e);
-				}
+		}
+		if( isMapChanged ) {
+			try {
+				map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
+				map.enter(cont);
+				isMapChanged = false;
+			} catch (IOException e) {
+				Log.error(e);
 			}
 		}
 		

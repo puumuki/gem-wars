@@ -85,6 +85,7 @@ public class Map extends AEntity {
     private double cameraPositionX = 0;
     private double cameraPositionY = 0;
     
+    private boolean goalOpen = false;
 	
 	@Override
 	public void render(GameContainer cont, Graphics graph) throws SlickException {
@@ -112,15 +113,40 @@ public class Map extends AEntity {
 	public void update(GameContainer cont, int delta) throws SlickException {
 		for( Player player : players ) {
 			player.update(cont, delta);
+
 		}
 		Player p = players.get(0);
 		if (p.direction != Direction.STATIONARY) {
 			centerCameraToPlayer(cont, p);
 		}
 		
+		// messy, but it is needed to remove the dead monsters
+		List<Monster> newMonsters = new ArrayList<Monster>();
 		for (Monster m : monsters) {
+			if(!m.isDead())
+				newMonsters.add(m);
 			m.update(cont, delta);
 		}
+		monsters = newMonsters;
+		
+		if (goalOpen == false && players.get(0).getGems() >= gemCount) {
+			openGoal();
+		}
+	}
+
+	/**
+	 * Opens the goal for the player to get in
+	 */
+	private void openGoal() {
+		goalOpen = true;
+		List<Point> goals = findItemPositions(specialLayer, ItemTypes.GOAL);
+		Point p = goals.get(0);
+		setCollision(p.x, p.y, false);
+		Item i = new Item(ItemTypes.GOAL_TILE);
+		i.positionX = p.x;
+		i.positionY = p.y;
+		groundLayer.setTile(p.x, p.y, i);
+		
 	}
 
 	private void centerCameraToPlayer(GameContainer cont, Player p) {
@@ -184,7 +210,7 @@ public class Map extends AEntity {
 		return findItemPositions( specialLayer, ItemTypes.GOAL ); 
 	}
 	
-	private List<Point> findItemPositions( Layer layer, ItemTypes type ) {
+	public List<Point> findItemPositions( Layer layer, ItemTypes type ) {
 		List<Point> positions = new ArrayList<Point>();
 		
 		for (int x = 0; x < specialLayer.getWidth(); x++) {
@@ -446,5 +472,13 @@ public class Map extends AEntity {
 			}
 		}
 		
+	}
+
+	public List<Monster> getMonsters() {
+		return monsters;
+	}
+
+	public boolean isGoalOpen() {
+		return goalOpen;
 	}
 }

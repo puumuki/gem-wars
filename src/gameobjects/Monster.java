@@ -31,6 +31,7 @@ public class Monster extends AEntity {
 	
 	private Map map;
 	
+	private boolean dead = false;
 	
 	public Monster(int x, int y, Map map) {
 		walkingRight = ResourceManager.fetchAnimation("MONSTER_RIGHT");
@@ -142,5 +143,13 @@ public class Monster extends AEntity {
 			else
 				direction = Direction.RIGHT; // giving up, testing another direction
 		}
+	}
+	
+	public void kill() {
+		dead = true;
+	}
+	
+	public boolean isDead() {
+		return dead;
 	}
 }
