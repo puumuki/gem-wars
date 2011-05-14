@@ -115,7 +115,10 @@ public class Gem extends Item implements IDynamic {
 			if (map.getObjectLayer().getTile(x, y).itemType != ItemTypes.EMPTY)
 				return false;
 			for (Player p : map.getPlayers()) {
-				if(p.positionX == x && p.positionY == y)
+				if((p.positionX == x && p.positionY == y)
+						|| (p.direction == Direction.LEFT && p.positionX == x+1 && p.positionY == y)
+						|| (p.direction == Direction.RIGHT && p.positionX == x-1 && p.positionY == y)
+						|| (p.direction == Direction.UP && p.positionX == x && p.positionY == y+1 ))
 					return false;
 			}
 			return true;
@@ -164,4 +167,5 @@ public class Gem extends Item implements IDynamic {
 	public int getValue() {
 		return this.itemType.ordinal() * 10;
 	}
+
 }

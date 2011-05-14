@@ -194,12 +194,13 @@ public class Player extends AEntity {
 		Point point = Direction.scanDirection(direction);
 		
 		boolean isCollected = map.isTileContainingGem(positionX + point.x, positionY + point.y);
-		if( isCollected ) {
+		if( isCollected
+				&& map.getObjectLayer().getTile(positionX + point.x, positionY + point.y).direction == Direction.STATIONARY) {
 			score += ((Gem)map.getObjectLayer().getTile(positionX + point.x, positionY + point.y)).getValue();
 			collectedGemCount++;
 			gemCollectedSound.play((float)1.0, Options.getInstance().getSoundVolume());
+			map.destroyGem(positionX + point.x, positionY + point.y);
 		}
-		map.destroyGem(positionX + point.x, positionY + point.y);
 		
 		
 	}
