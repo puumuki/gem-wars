@@ -84,6 +84,7 @@ public class GameplayState extends BasicGameState {
 		
 		map.render(cont, graph);
 		
+		
 		graph.drawString("SCORE: " + map.getPlayer(0).getScore(), 500, 0);
 		graph.drawString(" GEMS: " + map.getPlayer(0).getGems() + "/" + map.getGemCount(), 500, 15);
 		graph.drawString("LIVES: " + map.getPlayer(0).getLives(), 500, 30);
@@ -100,6 +101,10 @@ public class GameplayState extends BasicGameState {
 			if(map.hasPlayerDied(p)) {
 				p.kill();
 				
+				map.drawDiamondMatrix(p.positionX, p.positionY);
+				
+				// TODO: pause here
+				
 				if (map.getPlayer(0).lives <= 0) {
 					
 					state.enterState(Gemwars.GAMEOVERSTATE, 								
@@ -109,11 +114,10 @@ public class GameplayState extends BasicGameState {
 				else
 				{
 					// TODO: set path somewhere else
-					Map reloadedmap;
 					try {
-						reloadedmap = MapLoader.loadMap(new File("src/resources/maps/" + map.getFilename()), map.getPlayers());
+						this.map = MapLoader.loadMap(new File("src/resources/maps/" + map.getFilename()), map.getPlayers());
 
-						reloadedmap.enter(cont);
+						map.enter(cont);
 					} catch (IOException e) {
 						throw new SlickException(e.getMessage());
 					}
@@ -122,6 +126,7 @@ public class GameplayState extends BasicGameState {
 		}
 		
 		Input input = cont.getInput();
+		
 		
 		final double increment = 0.2; 
 		

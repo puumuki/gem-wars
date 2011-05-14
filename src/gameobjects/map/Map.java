@@ -11,6 +11,7 @@ import org.newdawn.slick.util.Log;
 
 import gameobjects.AEntity;
 import gameobjects.Direction;
+import gameobjects.Gem;
 import gameobjects.Item;
 import gameobjects.Monster;
 import gameobjects.Player;
@@ -399,6 +400,9 @@ public class Map extends AEntity {
 
 	public void enter(GameContainer cont) {
 		centerCameraToPlayer(cont, players.get(0));
+		for (Player p : players) {
+			p.setDead(false);
+		}
 	}
 	
 	/**
@@ -424,5 +428,23 @@ public class Map extends AEntity {
 				return true;
 		}
 		return false;
+	}
+
+	public void drawDiamondMatrix(int posX, int posY) throws SlickException {
+		for (int x = posX - 1; x <= posX + 1; x++) {
+			for (int y = posY - 1; y <= posY + 1; y++) {
+				if (!isColliding(x, y)) {
+					Gem g = new Gem(ItemTypes.RED_GEM);
+					Item i = new Item(ItemTypes.GROUND);
+					g.positionX = x;
+					g.positionY = y;
+					i.positionX = x;
+					i.positionY = y;
+					groundLayer.setTile(x, y, i);
+					objectLayer.setTile(x, y, g);
+				}
+			}
+		}
+		
 	}
 }

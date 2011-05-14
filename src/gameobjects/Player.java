@@ -3,8 +3,10 @@ package gameobjects;
 
 import java.awt.Point;
 
+import gameobjects.map.ItemTypes;
 import gameobjects.map.Map;
 import io.MapLoader;
+import io.Options;
 import io.ResourceManager;
 
 import org.newdawn.slick.Animation;
@@ -57,8 +59,11 @@ public class Player extends AEntity {
 	private Animation walkingDown;
 	private Animation pushLeft;
 	private Animation pushRight;
+	private Image deadImage;
 	
 	private Map map;
+	
+	private boolean dead = false;
 		
 	/**
 	 * Flag that indicates is the player pushing something.
@@ -118,54 +123,59 @@ public class Player extends AEntity {
 	public void update(GameContainer cont, int delta) throws SlickException {
 		
 		Input input = cont.getInput();
-		
-		//If no any key pressed is going to be stationary		
-		if(direction == Direction.STATIONARY ) {
-			if( input.isKeyDown(Input.KEY_DOWN )) {
-				if (!map.isColliding(positionX, positionY + 1))
-					direction = Direction.DOWN;
+		if (dead == false)
+		{
+			//If no any key pressed is going to be stationary		
+			if(direction == Direction.STATIONARY ) {
+				if( input.isKeyDown(Input.KEY_DOWN )) {
+					if (!map.isColliding(positionX, positionY + 1))
+						direction = Direction.DOWN;
+				}
+				
+				if( input.isKeyDown(Input.KEY_UP)) {
+					if (!map.isColliding(positionX, positionY - 1))
+						direction = Direction.UP;
+				}
+				
+				if( input.isKeyDown(Input.KEY_LEFT)) {
+					if (!map.isColliding(positionX - 1 , positionY))
+						direction = Direction.LEFT;
+				}
+				
+				if( input.isKeyDown(Input.KEY_RIGHT)) {
+					if (!map.isColliding(positionX + 1, positionY))
+						direction = Direction.RIGHT;
+				}
+				
 			}
 			
-			if( input.isKeyDown(Input.KEY_UP)) {
-				if (!map.isColliding(positionX, positionY - 1))
-					direction = Direction.UP;
+			if( direction != Direction.STATIONARY 
+				&& distance <= Item.TILE_HEIGHT ) {			
+				distance += speed * delta;
+			} else {
+				if( direction == Direction.LEFT ) {
+					positionX--;
+				}
+				if( direction == Direction.RIGHT ) {
+					positionX++;
+				}
+				if( direction == Direction.UP ) {
+					positionY--;
+				}
+				if( direction == Direction.DOWN ) {
+					positionY++;
+				}
+				
+				distance = 0;						
+				direction = Direction.STATIONARY;					
 			}
 			
-			if( input.isKeyDown(Input.KEY_LEFT)) {
-				if (!map.isColliding(positionX - 1 , positionY))
-					direction = Direction.LEFT;
-			}
-			
-			if( input.isKeyDown(Input.KEY_RIGHT)) {
-				if (!map.isColliding(positionX + 1, positionY))
-					direction = Direction.RIGHT;
-			}
-			
+			collectDiamonds();
+			dig();
 		}
-		
-		if( direction != Direction.STATIONARY 
-			&& distance <= Item.TILE_HEIGHT ) {			
-			distance += speed * delta;
-		} else {
-			if( direction == Direction.LEFT ) {
-				positionX--;
-			}
-			if( direction == Direction.RIGHT ) {
-				positionX++;
-			}
-			if( direction == Direction.UP ) {
-				positionY--;
-			}
-			if( direction == Direction.DOWN ) {
-				positionY++;
-			}
-			
-			distance = 0;						
-			direction = Direction.STATIONARY;					
+		else {
+			// do nothing
 		}
-		
-		collectDiamonds();
-		dig();
 	}
 	
 	private void dig() {
@@ -184,7 +194,7 @@ public class Player extends AEntity {
 		if( isCollected ) {
 			score += 100;
 			collectedGemCount++;
-			gemCollectedSound.play();
+			gemCollectedSound.play((float)1.0, Options.getInstance().getSoundVolume());
 			
 		}
 	}
@@ -201,6 +211,8 @@ public class Player extends AEntity {
 		pushLeft = ResourceManager.getInstance().getAnimation("PLAYER_PUSH_LEFT");
 
 		stationary = walkingDown.getImage(0);
+		
+		deadImage = ResourceManager.fetchImage("ITEM_TEXTURES").getSubImage(0, 0, Item.TILE_WIDTH, Item.TILE_HEIGHT);
 	}
 	
 	/**
@@ -240,6 +252,10 @@ public class Player extends AEntity {
 	 */
 	public void kill() {
 		lives--;
-		
+		dead = true;
+	}
+
+	public void setDead(boolean b) {
+		dead = b;
 	}
 }
