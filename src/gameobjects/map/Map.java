@@ -260,6 +260,32 @@ public class Map extends AEntity {
 			return collisionLayer[y][x];
 		return true;
 	}
+	
+	/**
+	 * Returns if the specific tile can be walked on by a monster
+	 * @param x horizontal position of the tile
+	 * @param y vertical position of the tile
+	 * @return true, if unwalkable, false, if can be walked on
+	 */
+	public boolean isMonsterColliding(int x, int y) {
+		if (groundLayer.getTile(x, y).itemType != ItemTypes.GROUND)
+			return true;
+		else if (objectLayer.getTile(x, y).itemType == ItemTypes.BLUE_GEM)
+			return true;
+		else if (objectLayer.getTile(x, y).itemType == ItemTypes.RED_GEM)
+			return true;
+		else if (objectLayer.getTile(x, y).itemType == ItemTypes.GREEN_GEM)
+			return true;
+		else if (objectLayer.getTile(x, y).itemType == ItemTypes.DARK_BOULDER)
+			return true;
+		else if (objectLayer.getTile(x, y).itemType == ItemTypes.WHITE_BOULDER)
+			return true;
+		else if (specialLayer.getTile(x, y).itemType != ItemTypes.EMPTY)
+			return true;
+		else if (x >= 0 && x < collisionLayer[y].length && y >= 0 && y < collisionLayer.length)
+			return collisionLayer[y][x];
+		return true;
+	}
 
 	/**
 	 * Sets a new layer to the map
