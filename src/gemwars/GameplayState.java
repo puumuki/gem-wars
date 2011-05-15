@@ -30,6 +30,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.Log;
 
+import utils.TimeCounter;
+
 /**
  * The Gameplay state is the one where the game itself happens.
  *
@@ -54,6 +56,9 @@ public class GameplayState extends BasicGameState {
     private Map map;
     
     private GameUI ui;
+    
+    private TimeCounter deathTimer = new TimeCounter();
+    private TimeCounter levelEndTimer = new TimeCounter();
     
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
@@ -215,34 +220,38 @@ public class GameplayState extends BasicGameState {
 		for (Player p : map.getPlayers()) {
 			
 			// if a monster kills a player, we do it here
-			if (map.hasMonsterKilled(p)) { 
-				p.kill();
-			}
+			map.checkMonsterKills(p);
 			
 			// has the player died in some manner?
 			if (p.isDead())
 			{
-				Log.debug("Removing dead player at [" + p.positionX + "," + p.positionY + "]");
-				map.drawDiamondMatrix(p.positionX, p.positionY);
-				
-				// TODO: pause here
-				
-				if (map.getPlayer(0).lives <= 0) {
+				if (deathTimer.isActive() == false) {
+					Log.debug("Removing dead player at [" + p.positionX + "," + p.positionY + "]");
+					map.drawDiamondMatrix(p.positionX, p.positionY);
 					
-					state.enterState(Gemwars.GAMEOVERSTATE, 								
-							new FadeOutTransition(), 
-							new FadeInTransition());
-				}
-				else
-				{
-					try {
+					deathTimer.start();
+				} else if (deathTimer.timeElapsedInMilliseconds() > 1500){
+					
+					deathTimer.stop();
+					deathTimer.reset();
+					
+					if (map.getPlayer(0).lives <= 0) {
 						
-						Map tempMap = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
-						this.map = tempMap;
-
-						tempMap.enter(cont);
-					} catch (IOException e) {
-						throw new SlickException(e.getMessage());
+						state.enterState(Gemwars.GAMEOVERSTATE, 								
+								new FadeOutTransition(), 
+								new FadeInTransition());
+					}
+					else
+					{
+						try {
+							
+							Map tempMap = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
+							this.map = tempMap;
+	
+							tempMap.enter(cont);
+						} catch (IOException e) {
+							throw new SlickException(e.getMessage());
+						}
 					}
 				}
 			}

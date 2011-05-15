@@ -100,20 +100,26 @@ public class Player extends AEntity {
 		int drawX = positionX * Item.TILE_WIDTH;
 		int drawY = positionY * Item.TILE_HEIGHT;
 		
-		if( direction == Direction.UP ) {
-			grap.drawAnimation(walkingUp, drawX, (int)(drawY - distance) );
+		if (isDead() == true) {
+			grap.drawImage(deadImage, drawX, drawY);
 		}
-		if( direction == Direction.DOWN ) {
-			grap.drawAnimation(walkingDown, drawX, (int) (drawY + distance ));
-		}
-		if( direction == Direction.LEFT ) {
-			grap.drawAnimation(walkingLeft, (int)(drawX - distance), drawY);
-		}
-		if( direction == Direction.RIGHT ) {
-			grap.drawAnimation(walkingRight, (int)(drawX + distance), drawY);			
-		}
-		if( direction == Direction.STATIONARY ) {
-			grap.drawImage(stationaryTemp, drawX, drawY);	
+		else
+		{
+			if( direction == Direction.UP ) {
+				grap.drawAnimation(walkingUp, drawX, (int)(drawY - distance) );
+			}
+			if( direction == Direction.DOWN ) {
+				grap.drawAnimation(walkingDown, drawX, (int) (drawY + distance ));
+			}
+			if( direction == Direction.LEFT ) {
+				grap.drawAnimation(walkingLeft, (int)(drawX - distance), drawY);
+			}
+			if( direction == Direction.RIGHT ) {
+				grap.drawAnimation(walkingRight, (int)(drawX + distance), drawY);			
+			}
+			if( direction == Direction.STATIONARY ) {
+				grap.drawImage(stationaryTemp, drawX, drawY);	
+			}
 		}
 		
 		// to debug, uncomment

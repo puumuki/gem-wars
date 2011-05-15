@@ -512,12 +512,13 @@ public class Map extends AEntity {
 		return players;
 	}
 
-	public boolean hasMonsterKilled(Player player) {
+	public void checkMonsterKills(Player player) {
 		for (Monster m : monsters) {
-			if(m.positionX == player.positionX && m.positionY == player.positionY)
-				return true;
+			if(m.positionX == player.positionX && m.positionY == player.positionY && player.isDead() == false) {
+				player.kill();
+				m.kill();
+			}
 		}
-		return false;
 	}
 
 	public void drawDiamondMatrix(int posX, int posY) throws SlickException {
