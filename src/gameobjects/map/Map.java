@@ -184,9 +184,14 @@ public class Map extends AEntity {
 			return;
 		}
 		
+		this.players.clear();
+		
 		for(Player p : players) {
+						
 			for(Point startingPosition : getStartingPositions() ) {
-				this.players.clear();
+			
+				
+				
 				this.players.add(p);
 				p.positionX = startingPosition.x;
 				p.positionY = startingPosition.y;

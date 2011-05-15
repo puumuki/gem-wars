@@ -23,7 +23,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * 
  * Antakaa toisillenne koodaamisen rauha ja oikeus omanlaiseen tulkintaansa tällä
  * tiellä. Jokainen kunniottakoon toisen koodia ja antakoot siitä palautetta sen toteutuksesta,
- * jos hän sitä pyytää
+ * jos hän sitä pyytää.
  * 
  * --Javapapumies
  *

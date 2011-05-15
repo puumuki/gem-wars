@@ -270,4 +270,19 @@ public class Player extends AEntity {
 	public boolean isDead() {
 		return dead;
 	}
+	
+	public Player copy() {
+		
+		Player player = new Player();
+		
+		player.playerNumber = this.playerNumber;
+		player.lives = this.lives;
+		player.distance = this.distance;
+		player.positionX = this.positionX;
+		player.positionY = this.positionY;
+		player.score = this.score;
+		player.collectedGemCount = this.collectedGemCount;
+		
+		return player;
+	}
 }
