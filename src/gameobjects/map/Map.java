@@ -11,6 +11,7 @@ import org.newdawn.slick.util.Log;
 import utils.TimeCounter;
 
 import gameobjects.AEntity;
+import gameobjects.Boulder;
 import gameobjects.Direction;
 import gameobjects.Gem;
 import gameobjects.Item;
@@ -396,9 +397,27 @@ public class Map extends AEntity {
 		return false;
 	}
 	
+	/**
+	 * Check if a tile contains a boulder in the given coordinates.
+	 * 
+	 * @param x 
+	 * @param y 
+	 * @return true if the tile has a boulder in it
+	 */
+	public boolean isTileContainingBoulder(int x, int y ) {
+		Item item = objectLayer.getTile(x, y);
+		
+		if( item.itemType == ItemTypes.WHITE_BOULDER 
+			|| item.itemType == ItemTypes.DARK_BOULDER ) {
+			
+			return true;			
+		}
+		
+		return false;
+	}
 	
 	
-	public boolean isTileContainingDirt(int x, int y) {
+	public boolean isTileContainingSand(int x, int y) {
 		Item item = groundLayer.getTile(x, y);
 		
 		if( item.itemType == ItemTypes.SAND ) {
@@ -408,9 +427,9 @@ public class Map extends AEntity {
 		return false;
 	}
 	
-	public boolean destroyDirt(int x, int y) {
+	public boolean destroySand(int x, int y) {
 		
-		if(isTileContainingDirt(x, y)) {
+		if(isTileContainingSand(x, y)) {
 			Item item = new Item(ItemTypes.GROUND);						
 			groundLayer.setTile(x, y, item);
 			
@@ -549,5 +568,21 @@ public class Map extends AEntity {
 	
 	public int getRemainingTime() {
 		return time - (int)timer.timeElapsedInSeconds();
+	}
+	
+	public boolean canPush(int posX, int posY, Direction d) {
+		if (isTileContainingBoulder(posX, posY) && d == Direction.LEFT && !isMonsterColliding(posX-1, posY))
+			return true;
+		if (isTileContainingBoulder(posX, posY) && d == Direction.RIGHT && !isMonsterColliding(posX+1, posY))
+			return true;
+		return false;
+	}
+
+	public void moveBoulder(int posX, int posY, Direction d) {
+		Item item = objectLayer.getTile(posX, posY);
+		if(item.itemType == ItemTypes.DARK_BOULDER || item.itemType == ItemTypes.WHITE_BOULDER) {
+			Boulder b = (Boulder)item;
+			b.move(d);
+		}
 	}
 }

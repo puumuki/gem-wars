@@ -31,6 +31,8 @@ public class Boulder extends PhysicsObject implements IDynamic {
 	
 	private double friction;
 	
+	private boolean pushed;
+	
 	/**
 	 * Creates a new boulder.
 	 * @param boulderType type (or colour) of the boulder. There could be a slight difference between them
@@ -108,6 +110,30 @@ public class Boulder extends PhysicsObject implements IDynamic {
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
 		super.update(cont, delta);
-		
+		if( direction != Direction.STATIONARY 
+				&& distance <= Item.TILE_HEIGHT) {
+			// taken care of in the super.update method
+		}
+		else {
+			direction = Direction.STATIONARY;
+			pushed = false;
+		}
+	}
+	
+	public void move(Direction d) {
+		distance = 0;
+		direction = d;
+		pushed = true;
+		if(direction == Direction.RIGHT) {
+			map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
+			positionX++;
+			map.getObjectLayer().setTile(positionX, positionY, this);
+		}
+		else if(direction == Direction.LEFT) {
+			map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
+			positionX--;
+			map.getObjectLayer().setTile(positionX, positionY, this);
+		}
+
 	}
 }

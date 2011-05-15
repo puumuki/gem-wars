@@ -15,6 +15,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+import utils.TimeCounter;
+
 /**
  * The Player class holds an implementation of human controller entity.
  */
@@ -48,6 +50,9 @@ public class Player extends AEntity {
 	private Sound gemCollectedSound;
 	
 	private Image stationary;
+	/**
+	 * This image is used to prevent stuttering while walking
+	 */
 	private Image stationaryTemp;
 	private Animation walkingRight;
 	private Animation walkingLeft;
@@ -65,6 +70,8 @@ public class Player extends AEntity {
 	 * Flag that indicates is the player pushing something.
 	 */	
 	public boolean pushingStone = false;
+	
+	private TimeCounter pushTimer = new TimeCounter();
 	
 	/**
 	 * Initialises the player. This should not be called directly! 
@@ -112,10 +119,16 @@ public class Player extends AEntity {
 				grap.drawAnimation(walkingDown, drawX, (int) (drawY + distance ));
 			}
 			if( direction == Direction.LEFT ) {
-				grap.drawAnimation(walkingLeft, (int)(drawX - distance), drawY);
+				if (pushingStone)
+					grap.drawAnimation(pushLeft, (int)(drawX - distance), drawY);
+				else
+					grap.drawAnimation(walkingLeft, (int)(drawX - distance), drawY);
 			}
 			if( direction == Direction.RIGHT ) {
-				grap.drawAnimation(walkingRight, (int)(drawX + distance), drawY);			
+				if (pushingStone)
+					grap.drawAnimation(pushRight, (int)(drawX + distance), drawY);
+				else
+					grap.drawAnimation(walkingRight, (int)(drawX + distance), drawY);			
 			}
 			if( direction == Direction.STATIONARY ) {
 				grap.drawImage(stationaryTemp, drawX, drawY);	
@@ -124,6 +137,7 @@ public class Player extends AEntity {
 		
 		// to debug, uncomment
 		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
+		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance+"\n"+pushTimer.timeElapsedInMilliseconds(), drawX, drawY);
 	}
 
 	@Override
@@ -135,8 +149,17 @@ public class Player extends AEntity {
 
 			collectDiamonds();
 			dig();
-			//If no any key pressed is going to be stationary		
+			
+			// Press K to kill the player
+			if (input.isKeyDown(Input.KEY_K)) {
+				kill();
+			}
+			
+			//If no key is pressed is going to be stationary		
 			if(direction == Direction.STATIONARY ) {
+				
+				pushingStone = false;
+				
 				if( input.isKeyDown(Input.KEY_DOWN )) {
 					if (!map.isColliding(positionX, positionY + 1))
 						direction = Direction.DOWN;
@@ -150,18 +173,56 @@ public class Player extends AEntity {
 				if( input.isKeyDown(Input.KEY_LEFT)) {
 					if (!map.isColliding(positionX - 1 , positionY))
 						direction = Direction.LEFT;
+					else if (map.canPush(positionX - 1, positionY, Direction.LEFT)) {
+						if(pushTimer.isActive() == false) {
+							pushingStone = true;
+							direction = Direction.LEFT;
+							pushTimer.start();
+						}
+						
+					}
 				}
 				
 				if( input.isKeyDown(Input.KEY_RIGHT)) {
 					if (!map.isColliding(positionX + 1, positionY))
 						direction = Direction.RIGHT;
+					else if (map.canPush(positionX + 1, positionY, Direction.RIGHT)) {
+						if(pushTimer.isActive() == false) {
+							pushingStone = true;
+							direction = Direction.RIGHT;
+							pushTimer.start();
+						}
+					}
 				}
 				stationaryTemp = stationary;
+				
+				
+			}
+			
+
+			
+			if ((!input.isKeyDown(Input.KEY_LEFT) && pushTimer.isActive() && direction == Direction.LEFT)
+					|| (!input.isKeyDown(Input.KEY_RIGHT) && pushTimer.isActive() && direction == Direction.RIGHT)) {
+				pushTimer.stop();
+				pushTimer.reset();
+				pushingStone = false;
+				direction = Direction.STATIONARY;
 			}
 			
 			if( direction != Direction.STATIONARY 
-				&& distance <= Item.TILE_HEIGHT ) {			
-				distance += speed * delta;
+				&& distance <= Item.TILE_HEIGHT ) {
+				if(pushTimer.isActive()) {
+					if(pushTimer.timeElapsedInMilliseconds() > 500) {
+						pushTimer.stop();
+						pushTimer.reset();
+						if (direction == Direction.LEFT)
+							map.moveBoulder(positionX - 1, positionY, direction);
+						if (direction == Direction.RIGHT)
+							map.moveBoulder(positionX + 1, positionY, direction);
+					}
+				}
+				else
+					distance += speed * delta;
 			} else {
 				if( direction == Direction.LEFT ) {
 					positionX--;
@@ -187,7 +248,7 @@ public class Player extends AEntity {
 			
 		}
 		else {
-			// do nothing
+			// if the player is dead, do nothing
 		}
 	}
 	
@@ -196,7 +257,7 @@ public class Player extends AEntity {
 	 */
 	private void dig() {
 		Point point = Direction.scanDirection(direction);		
-		map.destroyDirt(positionX + point.x, positionY + point.y);		
+		map.destroySand(positionX + point.x, positionY + point.y);		
 	}
 	
 
