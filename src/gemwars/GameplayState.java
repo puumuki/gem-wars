@@ -9,6 +9,7 @@ import gameobjects.Monster;
 import gameobjects.Player;
 import gameobjects.map.ItemTypes;
 import gameobjects.map.Map;
+import gemwars.ui.GameUI;
 import io.MapLoader;
 import io.Options;
 import io.ResourceManager;
@@ -49,6 +50,8 @@ public class GameplayState extends BasicGameState {
 
     private Map map;
     
+    private GameUI ui;
+    
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
 		
@@ -67,6 +70,8 @@ public class GameplayState extends BasicGameState {
 		}		
 
 		gamemusic = ResourceManager.getInstance().getMusic("GAME_MUSIC");
+		
+		ui = new GameUI(cont, state);
 	}
 	
 	@Override
@@ -94,11 +99,13 @@ public class GameplayState extends BasicGameState {
 		
 		map.render(cont, graph);
 		
+		ui.render(cont, graph, 0, map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
 		
+		/*
 		graph.drawString("SCORE: " + map.getPlayer(0).getScore(), 500, 0);
 		graph.drawString(" GEMS: " + map.getPlayer(0).getGems() + "/" + map.getGemCount(), 500, 15);
 		graph.drawString("LIVES: " + map.getPlayer(0).getLives(), 500, 30);
-		
+		*/
 	}
 
 	@Override

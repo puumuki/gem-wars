@@ -59,6 +59,12 @@
 	<resource type="sound" id="GAME_COLLECT">resources\sounds\collect.wav</resource>
 	<resource type="music" id="GAME_MUSIC">resources\music\peli.XM</resource>
 	
+	<!-- UI -->
+	<resource type="animation" id="UI_CLOCK" tw="48" th="48" duration="42">resources\images\ui_clock.png</resource>
+	<resource type="animation" id="UI_COIN" tw="48" th="48" duration="42">resources\images\ui_coin.png</resource>
+	<resource type="animation" id="UI_GEM" tw="48" th="48" duration="42">resources\images\ui_gem.png</resource>
+	<resource type="animation" id="UI_HEAD" tw="48" th="48" duration="42">resources\images\ui_head.png</resource>
+	
 </resources>
 
 
