@@ -115,21 +115,21 @@ public class Map extends AEntity {
 		
 		for( Player player : players ) {
 			player.update(cont, delta);
-
+			
+			
 		}
 		Player p = players.get(0);
 		if (p.direction != Direction.STATIONARY) {
 			centerCameraToPlayer(cont, p);
 		}
 		
-		// messy, but it is needed to remove the dead monsters
-		List<Monster> newMonsters = new ArrayList<Monster>();
-		for (Monster m : monsters) {
-			if(!m.isDead())
-				newMonsters.add(m);
-			m.update(cont, delta);
+		// remove dead monsters
+		for (int i = 0; i < monsters.size(); i++) {
+			Monster monster = monsters.get(i);
+			if(monster.isDead())
+				monsters.remove(i);
+			monster.update(cont, delta);
 		}
-		monsters = newMonsters;
 		
 		if (goalOpen == false && players.get(0).getGems() >= gemCount) {
 			openGoal();
@@ -455,7 +455,7 @@ public class Map extends AEntity {
 		return players;
 	}
 
-	public boolean hasPlayerDied(Player player) {
+	public boolean hasMonsterKilled(Player player) {
 		for (Monster m : monsters) {
 			if(m.positionX == player.positionX && m.positionY == player.positionY)
 				return true;

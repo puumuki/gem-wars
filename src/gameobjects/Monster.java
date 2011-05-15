@@ -22,8 +22,6 @@ public class Monster extends AEntity {
 	private Animation walkingUp;
 	private Animation walkingDown;
 	
-	private Direction direction = Direction.STATIONARY;
-	
 	private double distance;
 	
 	public int positionX;
@@ -45,6 +43,8 @@ public class Monster extends AEntity {
 		this.map = map;
 		
 		this.speed = 0.1;
+		
+		this.direction = Direction.STATIONARY;
 	}
 	
 	@Override

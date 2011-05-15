@@ -61,11 +61,10 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 			if (map.getObjectLayer().getTile(x, y).itemType != ItemTypes.EMPTY)
 				return false;
 			for (Player p : map.getPlayers()) {
-				if(((p.positionX == x && p.positionY == y)
+				if((p.positionX == x && p.positionY == y)
 						|| (p.direction == Direction.LEFT && p.positionX == x+1 && p.positionY == y)
 						|| (p.direction == Direction.RIGHT && p.positionX == x-1 && p.positionY == y)
 						|| (p.direction == Direction.UP && p.positionX == x && p.positionY == y+1 ))
-						&& lastDirection != Direction.STATIONARY)
 					return false;
 			}
 			return true;
@@ -75,49 +74,56 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
+		// object is moving
 		if( direction != Direction.STATIONARY 
-			&& distance <= Item.TILE_HEIGHT) { 					// boulder is moving
+			&& distance <= Item.TILE_HEIGHT) {
 			
 			distance += speed * delta;
 		}
-		else { 													// boulder is not moving or has just finished moving
+		// object is not moving or has just finished moving
+		else {
 			distance = 0;
 			lastDirection = direction;
 			direction = Direction.STATIONARY;
-		if (isFalling()) { 													// can it fall down?
+			
+			// check for player and monster deaths if they are under the object when it finishes moving
+			for (Player p : map.getPlayers()) {
+				if(p.positionX == positionX && p.positionY == positionY+1 && lastDirection != Direction.STATIONARY && p.direction == Direction.STATIONARY)
+					p.kill();
+			}
+			for (Monster m: map.getMonsters()) {
+				if(m.positionX == positionX && m.positionY == positionY+1 && lastDirection != Direction.STATIONARY && m.direction == Direction.STATIONARY)
+					m.kill();
+			}
+			
+			// can it fall down?
+			if (isFalling()) {
 				direction = Direction.DOWN;
 				map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
 				positionY++;
 				map.getObjectLayer().setTile(positionX, positionY, this);
 				
-				for (Player p : map.getPlayers()) {
-					if(p.positionX == positionX && p.positionY == positionY)
-						p.kill();
-				}
-				for (Monster m: map.getMonsters()) {
-					if(m.positionX == positionX && m.positionY == positionY)
-						m.kill();
-				}
 				
-				
-			} else if (lastDirection == Direction.DOWN && isRollingRight()) { // if not, can it roll right after falling down?
+			 // if not, can it roll right after falling down?
+			} else if (lastDirection == Direction.DOWN && isRollingRight()) {
 				direction = Direction.RIGHT;
 				map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
 				positionX++;
 				map.getObjectLayer().setTile(positionX, positionY, this);
-			} else if (lastDirection == Direction.DOWN && isRollingLeft()) { // if not, can it roll left after falling down? 
+				
+			 // if not, can it roll left after falling down?
+			} else if (lastDirection == Direction.DOWN && isRollingLeft()) { 
 				direction = Direction.LEFT;
 				map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
 				positionX--;
 				map.getObjectLayer().setTile(positionX, positionY, this);
-			} else { 														// just stay put.
+				
+			// just stay put.
+			} else {
 				direction = Direction.STATIONARY;
 			}
 		}
 		
-		if (isPushable()) {
-			
-		}
 		
 	}
 
