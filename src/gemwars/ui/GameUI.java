@@ -3,6 +3,7 @@ package gemwars.ui;
 import io.ResourceManager;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -34,7 +35,6 @@ public class GameUI {
 	 * @param state what state are we in
 	 * @throws SlickException if something goes wrong
 	 */
-	@SuppressWarnings("unchecked")
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
 		clock = ResourceManager.fetchAnimation("UI_CLOCK");
 		coin = ResourceManager.fetchAnimation("UI_COIN");
@@ -44,11 +44,8 @@ public class GameUI {
 		
 		java.awt.Font awtFont = new java.awt.Font("Verdana", java.awt.Font.BOLD, 30);
         font = new UnicodeFont(awtFont);
-        font.addAsciiGlyphs();       
-        java.awt.Color topColor = new java.awt.Color( 0xbbdd00 );
-        java.awt.Color bottomColor = new java.awt.Color( 0x99aa00 );
-        
-        font.getEffects().add(new GradientEffect(topColor, bottomColor, 1f));
+        font.addAsciiGlyphs();
+        setFontColors();
         font.loadGlyphs();
         
 	}
@@ -65,22 +62,49 @@ public class GameUI {
 	 * @throws SlickException if something goes wrong
 	 */
 	public void render(GameContainer cont, Graphics grap, int time, int points, int gemCount, int gemsNeeded, int lives) throws SlickException {
+		int margin = 6;
 		grap.setFont(font);
-		int margin = 5;
-		
+		grap.setColor(new Color(0,0,0,(float)0.5));
+
+		// points in top left
+		String pointsText = "x "+points;
+		grap.fillRoundRect((float)(margin/2.0), (float)(margin/2.0), (float)(coin.getWidth() + font.getWidth(pointsText) + margin * 4), (float)(coin.getHeight() + margin), 4);
 		grap.drawAnimation(coin, margin, margin);
-		grap.drawString("x "+points, margin + coin.getWidth() + margin * 2, margin + coin.getHeight() / 2 - font.getLineHeight() / 2);
+		font.drawString(margin + coin.getWidth() + margin * 2, (float)(margin + coin.getHeight() / 2.0 - font.getHeight(pointsText) / 2.0), pointsText);
 		
-		grap.drawAnimation(clock, cont.getWidth() - clock.getWidth() - 5, 5);
+		// time in top right
 		String timeText = time + " x";
-		grap.drawString(timeText, cont.getWidth() - (margin + clock.getWidth() + margin * 2) - font.getWidth(timeText), margin + coin.getHeight() / 2 - font.getLineHeight() / 2);
+		float width = clock.getWidth() + font.getWidth(timeText) + margin * 4;
+		grap.fillRoundRect((float)(cont.getWidth() - margin/2.0 - width), (float)(margin/2.0), width, (float)(clock.getHeight() + margin), 4);
+		grap.drawAnimation(clock, cont.getWidth() - clock.getWidth() - 5, 5);
+		font.drawString(cont.getWidth() - (margin + clock.getWidth() + margin * 2) - font.getWidth(timeText), (float)(margin + clock.getHeight() / 2.0 - font.getLineHeight() / 2.0), timeText);
 		
+		// gem count in bottom left
+		String gemText = "x " + gemCount + " / " + gemsNeeded;
+		width = head.getWidth() + font.getWidth(gemText) + margin * 4;
+		float y = (float)(cont.getHeight() - gem.getHeight() - margin * 1.5);
+		grap.fillRoundRect((float)( margin/2.0 ), y, width, (float)(head.getHeight() + margin), 4);
 		grap.drawAnimation(gem, margin, cont.getHeight() - gem.getWidth() - margin);
-		grap.drawString("x " + gemCount + " / " + gemsNeeded, margin + gem.getWidth() + margin * 2, cont.getHeight() - (margin + gem.getHeight() / 2) - font.getLineHeight() / 2);
+		font.drawString(gem.getWidth() + margin * 3, (float)(cont.getHeight() - (margin + head.getHeight() / 2.0) - font.getHeight(gemText) / 2.0), gemText);
 		
-		grap.drawAnimation(head, cont.getWidth() - head.getWidth() - margin, cont.getHeight() - head.getWidth() - margin);
+		// life count in bottom right
 		String livesText = lives + " x";
-		grap.drawString(livesText, cont.getWidth() - (margin + head.getWidth() + margin * 2) - font.getWidth(livesText), cont.getHeight() - (margin + head.getHeight() / 2) - font.getLineHeight() / 2);
+		width = head.getWidth() + font.getWidth(livesText) + margin * 4;
+		y = (float)(cont.getHeight() - head.getHeight() - margin * 1.5);
+		grap.fillRoundRect((float)(cont.getWidth() - margin/2.0 - width), y, width, (float)(head.getHeight() + margin), 4);
+		grap.drawAnimation(head, cont.getWidth() - head.getWidth() - margin, cont.getHeight() - head.getWidth() - margin);
+		font.drawString(cont.getWidth() - (margin + head.getWidth() + margin * 2) - font.getWidth(livesText), (float)(cont.getHeight() - (margin + head.getHeight() / 2.0) - font.getHeight(livesText) / 2.0), livesText);
 	}
+
 	
+	
+	
+	@SuppressWarnings("unchecked")
+	private void setFontColors() {
+
+        java.awt.Color topColor = new java.awt.Color( 0xf3ed11 );
+        java.awt.Color bottomColor = new java.awt.Color( 0xd3cc0c );
+        font.getEffects().clear();
+        font.getEffects().add(new GradientEffect(topColor, bottomColor, 1f));
+	}
 }
