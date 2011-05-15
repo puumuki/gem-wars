@@ -1,10 +1,7 @@
 package gemwars.ui.components;
 
-import java.awt.Font;
-
 import gameobjects.IGameObject;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;

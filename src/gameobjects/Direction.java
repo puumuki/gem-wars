@@ -3,8 +3,6 @@ package gameobjects;
 import java.awt.Point;
 
 /**
- * 
- * @author Teemuki
  *
  * Enumeration to indicate the direction where an entity is moving.
  */

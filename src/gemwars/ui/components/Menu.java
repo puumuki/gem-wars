@@ -12,8 +12,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.GradientEffect;
 import org.newdawn.slick.font.effects.OutlineEffect;
-import org.newdawn.slick.UnicodeFont;
-
 import gameobjects.IGameObject;
 
 public class Menu implements IGameObject {

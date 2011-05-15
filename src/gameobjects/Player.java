@@ -73,7 +73,6 @@ public class Player extends AEntity {
 		playerNumber = __staticPlayerNumber++;		
 		postProcessAnimations();
 		initSounds();
-		//Tweak this if you want to player to go faster
 		this.speed = 0.1;
 	}
 	

@@ -24,12 +24,31 @@ import gameobjects.map.Layer;
 import gameobjects.map.LayerTypes;
 import gameobjects.map.Map;
 
+/**
+ * This can be used to load maps.
+ *
+ */
 public class MapLoader {
 	
+	/**
+	 * Load a specific map.
+	 * @param file map file to load
+	 * @return the new map.
+	 * @throws IOException
+	 * @throws SlickException
+	 */
 	public static Map loadMap( File file ) throws IOException, SlickException {
 		return loadMap(file, null);
 	}
 	
+	/**
+	 * Load a specific map with player information.
+	 * @param file map file to load
+	 * @param players links to the players (or null if no players)
+	 * @return the new map
+	 * @throws IOException
+	 * @throws SlickException
+	 */
 	public static Map loadMap(File file, List<Player> players) throws IOException, SlickException {
 		Log.info("Loading level from a file : " + file.getName());
 		
@@ -75,7 +94,7 @@ public class MapLoader {
 				} catch (NumberFormatException e) {
 					time = 60;
 				}
-				map.setTime(time);
+				map.setTime(time); // TODO: take Options.gameSpeed into account!
 				
 				// Then layers, one at a time
 				for (int i = 0; i < 4; i++) {
@@ -233,6 +252,11 @@ public class MapLoader {
 		return maps;
 	}
 	
+	/**
+	 * Does the "dirty work" to find map files in a directory (and its subdirectories).
+	 * @param maps already known maps
+	 * @param path map folder
+	 */
 	private static void searchRecursivelyForMapFiles( List<File>maps, File path ) {
 		for( File file : path.listFiles() ) {
 			

@@ -192,6 +192,13 @@ public class GameplayState extends BasicGameState {
 
 	}
 	
+	/**
+	 * Checks for monster and player deaths and proceeds accordingly.
+	 * @param cont game container
+	 * @param state game state
+	 * @param delta
+	 * @throws SlickException
+	 */
 	private void checkDeaths(GameContainer cont, StateBasedGame state, int delta) throws SlickException {
 		// are there dead monsters?
 		for (Monster m : map.getMonsters()) {
@@ -239,6 +246,12 @@ public class GameplayState extends BasicGameState {
 		}
 	}
 	
+	/**
+	 * Checks if a player has entered the goal
+	 * @param cont game container
+	 * @param state the state we are in
+	 * @param delta
+	 */
 	private void checkGoal(GameContainer cont, StateBasedGame state, int delta) {
 		for (Player p : map.getPlayers()) {
 			// is the player in the goal?

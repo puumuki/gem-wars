@@ -12,11 +12,15 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-
-
-
+/**
+ * Items are a basic entity type.
+ *
+ */
 public class Item extends AEntity {
 	
+	/**
+	 * Hashmap for item textures
+	 */
 	private static Map<ItemTypes, Image> itemTextures = new HashMap<ItemTypes, Image>();  
 	
 	/**
@@ -28,6 +32,10 @@ public class Item extends AEntity {
 	public static final int TILE_WIDTH = 56;
 	public static final int TILE_HEIGHT = 56;
 			
+	/**
+	 * Create a new item
+	 * @param itemType type of the item
+	 */
 	public Item( ItemTypes itemType ) {
 		this.itemType = itemType;
 		

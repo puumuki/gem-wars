@@ -14,6 +14,10 @@ import org.newdawn.slick.SlickException;
 
 import utils.GemwarsUtils;
 
+/**
+ * A boulder that blocks the player and that he can push. Boulders can kill the player if they fall on him.
+ *
+ */
 public class Boulder extends PhysicsObject implements IDynamic {
 		
 	private Image staticStone;
@@ -23,15 +27,25 @@ public class Boulder extends PhysicsObject implements IDynamic {
 	
 	private Renderable currentAnimation;
 
-	
 	private Map map;
 	
+	private double friction;
+	
+	/**
+	 * Creates a new boulder.
+	 * @param boulderType type (or colour) of the boulder. There could be a slight difference between them
+	 * (black boulder has more friction?)
+	 * @param map link to the map we are on
+	 * @throws SlickException if something goes wrong
+	 */
 	public Boulder( ItemTypes boulderType,  Map map) throws SlickException {
 		super( boulderType , map);
 		this.map = map;
 		init();
 		
 		speed = 0.1;
+		
+		// TODO: set friction
 	}
 	
 	

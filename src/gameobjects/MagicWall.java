@@ -9,6 +9,11 @@ import org.newdawn.slick.SlickException;
 
 import gameobjects.map.ItemTypes;
 
+/**
+ * A magic wall! It is animated.
+ * Some more magicks might be implemented later.
+ *
+ */
 public class MagicWall extends Item {
 
 	private Animation wall;

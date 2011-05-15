@@ -12,6 +12,10 @@ import org.newdawn.slick.SlickException;
 
 import utils.GemwarsUtils;
 
+/**
+ * A gem that the player can collect. Gems can kill the player if they fall on him. 
+ *
+ */
 public class Gem extends PhysicsObject implements IDynamic {
 
 	private Image gemImage;
@@ -19,7 +23,13 @@ public class Gem extends PhysicsObject implements IDynamic {
 	private Animation gemDown;
 	private Animation gemLeft;
 	private Animation gemRight;
-		
+	
+	/**
+	 * Creates a new gem.
+	 * @param gemtype type (or colour) of the gem
+	 * @param map link to the map we are on
+	 * @throws SlickException if something goes wrong
+	 */
 	public Gem(ItemTypes gemtype, Map map) throws SlickException {
 		
 		super(gemtype, map);
@@ -84,14 +94,12 @@ public class Gem extends PhysicsObject implements IDynamic {
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
 		super.update(cont, delta);
-		
-		/*
-		gemRight.update(delta);
-		gemDown.update(delta);
-		gemLeft.update(delta);
-		*/
 	}
 	
+	/**
+	 * Value of the gem. Depends on the colour.
+	 * @return value according to a specific algorithm ;)
+	 */
 	public int getValue() {
 		return this.itemType.ordinal() * 10;
 	}

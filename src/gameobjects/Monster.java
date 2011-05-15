@@ -12,8 +12,6 @@ import org.newdawn.slick.SlickException;
  * Enemies of the player. Stupid ants that move according to 
  * a certain pattern so they can be predicted.
  * 
- * Monsters "hug" the wall on their left. If they encounter a wall, they turn left until they can get out of the situation.
- *
  */
 public class Monster extends AEntity {
 
@@ -31,6 +29,12 @@ public class Monster extends AEntity {
 	
 	private boolean dead = false;
 	
+	/**
+	 * Creates a new monster
+	 * @param x position x
+	 * @param y position y
+	 * @param map link to the map we are on
+	 */
 	public Monster(int x, int y, Map map) {
 		walkingRight = ResourceManager.fetchAnimation("MONSTER_RIGHT");
 		walkingLeft = ResourceManager.fetchAnimation("MONSTER_LEFT");
@@ -42,7 +46,7 @@ public class Monster extends AEntity {
 		
 		this.map = map;
 		
-		this.speed = 0.1;
+		speed = 0.1;
 		
 		this.direction = Direction.STATIONARY;
 	}
@@ -85,16 +89,16 @@ public class Monster extends AEntity {
 		if(direction == Direction.STATIONARY) // corrects a bug on start
 			direction = Direction.RIGHT;
 
-
-		
-		/*
-		walkingRight.update(delta);
-		walkingLeft.update(delta);
-		walkingUp.update(delta);
-		walkingDown.update(delta);
-		*/
 	}
 	
+	/**
+	 * The AI of the monster.
+	 * <p>
+	 * Monsters "hug" the wall on their left. If they encounter a wall, they turn left until they can get out of the situation.
+	 * However, if there is no wall, they should go forwards in some manner... TODO: this still needs to be implemented.
+	 * 
+	 * @throws SlickException if something goes awry
+	 */
 	private void changeDirection() throws SlickException {
 		if( direction == Direction.RIGHT ) {
 			if (!map.isMonsterColliding(positionX, positionY - 1)) { // can it turn left
@@ -145,10 +149,17 @@ public class Monster extends AEntity {
 		}
 	}
 	
+	/**
+	 * Kills the monster.
+	 */
 	public void kill() {
 		dead = true;
 	}
 	
+	/**
+	 * To check whether or not the monster is dead.
+	 * @return true, if it is dead, false, if not
+	 */
 	public boolean isDead() {
 		return dead;
 	}
