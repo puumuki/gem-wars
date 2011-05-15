@@ -8,6 +8,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
+import utils.TimeCounter;
+
 import gameobjects.AEntity;
 import gameobjects.Direction;
 import gameobjects.Gem;
@@ -85,6 +87,8 @@ public class Map extends AEntity {
     private double cameraPositionY = 0;
     
     private boolean goalOpen = false;
+    
+    private TimeCounter timer = new TimeCounter();
 	
 	@Override
 	public void render(GameContainer cont, Graphics graph) throws SlickException {
@@ -133,6 +137,13 @@ public class Map extends AEntity {
 		
 		if (goalOpen == false && players.get(0).getGems() >= gemCount) {
 			openGoal();
+		}
+		
+		// time up?
+		if ((time*1000 - timer.timeElapsedInMilliseconds()) <= 0) {
+			for (Player player : players) {
+				player.kill();
+			}
 		}
 	}
 
@@ -186,16 +197,13 @@ public class Map extends AEntity {
 		
 		this.players.clear();
 		
-		for(Player p : players) {
-						
-			for(Point startingPosition : getStartingPositions() ) {
-			
-				
-				
-				this.players.add(p);
-				p.positionX = startingPosition.x;
-				p.positionY = startingPosition.y;
-			}
+		List<Point> starts = getStartingPositions();
+		for(int i = 0; i < starts.size(); i++) {
+			Player p = players.get(i);
+			this.players.add(p);
+			Log.debug("Recreating player "+p+" to position: " + starts.get(i));
+			p.positionX = starts.get(i).x;
+			p.positionY = starts.get(i).y;
 		}
 
 	}
@@ -441,6 +449,8 @@ public class Map extends AEntity {
 		for (Player p : players) {
 			p.setDead(false);
 		}
+		
+		timer.start();
 	}
 	
 	/**
@@ -492,5 +502,9 @@ public class Map extends AEntity {
 
 	public boolean isGoalOpen() {
 		return goalOpen;
+	}
+	
+	public int getRemainingTime() {
+		return time - (int)timer.timeElapsedInSeconds();
 	}
 }

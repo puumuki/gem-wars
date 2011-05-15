@@ -99,7 +99,7 @@ public class GameplayState extends BasicGameState {
 		
 		map.render(cont, graph);
 		
-		ui.render(cont, graph, 0, map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
+		ui.render(cont, graph, map.getRemainingTime(), map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
 		
 		/*
 		graph.drawString("SCORE: " + map.getPlayer(0).getScore(), 500, 0);
@@ -123,58 +123,10 @@ public class GameplayState extends BasicGameState {
 			for (Monster m : map.getMonsters())
 				m.kill();
 		}
-		// are there dead monsters?
-		for (Monster m : map.getMonsters()) {
-			if (m.isDead()) {
-				map.drawDiamondMatrix(m.positionX, m.positionY);
-			}
-		}
 		
-		// has the player died?
-		for (Player p : map.getPlayers()) {
-			if (map.hasMonsterKilled(p)) // checks for monster killing 
-				p.kill();
-			
-			if (p.isDead()) // has the player died in some manner?
-			{
-				map.drawDiamondMatrix(p.positionX, p.positionY);
-				
-				// TODO: pause here
-				
-				if (map.getPlayer(0).lives <= 0) {
-					
-					state.enterState(Gemwars.GAMEOVERSTATE, 								
-							new EmptyTransition(), 
-							new BlobbyTransition());
-				}
-				else
-				{
-					try {
-						
-						Map tempMap = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
-						this.map = tempMap;
+		checkDeaths(cont, state, delta);
 
-						tempMap.enter(cont);
-					} catch (IOException e) {
-						throw new SlickException(e.getMessage());
-					}
-				}
-			}
-			
-			
-
-			// is the player in the goal?
-			if (map.isGoalOpen()) {
-				List<Point> goals = map.findItemPositions(map.getSpecialLayer(), ItemTypes.GOAL);
-				Point point = goals.get(0);
-				if (p.positionX == point.x && p.positionY == point.y) {
-					// TODO: show level ending screen and change level
-					currentMapIndex++;
-					isMapChanged = true;
-				}
-			}
-		}
-		
+		checkGoal(cont, state, delta);
 		
 		
 		
@@ -240,7 +192,61 @@ public class GameplayState extends BasicGameState {
 
 	}
 	
+	private void checkDeaths(GameContainer cont, StateBasedGame state, int delta) throws SlickException {
+		// are there dead monsters?
+		for (Monster m : map.getMonsters()) {
+			if (m.isDead()) {
+				map.drawDiamondMatrix(m.positionX, m.positionY);
+			}
+		}
+		
+		// has the player died?
+		for (Player p : map.getPlayers()) {
+			if (map.hasMonsterKilled(p)) // checks for monster killing 
+				p.kill();
+			
+			if (p.isDead()) // has the player died in some manner?
+			{
+				map.drawDiamondMatrix(p.positionX, p.positionY);
+				
+				// TODO: pause here
+				
+				if (map.getPlayer(0).lives <= 0) {
+					
+					state.enterState(Gemwars.GAMEOVERSTATE, 								
+							new EmptyTransition(), 
+							new BlobbyTransition());
+				}
+				else
+				{
+					try {
+						
+						Map tempMap = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
+						this.map = tempMap;
+
+						tempMap.enter(cont);
+					} catch (IOException e) {
+						throw new SlickException(e.getMessage());
+					}
+				}
+			}
+		}
+	}
 	
+	private void checkGoal(GameContainer cont, StateBasedGame state, int delta) {
+		for (Player p : map.getPlayers()) {
+			// is the player in the goal?
+			if (map.isGoalOpen()) {
+				List<Point> goals = map.findItemPositions(map.getSpecialLayer(), ItemTypes.GOAL);
+				Point point = goals.get(0);
+				if (p.positionX == point.x && p.positionY == point.y) {
+					// TODO: show level ending screen and change level
+					currentMapIndex++;
+					isMapChanged = true;
+				}
+			}
+		}
+	}
 
 	@Override
 	public int getID() {

@@ -66,7 +66,7 @@ public class TimeCounter {
 	/**
 	 * @return Returns elapsed time in milliseconds
 	 */	
-	public long timeElabsedInMilliseconds() {
+	public long timeElapsedInMilliseconds() {
 		if( active )
 			return (timeElapsed + System.currentTimeMillis() - lastTimeStarted); 
 		else
@@ -77,6 +77,6 @@ public class TimeCounter {
 	 * @return Returns elabsed time in seconds 
 	 */
 	public float timeElapsedInSeconds() {
-		return timeElabsedInMilliseconds() / 1000f;
+		return timeElapsedInMilliseconds() / 1000f;
 	}	
 }

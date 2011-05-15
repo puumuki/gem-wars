@@ -25,6 +25,7 @@
 	<!-- GAMEPLAY -->
 	<!-- tiles -->
 	<resource type="image" id="ITEM_TEXTURES">resources\images\winbd_all.png</resource>
+	<resource type="animation" id="MAGIC_WALL" tw="56" th="56" duration="42">resources\images\magic_wall.png</resource>
 	
 	<!-- player -->
 	<resource type="animation" id="PLAYER_LEFT" tw="56" th="56" duration="42">resources\images\player_left.png</resource>

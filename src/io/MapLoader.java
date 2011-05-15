@@ -16,6 +16,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import gameobjects.Boulder;
 import gameobjects.Gem;
 import gameobjects.Item;
+import gameobjects.MagicWall;
 import gameobjects.Monster;
 import gameobjects.Player;
 import gameobjects.map.ItemTypes;
@@ -166,7 +167,10 @@ public class MapLoader {
 											|| item == ItemTypes.WHITE_BOULDER.ordinal() ) {
 										
 										tile = new Boulder(ItemTypes.getType(item), map);
-									}									
+									}
+									else if (item == ItemTypes.MAGIC_GREY_WALL.ordinal()) {
+										tile = new MagicWall(ItemTypes.getType(item));
+									}
 									else if(item == ItemTypes.MONSTER.ordinal()) {
 										map.add(new Monster(x, y, map));
 									}
