@@ -14,6 +14,7 @@ import io.MapLoader;
 import io.Options;
 import io.ResourceManager;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -25,6 +26,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.BlobbyTransition;
 import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.Log;
 
 /**
@@ -33,7 +36,7 @@ import org.newdawn.slick.util.Log;
  */
 public class GameplayState extends BasicGameState {
 
-    int stateID = -1;
+    int stateID;
     
     
     Music gamemusic = null;
@@ -227,8 +230,8 @@ public class GameplayState extends BasicGameState {
 				if (map.getPlayer(0).lives <= 0) {
 					
 					state.enterState(Gemwars.GAMEOVERSTATE, 								
-							new EmptyTransition(), 
-							new BlobbyTransition());
+							new FadeOutTransition(), 
+							new FadeInTransition());
 				}
 				else
 				{
