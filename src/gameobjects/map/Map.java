@@ -110,6 +110,7 @@ public class Map extends AEntity {
 		}
 
 		graph.resetTransform();
+
 	}
 
 	@Override
@@ -161,18 +162,40 @@ public class Map extends AEntity {
 		
 	}
 
+	/**
+	 * Transforms the camera position according to the player movements
+	 * @param cont game container
+	 * @param p the player that we follow
+	 */
 	private void centerCameraToPlayer(GameContainer cont, Player p) {
-		cameraPositionX = -1 * p.positionX * Item.TILE_WIDTH + cont.getWidth() / 2 - Item.TILE_WIDTH / 2;
+		int mapMaxX = groundLayer.getWidth() * Item.TILE_WIDTH;
+		int mapMaxY = groundLayer.getHeight() * Item.TILE_HEIGHT;
+
+		cameraPositionX = -1 * p.positionX * Item.TILE_WIDTH + cont.getWidth() / 2 - Item.TILE_WIDTH / 2;		
 		cameraPositionY = -1 * p.positionY * Item.TILE_HEIGHT + cont.getHeight() / 2 - Item.TILE_HEIGHT / 2;
 		
-		if (p.direction == Direction.DOWN)
-			cameraPositionY -= p.getDistance();
-		if (p.direction == Direction.UP)
+		if (p.direction == Direction.DOWN) {
+				cameraPositionY -= p.getDistance();
+		}
+		if (p.direction == Direction.UP) {
 			cameraPositionY += p.getDistance();
-		if (p.direction == Direction.LEFT)
+		}
+		if (p.direction == Direction.LEFT) {
 			cameraPositionX += p.getDistance();
-		if (p.direction == Direction.RIGHT)
+		}
+		if (p.direction == Direction.RIGHT) {
 			cameraPositionX -= p.getDistance();
+		}
+		
+		if (cameraPositionX < -1 * (mapMaxX - cont.getWidth()))
+			cameraPositionX = -1 * (mapMaxX - cont.getWidth());
+		if (cameraPositionY < -1 * (mapMaxY - cont.getHeight()))
+			cameraPositionY = -1 * (mapMaxY - cont.getHeight());
+		if (cameraPositionX > 0)
+			cameraPositionX = 0;
+		if (cameraPositionY > 0)
+			cameraPositionY = 0;
+		
 	}
 	
 	/**
