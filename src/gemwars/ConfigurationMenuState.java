@@ -44,6 +44,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {		
 		
@@ -57,7 +58,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 		gearPairs.add( new GearPair( 25f, new Vector2f(680,200), 0.2f));
 		
 		//This the way to customize a font.
-		java.awt.Font awtFont = new java.awt.Font("Ariel", java.awt.Font.PLAIN, 20);
+		java.awt.Font awtFont = new java.awt.Font("Arial", java.awt.Font.PLAIN, 20);
         font = new UnicodeFont(awtFont);
         font.addAsciiGlyphs();       
         
