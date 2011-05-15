@@ -117,11 +117,6 @@ public class Map extends AEntity {
 		
 		objectLayer.update(cont, delta);
 		
-		for( Player player : players ) {
-			player.update(cont, delta);
-			
-			
-		}
 		Player p = players.get(0);
 		if (p.direction != Direction.STATIONARY) {
 			centerCameraToPlayer(cont, p);
@@ -144,6 +139,10 @@ public class Map extends AEntity {
 			for (Player player : players) {
 				player.kill();
 			}
+		}
+
+		for( Player player : players ) {
+			player.update(cont, delta);
 		}
 	}
 
@@ -195,17 +194,19 @@ public class Map extends AEntity {
 			return;
 		}
 		
-		this.players.clear();
-		
+		List<Player> newPlayers = new ArrayList<Player>();
 		List<Point> starts = getStartingPositions();
+		
 		for(int i = 0; i < starts.size(); i++) {
-			Player p = players.get(i);
-			this.players.add(p);
+			Player p = players.get(i).copy();
+			newPlayers.add(p);
 			Log.debug("Recreating player "+p+" to position: " + starts.get(i));
 			p.positionX = starts.get(i).x;
 			p.positionY = starts.get(i).y;
+			p.setMap(this);
 		}
-
+		this.players.clear();
+		this.players = newPlayers;
 	}
 	
 	/**

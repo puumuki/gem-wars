@@ -165,7 +165,7 @@ public class GameplayState extends BasicGameState {
 			
 			
 			try {
-				map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
+				map = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
 				
 				map.enter(cont);
 				isMapChanged = false;

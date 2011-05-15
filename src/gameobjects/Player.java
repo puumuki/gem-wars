@@ -127,6 +127,9 @@ public class Player extends AEntity {
 		Input input = cont.getInput();
 		if (dead == false)
 		{
+
+			collectDiamonds();
+			dig();
 			//If no any key pressed is going to be stationary		
 			if(direction == Direction.STATIONARY ) {
 				if( input.isKeyDown(Input.KEY_DOWN )) {
@@ -173,11 +176,10 @@ public class Player extends AEntity {
 				}
 				
 				distance = 0;						
-				direction = Direction.STATIONARY;					
+				direction = Direction.STATIONARY;
+
 			}
 			
-			collectDiamonds();
-			dig();
 		}
 		else {
 			// do nothing
@@ -277,12 +279,16 @@ public class Player extends AEntity {
 		
 		player.playerNumber = this.playerNumber;
 		player.lives = this.lives;
-		player.distance = this.distance;
+		//player.distance = this.distance;
 		player.positionX = this.positionX;
 		player.positionY = this.positionY;
 		player.score = this.score;
 		player.collectedGemCount = this.collectedGemCount;
 		
 		return player;
+	}
+	
+	public void setMap(Map map) {
+		this.map = map;
 	}
 }
