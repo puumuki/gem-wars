@@ -38,6 +38,11 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	public int layer;
 	
 	/**
+	 * How far we've gone from the last position
+	 */
+	public double distance;
+	
+	/**
 	 * The entity is rendered to the screen when this method is called.
 	 * 
 	 * @param cont Don't read any input or update physics in this method.

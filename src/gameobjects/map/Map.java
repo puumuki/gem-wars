@@ -467,7 +467,7 @@ public class Map extends AEntity {
 		for (int x = posX - 1; x <= posX + 1; x++) {
 			for (int y = posY - 1; y <= posY + 1; y++) {
 				if (!isColliding(x, y)) {
-					Gem g = new Gem(ItemTypes.RED_GEM);
+					Gem g = new Gem(ItemTypes.RED_GEM, this);
 					Item i = new Item(ItemTypes.GROUND);
 					g.positionX = x;
 					g.positionY = y;
