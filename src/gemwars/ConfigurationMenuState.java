@@ -2,6 +2,8 @@ package gemwars;
 
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -16,6 +18,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import gameobjects.GearPair;
 import gameobjects.Player;
+import gemwars.ui.components.Menu;
+import gemwars.ui.components.MenuItem;
 
 /**
  * OptionState is a game state where user can change setting like key setting, and sound music volume.
@@ -24,7 +28,7 @@ import gameobjects.Player;
  */
 public class ConfigurationMenuState extends BasicGameState  {
 
-	private Player player;
+	
 	
 	private int stateID;
 			
@@ -32,9 +36,13 @@ public class ConfigurationMenuState extends BasicGameState  {
 			
 	private UnicodeFont font;
 	
+	private Menu menu; 
+	
 	public ConfigurationMenuState( int id ) {
 		this.stateID = id;				
 	}
+	
+	
 	
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {		
@@ -57,10 +65,13 @@ public class ConfigurationMenuState extends BasicGameState  {
         java.awt.Color bottomColor = new java.awt.Color( 0xbbff00 );
         
         font.getEffects().add(new GradientEffect(topColor, bottomColor, 1f));
-        font.loadGlyphs();
-        
+        font.loadGlyphs();        
                 
-        player = new Player();
+        menu = new Menu();
+        
+        menu.add( new MenuItem(50, 50, "Sound Volume "));
+        menu.add( new MenuItem(50, 75, "Testi Volume "));
+        menu.add( new MenuItem(50, 100, "Music Volume "));        
 	}		
 
 	/**
@@ -88,9 +99,9 @@ public class ConfigurationMenuState extends BasicGameState  {
 			pair.render(cont, g);
 		}
 		
-		g.drawString("To return to the main menu, try to press the 'Escape'-key", 50, 50);
+		//g.drawString("To return to the main menu, try to press the 'Escape'-key", 50, 50);
 		
-		player.render(cont, g);
+		menu.render(cont, g);
 	}
 	
 	@Override
@@ -98,6 +109,8 @@ public class ConfigurationMenuState extends BasicGameState  {
 		for( GearPair pair : gearPairs ) {
 			pair.update(cont, delta);
 		}
+		
+		menu.update(cont, delta);
 		
 		Input input = cont.getInput();
 		

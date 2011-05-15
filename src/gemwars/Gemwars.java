@@ -101,7 +101,7 @@ public class Gemwars extends StateBasedGame {
         this.addState(new GameplayState(GAMEPLAYSTATE));
         this.addState(new ConfigurationMenuState(CONFIGURATION_MENU_STATE));
         this.addState(new GameOverState(GAMEOVERSTATE));
-        this.enterState(MAINMENUSTATE);
+        this.enterState(CONFIGURATION_MENU_STATE);
 	}
 	
 	public static void addGemwarsListener( GemwarsListener listener ) {
