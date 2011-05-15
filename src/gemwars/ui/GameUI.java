@@ -10,6 +10,10 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.GradientEffect;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * This class manages the game's user interface.
+ * It draws some nice animations and information on the screen while the game is running.
+ */
 public class GameUI {
 
 	private Animation clock;
@@ -24,6 +28,12 @@ public class GameUI {
 		init(cont, state);
 	}
 	
+	/**
+	 * initialise the game ui graphics 
+	 * @param cont container
+	 * @param state what state are we in
+	 * @throws SlickException if something goes wrong
+	 */
 	@SuppressWarnings("unchecked")
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
 		clock = ResourceManager.fetchAnimation("UI_CLOCK");
@@ -43,7 +53,17 @@ public class GameUI {
         
 	}
 	
-	
+	/**
+	 * Render the game ui
+	 * @param cont container, where we render
+	 * @param grap link to graphics
+	 * @param time time left
+	 * @param points player points
+	 * @param gemCount how many gems the player has
+	 * @param gemsNeeded how many gems the player needs
+	 * @param lives how many lives the player has
+	 * @throws SlickException if something goes wrong
+	 */
 	public void render(GameContainer cont, Graphics grap, int time, int points, int gemCount, int gemsNeeded, int lives) throws SlickException {
 		grap.setFont(font);
 		int margin = 5;

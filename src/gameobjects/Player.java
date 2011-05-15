@@ -16,8 +16,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 /**
- * @author Teemuki
- * 
  * The Player class holds an implementation of human controller entity.
  */
 public class Player extends AEntity {
@@ -46,7 +44,6 @@ public class Player extends AEntity {
 		
 	boolean areWeMoving = false;
 	
-	private double distance;
 
 	private Sound gemCollectedSound;
 	
@@ -69,10 +66,15 @@ public class Player extends AEntity {
 	 */	
 	public boolean pushingStone = false;
 	
+	/**
+	 * Initialises the player. This should not be called directly! 
+	 */
 	public Player() {
 		playerNumber = __staticPlayerNumber++;		
 		postProcessAnimations();
 		initSounds();
+		//Tweak this if you want to player to go faster
+		this.speed = 0.1;
 	}
 	
 	public Player( int positionX, int positionY ) {
@@ -82,8 +84,6 @@ public class Player extends AEntity {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		
-		//Tweak this if you want to player to go faster
-		this.speed = 0.1;
 	}
 	
 	public Player(int posX, int posY, Map map) {
@@ -186,13 +186,18 @@ public class Player extends AEntity {
 		}
 	}
 	
+	/**
+	 * dig a sand block
+	 */
 	private void dig() {
 		Point point = Direction.scanDirection(direction);		
 		map.destroyDirt(positionX + point.x, positionY + point.y);		
 	}
 	
 
-	
+	/**
+	 * collect a gem
+	 */
 	private void collectDiamonds() {						
 		Point point = Direction.scanDirection(direction);
 		
@@ -265,6 +270,10 @@ public class Player extends AEntity {
 		dead = true;
 	}
 
+	/**
+	 * Sets the player as dead or alive
+	 * @param b true, if dead, false, if alive
+	 */
 	public void setDead(boolean b) {
 		dead = b;
 	}
@@ -273,6 +282,10 @@ public class Player extends AEntity {
 		return dead;
 	}
 	
+	/**
+	 * Makes a copy of the current player (for level changes etc.)
+	 * @return a copied player
+	 */
 	public Player copy() {
 		
 		Player player = new Player();

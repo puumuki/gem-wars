@@ -198,13 +198,31 @@ public class Map extends AEntity {
 		List<Point> starts = getStartingPositions();
 		
 		for(int i = 0; i < starts.size(); i++) {
-			Player p = players.get(i).copy();
-			newPlayers.add(p);
-			Log.debug("Recreating player "+p+" to position: " + starts.get(i));
-			p.positionX = starts.get(i).x;
-			p.positionY = starts.get(i).y;
-			p.setMap(this);
+			
+			Point startPos = starts.get(i);
+			
+			// set players back
+			if(i < players.size()) {
+				Player p = players.get(i).copy();
+				newPlayers.add(p);
+				Log.debug("Recreating player "+i+" to position: " + startPos);
+				p.positionX = startPos.x;
+				p.positionY = startPos.y;
+				p.setMap(this);
+				p.collectedGemCount = 0;
+				p.direction = Direction.STATIONARY;
+				p.distance = 0;
+				p.pushingStone = false;
+			}
+			// more starting points than players
+			else {
+				Log.debug("Not enough players; creating player "+i+" to position: " + startPos);
+				Player player = new Player(startPos.x, startPos.y, this);
+				newPlayers.add(player);
+			}
 		}
+		
+		
 		this.players.clear();
 		this.players = newPlayers;
 	}

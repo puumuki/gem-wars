@@ -159,7 +159,7 @@ public class GameplayState extends BasicGameState {
 			
 			else if( currentMapIndex >= availableMaps.size() ) {
 				currentMapIndex = 0;
-			}		
+			}
 		}
 		if( isMapChanged ) {
 			
@@ -196,17 +196,23 @@ public class GameplayState extends BasicGameState {
 		// are there dead monsters?
 		for (Monster m : map.getMonsters()) {
 			if (m.isDead()) {
+				Log.debug("Removing dead monster at [" + m.positionX + "," + m.positionY + "]");
 				map.drawDiamondMatrix(m.positionX, m.positionY);
 			}
 		}
 		
-		// has the player died?
+		// player checks
 		for (Player p : map.getPlayers()) {
-			if (map.hasMonsterKilled(p)) // checks for monster killing 
-				p.kill();
 			
-			if (p.isDead()) // has the player died in some manner?
+			// if a monster kills a player, we do it here
+			if (map.hasMonsterKilled(p)) { 
+				p.kill();
+			}
+			
+			// has the player died in some manner?
+			if (p.isDead())
 			{
+				Log.debug("Removing dead player at [" + p.positionX + "," + p.positionY + "]");
 				map.drawDiamondMatrix(p.positionX, p.positionY);
 				
 				// TODO: pause here
