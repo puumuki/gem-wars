@@ -68,14 +68,14 @@ public class GameUI {
 
 		// points in top left
 		String pointsText = "x "+points;
-		grap.fillRoundRect((float)(margin/2.0), (float)(margin/2.0), (float)(coin.getWidth() + font.getWidth(pointsText) + margin * 4), (float)(coin.getHeight() + margin), 4);
+		grap.fillRoundRect((float)(margin/2.0), (float)(margin/2.0), (coin.getWidth() + font.getWidth(pointsText) + margin * 4), (coin.getHeight() + margin), 4);
 		grap.drawAnimation(coin, margin, margin);
 		font.drawString(margin + coin.getWidth() + margin * 2, (float)(margin + coin.getHeight() / 2.0 - font.getHeight(pointsText) / 2.0), pointsText);
 		
 		// time in top right
 		String timeText = time + " x";
 		float width = clock.getWidth() + font.getWidth(timeText) + margin * 4;
-		grap.fillRoundRect((float)(cont.getWidth() - margin/2.0 - width), (float)(margin/2.0), width, (float)(clock.getHeight() + margin), 4);
+		grap.fillRoundRect((float)(cont.getWidth() - margin/2.0 - width), (float)(margin/2.0), width, (clock.getHeight() + margin), 4);
 		grap.drawAnimation(clock, cont.getWidth() - clock.getWidth() - 5, 5);
 		font.drawString(cont.getWidth() - (margin + clock.getWidth() + margin * 2) - font.getWidth(timeText), (float)(margin + clock.getHeight() / 2.0 - font.getLineHeight() / 2.0), timeText);
 		
@@ -83,7 +83,7 @@ public class GameUI {
 		String gemText = "x " + gemCount + " / " + gemsNeeded;
 		width = head.getWidth() + font.getWidth(gemText) + margin * 4;
 		float y = (float)(cont.getHeight() - gem.getHeight() - margin * 1.5);
-		grap.fillRoundRect((float)( margin/2.0 ), y, width, (float)(head.getHeight() + margin), 4);
+		grap.fillRoundRect((float)( margin/2.0 ), y, width, (head.getHeight() + margin), 4);
 		grap.drawAnimation(gem, margin, cont.getHeight() - gem.getWidth() - margin);
 		font.drawString(gem.getWidth() + margin * 3, (float)(cont.getHeight() - (margin + head.getHeight() / 2.0) - font.getHeight(gemText) / 2.0), gemText);
 		
@@ -91,7 +91,7 @@ public class GameUI {
 		String livesText = lives + " x";
 		width = head.getWidth() + font.getWidth(livesText) + margin * 4;
 		y = (float)(cont.getHeight() - head.getHeight() - margin * 1.5);
-		grap.fillRoundRect((float)(cont.getWidth() - margin/2.0 - width), y, width, (float)(head.getHeight() + margin), 4);
+		grap.fillRoundRect((float)(cont.getWidth() - margin/2.0 - width), y, width, (head.getHeight() + margin), 4);
 		grap.drawAnimation(head, cont.getWidth() - head.getWidth() - margin, cont.getHeight() - head.getWidth() - margin);
 		font.drawString(cont.getWidth() - (margin + head.getWidth() + margin * 2) - font.getWidth(livesText), (float)(cont.getHeight() - (margin + head.getHeight() / 2.0) - font.getHeight(livesText) / 2.0), livesText);
 		
