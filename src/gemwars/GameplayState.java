@@ -21,6 +21,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.imageout.ImageOut;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -60,8 +61,12 @@ public class GameplayState extends BasicGameState {
     
     private TimeCounter deathTimer = new TimeCounter();
     
+    // goal stuff
     private TimeCounter goalTimer = new TimeCounter();
     private int goaltime = 0;
+    private long goalEndTimeStart = 0;
+    private int goalBlackingAlpha = 0;
+    private Sound bonusSound;
     
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
@@ -83,6 +88,7 @@ public class GameplayState extends BasicGameState {
 			throw new SlickException("Can't load map file. ", e);
 		}		
 
+		bonusSound = ResourceManager.fetchSound("GAME_BONUS");
 		gamemusic = ResourceManager.getInstance().getMusic("GAME_MUSIC");
 		
 		ui = new GameUI(cont, state);
@@ -113,6 +119,11 @@ public class GameplayState extends BasicGameState {
 		
 		map.render(cont, graph);
 		
+		if (goalTimer.isActive()) {
+			graph.setColor(new Color(0,0,0,goalBlackingAlpha));
+			graph.fillRect(0, 0, cont.getWidth(), cont.getHeight());
+		}
+		
 		drawUI(cont, graph);
 		
 		/*
@@ -139,17 +150,22 @@ public class GameplayState extends BasicGameState {
 					p.score += 5;
 				}
 				goaltime--;
+				if(!bonusSound.playing())
+					bonusSound.play();
 				
 				if(goaltime == 0)
-					goalTimer.reset();
+					goalEndTimeStart = goalTimer.timeElapsedInMilliseconds();
 			}
-			// slight delay
-			else if (goalTimer.timeElapsedInMilliseconds() >= 500){
-				map.stopGoalAnimation();
-				goalTimer.stop();
-				goalTimer.reset();
-				currentMapIndex++;
-				isMapChanged = true;
+			// slight delay before level change
+			else {
+				if (goalTimer.timeElapsedInMilliseconds() >= goalEndTimeStart + 1500) {
+					isMapChanged = true;
+				}
+				else if (goalBlackingAlpha < 255) {
+					goalBlackingAlpha+=delta*0.5;
+					if (goalBlackingAlpha > 255)
+						goalBlackingAlpha = 255;
+				}
 			}
 			
 		}
@@ -194,12 +210,13 @@ public class GameplayState extends BasicGameState {
 		
 */
 		if( isMapChanged ) {
-			
+
+			currentMapIndex++;
 			if( currentMapIndex < 0 ) {
-				currentMapIndex = availableMaps.size() - 1;
+				currentMapIndex = singlePlayerMaps.size() - 1;
 			}
 			
-			else if( currentMapIndex >= availableMaps.size() ) {
+			else if( currentMapIndex >= singlePlayerMaps.size() ) {
 				currentMapIndex = 0;
 			}
 			
@@ -208,6 +225,7 @@ public class GameplayState extends BasicGameState {
 				
 				map.enter(cont);
 				isMapChanged = false;
+				resetGoal();
 			} catch (IOException e) {
 				Log.error(e);
 			}
@@ -231,6 +249,15 @@ public class GameplayState extends BasicGameState {
 
 	}
 	
+	private void resetGoal() {
+
+		goalTimer.stop();
+		goalTimer.reset();
+		goalEndTimeStart = 0;
+		goalBlackingAlpha = 0;
+		
+	}
+
 	/**
 	 * Checks for monster and player deaths and proceeds accordingly.
 	 * @param cont game container
@@ -317,7 +344,7 @@ public class GameplayState extends BasicGameState {
 
 	private void drawUI(GameContainer cont, Graphics graph) throws SlickException {
 		if (goalTimer.isActive()) {
-			
+			ui.render(cont, graph, goaltime, map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
 		} else {
 			ui.render(cont, graph, map.getRemainingTime(), map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
 		}

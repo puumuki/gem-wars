@@ -595,8 +595,4 @@ public class Map extends AEntity {
 	public boolean getGoalAnimation() {
 		return goalAnimation;
 	}
-	
-	public void stopGoalAnimation() {
-		goalAnimation = false;
-	}
 }
