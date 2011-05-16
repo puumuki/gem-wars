@@ -242,10 +242,14 @@ public class MapLoader {
 	 * @return All files that name ends with ".gem"
 	 */
 	public static List<File> findAvailableMaps( File path ) {		
+		return findAvailableMaps(path, "");
+	}
+	
+	public static List<File> findAvailableMaps(File path, String pattern) {
 		
 		List<File> maps = new ArrayList<File>();
 		
-		searchRecursivelyForMapFiles( maps, path );
+		searchRecursivelyForMapFiles( maps, path, pattern);
 		
 		Collections.sort(maps);
 		
@@ -256,23 +260,37 @@ public class MapLoader {
 	 * Does the "dirty work" to find map files in a directory (and its subdirectories).
 	 * @param maps already known maps
 	 * @param path map folder
+	 * @param pattern regex pattern for the map filenames
 	 */
-	private static void searchRecursivelyForMapFiles( List<File>maps, File path ) {
+	private static void searchRecursivelyForMapFiles(List<File> maps, File path, String pattern) {
 		for( File file : path.listFiles() ) {
 			
 			if( file.isDirectory() ) {
-				searchRecursivelyForMapFiles( maps, file );				
+				searchRecursivelyForMapFiles( maps, file, pattern );				
 			}
 			
 			if( file.isFile() ) {
 				String fileName = file.getName();
 				
-				
-				//TODO: Should we have some kind validation for the map format?
-				if( fileName.endsWith(".gem") ) {
+				if (fileName.matches(pattern)) {
 					maps.add(file);
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Loads all single player maps in a certain directory (and recursively)
+	 * @param path directory we are in
+	 * @return list of maps
+	 */
+	public static List<File> loadSinglePlayerMaps(File path) {
+		List<File> maps = new ArrayList<File>();
+				
+		searchRecursivelyForMapFiles( maps, path, "e[0-9]*l[0-9].gem");
+		
+		Collections.sort(maps);
+		
+		return maps;
 	}
 }

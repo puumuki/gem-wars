@@ -88,6 +88,7 @@ public class Map extends AEntity {
     private double cameraPositionY = 0;
     
     private boolean goalOpen = false;
+    private boolean goalAnimation = false;
     
     private TimeCounter timer = new TimeCounter();
 	
@@ -584,5 +585,18 @@ public class Map extends AEntity {
 			Boulder b = (Boulder)item;
 			b.move(d);
 		}
+	}
+	
+	public void goalAnimation() {
+		timer.stop();
+		goalAnimation = true;
+	}
+	
+	public boolean getGoalAnimation() {
+		return goalAnimation;
+	}
+	
+	public void stopGoalAnimation() {
+		goalAnimation = false;
 	}
 }

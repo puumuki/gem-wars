@@ -45,7 +45,7 @@ public class Boulder extends PhysicsObject implements IDynamic {
 		this.map = map;
 		init();
 		
-		speed = 0.1;
+		speed = 0.15;
 		
 		// TODO: set friction
 	}

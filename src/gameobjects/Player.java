@@ -80,7 +80,7 @@ public class Player extends AEntity {
 		playerNumber = __staticPlayerNumber++;		
 		postProcessAnimations();
 		initSounds();
-		this.speed = 0.1;
+		this.speed = 0.15;
 	}
 	
 	public Player( int positionX, int positionY ) {
@@ -144,7 +144,7 @@ public class Player extends AEntity {
 	public void update(GameContainer cont, int delta) throws SlickException {
 		
 		Input input = cont.getInput();
-		if (dead == false)
+		if (dead == false && map.getGoalAnimation() == false)
 		{
 
 			collectDiamonds();
@@ -248,7 +248,7 @@ public class Player extends AEntity {
 			
 		}
 		else {
-			// if the player is dead, do nothing
+			// if the player is dead or in the goal, do nothing
 		}
 	}
 	

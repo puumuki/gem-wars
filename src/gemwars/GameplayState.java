@@ -49,6 +49,7 @@ public class GameplayState extends BasicGameState {
     }
     
     private List<File> availableMaps;
+    private List<File> singlePlayerMaps;
     
     private int currentMapIndex = 0;
 	boolean isMapChanged = false;
@@ -58,7 +59,9 @@ public class GameplayState extends BasicGameState {
     private GameUI ui;
     
     private TimeCounter deathTimer = new TimeCounter();
-    private TimeCounter levelEndTimer = new TimeCounter();
+    
+    private TimeCounter goalTimer = new TimeCounter();
+    private int goaltime = 0;
     
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
@@ -70,9 +73,12 @@ public class GameplayState extends BasicGameState {
 		}
 		
 		availableMaps = MapLoader.findAvailableMaps(file);
+		singlePlayerMaps = MapLoader.loadSinglePlayerMaps(file);
 		
 		try {
-			map = MapLoader.loadMap(availableMaps.get(currentMapIndex));
+			map = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex));
+		} catch (IndexOutOfBoundsException iobe) {
+			throw new SlickException("No maps found. ", iobe);
 		} catch (IOException e) {
 			throw new SlickException("Can't load map file. ", e);
 		}		
@@ -107,7 +113,7 @@ public class GameplayState extends BasicGameState {
 		
 		map.render(cont, graph);
 		
-		ui.render(cont, graph, map.getRemainingTime(), map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
+		drawUI(cont, graph);
 		
 		/*
 		graph.drawString("SCORE: " + map.getPlayer(0).getScore(), 500, 0);
@@ -125,19 +131,44 @@ public class GameplayState extends BasicGameState {
 
 		Input input = cont.getInput();
 		
+		// Are we doing the goal animation?
+		if (goalTimer.isActive()) {
+			if (goaltime > 0) {
+				for (Player p : map.getPlayers()) {
+					// increment the player's score by 5 points for every second that was left on the clock
+					p.score += 5;
+				}
+				goaltime--;
+				
+				if(goaltime == 0)
+					goalTimer.reset();
+			}
+			// slight delay
+			else if (goalTimer.timeElapsedInMilliseconds() >= 500){
+				map.stopGoalAnimation();
+				goalTimer.stop();
+				goalTimer.reset();
+				currentMapIndex++;
+				isMapChanged = true;
+			}
+			
+		}
+		// normal gameplay
+		else {
+	
+			checkDeaths(cont, state, delta);
+	
+			checkGoal(cont, state, delta);
+		}
 
-		// FIXME: for debug only
+		// for debugging only
+		/*
 		if (input.isKeyPressed(Input.KEY_0)) {
 			for (Monster m : map.getMonsters())
 				m.kill();
 		}
-		
-		checkDeaths(cont, state, delta);
-
-		checkGoal(cont, state, delta);
-		
-		
-		
+		*/
+				
 		//final double increment = 0.2; 
 		
 		//If we want a friction to movement we need to change logic here.
@@ -146,10 +177,9 @@ public class GameplayState extends BasicGameState {
 		//By multiplying increment value with delta we keep camera movement
 		//speed constant with every platform.
 		
-
+/*
+		// For debugging only
 		if( input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) {
-			// TODO: change it so it does not change the map at simply pressing R/LCONTROL when the camera has been moved 
-			
 			
 			if( input.isKeyPressed(Input.KEY_LEFT) ) {
 				currentMapIndex--;
@@ -160,6 +190,10 @@ public class GameplayState extends BasicGameState {
 				currentMapIndex++;
 				isMapChanged=true;
 			}
+		}
+		
+*/
+		if( isMapChanged ) {
 			
 			if( currentMapIndex < 0 ) {
 				currentMapIndex = availableMaps.size() - 1;
@@ -168,12 +202,9 @@ public class GameplayState extends BasicGameState {
 			else if( currentMapIndex >= availableMaps.size() ) {
 				currentMapIndex = 0;
 			}
-		}
-		if( isMapChanged ) {
-			
 			
 			try {
-				map = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
+				map = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex), map.getPlayers());
 				
 				map.enter(cont);
 				isMapChanged = false;
@@ -208,6 +239,8 @@ public class GameplayState extends BasicGameState {
 	 * @throws SlickException
 	 */
 	private void checkDeaths(GameContainer cont, StateBasedGame state, int delta) throws SlickException {
+		
+
 		// are there dead monsters?
 		for (Monster m : map.getMonsters()) {
 			if (m.isDead()) {
@@ -245,7 +278,7 @@ public class GameplayState extends BasicGameState {
 					{
 						try {
 							
-							Map tempMap = MapLoader.loadMap(availableMaps.get(currentMapIndex), map.getPlayers());
+							Map tempMap = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex), map.getPlayers());
 							this.map = tempMap;
 	
 							tempMap.enter(cont);
@@ -271,14 +304,25 @@ public class GameplayState extends BasicGameState {
 				List<Point> goals = map.findItemPositions(map.getSpecialLayer(), ItemTypes.GOAL);
 				Point point = goals.get(0);
 				if (p.positionX == point.x && p.positionY == point.y) {
-					// TODO: show level ending screen and change level
-					currentMapIndex++;
-					isMapChanged = true;
+					
+					map.goalAnimation();
+					
+					goalTimer.start();
+					goaltime = map.getRemainingTime();
+					
 				}
 			}
 		}
 	}
 
+	private void drawUI(GameContainer cont, Graphics graph) throws SlickException {
+		if (goalTimer.isActive()) {
+			
+		} else {
+			ui.render(cont, graph, map.getRemainingTime(), map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
+		}
+	}
+	
 	@Override
 	public int getID() {
 		return stateID;

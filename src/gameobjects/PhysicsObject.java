@@ -38,19 +38,16 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	 * Checks if the object can fall down 
 	 * @return true, if it can
 	 */
-	public boolean isFalling() {
-		if(canDrop(positionX, positionY + 1))
-			return true;
-			
-		return false;
+	private boolean canFallDown() {
+		return canDrop(positionX, positionY + 1);
 	}
 	
 	/**
 	 * Checks if the object can roll right
 	 * @return true, if it can
 	 */
-	public boolean isRollingRight() {
-		if(canDrop(positionX + 1, positionY + 1) && canDrop(positionX + 1, positionY))
+	private boolean canRollRight() {
+		if(canDrop(positionX + 1, positionY + 1) && canDrop(positionX + 1, positionY) && gemOrBoulderUnder())
 			return true;
 			
 		return false;
@@ -60,20 +57,32 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	 * Checks if the object can roll left
 	 * @return true, if it can
 	 */
-	public boolean isRollingLeft() {
-		if(canDrop(positionX - 1, positionY + 1) && canDrop(positionX - 1, positionY))
+	private boolean canRollLeft() {
+		if(canDrop(positionX - 1, positionY + 1) && canDrop(positionX - 1, positionY) && gemOrBoulderUnder())
 			return true;
 			
 		return false;
 	}
 	
 	/**
-	 * Makes some interesting calculations to find out if the object can drop down
+	 * Checks if there is a gem or a boulder under the object 
+	 * @return
+	 */
+	private boolean gemOrBoulderUnder() {
+		ItemTypes item = map.getObjectLayer().getTile(positionX, positionY + 1).itemType;
+		if (item == ItemTypes.WHITE_BOULDER || item == ItemTypes.DARK_BOULDER || item == ItemTypes.BLUE_GEM
+				|| item == ItemTypes.RED_GEM || item == ItemTypes.GREEN_GEM)
+			return true;
+		return false;
+	}
+	
+	/**
+	 * Makes some interesting calculations to find out if the object can drop down to a specific location
 	 * @param x X position where the object is trying to go 
 	 * @param y Y position where the object is trying to go
 	 * @return true, if it can move there, false, if not
 	 */
-	public boolean canDrop(int x, int y) {
+	private boolean canDrop(int x, int y) {
 		if (map.getGroundLayer().getTile(x, y).itemType == ItemTypes.GROUND) {
 			if (map.getObjectLayer().getTile(x, y).itemType != ItemTypes.EMPTY)
 				return false;
@@ -117,22 +126,22 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 			}
 			
 			// can it fall down?
-			if (isFalling()) {
+			if (canFallDown()) {
 				direction = Direction.DOWN;
 				map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
 				positionY++;
 				map.getObjectLayer().setTile(positionX, positionY, this);
 				
 				
-			 // if not, can it roll right after falling down?
-			} else if (lastDirection == Direction.DOWN && isRollingRight()) {
+			 // if not, can it roll right (there is a gem or a boulder under it)?
+			} else if (canRollRight()) {
 				direction = Direction.RIGHT;
 				map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
 				positionX++;
 				map.getObjectLayer().setTile(positionX, positionY, this);
 				
-			 // if not, can it roll left after falling down?
-			} else if (lastDirection == Direction.DOWN && isRollingLeft()) { 
+			 // if not, can it roll left (there is a gem or a boulder under it)?
+			} else if (canRollLeft()) { 
 				direction = Direction.LEFT;
 				map.getObjectLayer().setTile(positionX, positionY, new Item(ItemTypes.EMPTY));
 				positionX--;

@@ -66,6 +66,8 @@ public class Gemwars extends StateBasedGame {
 		
         AppGameContainer app = new AppGameContainer(new Gemwars());        
         
+        app.setShowFPS(false);
+        
         app.setDisplayMode(properties.getScreenWitdh(), 
         				   properties.getScreenHeight(), 
         				   properties.getFullscreen());

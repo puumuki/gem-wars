@@ -46,7 +46,7 @@ public class Monster extends AEntity {
 		
 		this.map = map;
 		
-		speed = 0.1;
+		speed = 0.15;
 		
 		this.direction = Direction.STATIONARY;
 	}

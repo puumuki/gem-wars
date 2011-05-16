@@ -6,6 +6,7 @@ import gameobjects.map.ItemTypes;
 import io.Options;
 import io.ResourceManager;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.io.File;
@@ -25,6 +26,8 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.OutlineEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.BlobbyTransition;
@@ -149,6 +152,8 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		background.draw(0,0);
 		
+		drawCredits(gc, g);
+		
 		
 		switch (currentSelection) {
 		case 2:
@@ -244,6 +249,25 @@ public class MainMenuState extends BasicGameState {
 			selected = currentSelection;
 			menusound.play((float)1.0, Options.getInstance().getSoundVolume());
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void drawCredits(GameContainer gc, Graphics g)
+			throws SlickException {
+		java.awt.Font awtFont = new java.awt.Font("Verdana", java.awt.Font.PLAIN, 13);
+        UnicodeFont font = new UnicodeFont(awtFont);
+        font.addAsciiGlyphs();
+        font.getEffects().add(new ColorEffect(new Color(255,255,255)));
+        font.getEffects().add(new OutlineEffect(1, new Color(255,255,255,150)));
+        font.loadGlyphs();
+		String text = "GemWars is a game with a long development\n" +
+				"history comparable to Duke Nukem Forever.\n\n" +
+				"This Java version is the work of\n" +
+				"Miika Hämynen and Teemu Puukko.\n\n" +
+				"The following people have had a part in\nGemWars' development in the past:\n" +
+				"Jarkko Laine, Lauri Laine, Joona Nuutinen,\nMatti Manninen, Skyler York, Antti Kanninen\n\n" +
+				"We thank them for the pioneering work.";
+		font.drawString(245, 170, text);
 	}
 
 	@Override
