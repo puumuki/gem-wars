@@ -110,11 +110,8 @@ public class Boulder extends PhysicsObject implements IDynamic {
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
 		super.update(cont, delta);
-		if( direction != Direction.STATIONARY 
-				&& distance <= Item.TILE_HEIGHT) {
-			// taken care of in the super.update method
-		}
-		else {
+		if ((super.getLastDirection() == Direction.LEFT || super.getLastDirection() == Direction.RIGHT)
+				&& pushed == true){
 			direction = Direction.STATIONARY;
 			pushed = false;
 		}

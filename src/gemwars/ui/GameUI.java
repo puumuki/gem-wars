@@ -94,6 +94,8 @@ public class GameUI {
 		grap.fillRoundRect((float)(cont.getWidth() - margin/2.0 - width), y, width, (float)(head.getHeight() + margin), 4);
 		grap.drawAnimation(head, cont.getWidth() - head.getWidth() - margin, cont.getHeight() - head.getWidth() - margin);
 		font.drawString(cont.getWidth() - (margin + head.getWidth() + margin * 2) - font.getWidth(livesText), (float)(cont.getHeight() - (margin + head.getHeight() / 2.0) - font.getHeight(livesText) / 2.0), livesText);
+		
+		grap.setColor(new Color(255,50,50));
 	}
 
 	

@@ -89,6 +89,9 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 		return false;
 	}
 
+	/**
+	 * Makes some neat calculations to move the objects
+	 */
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
 		// object is moving
@@ -142,6 +145,14 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 		}
 		
 		
+	}
+	
+	/**
+	 * This is needed for checking if a boulder was last pushed
+	 * @return direction we moved the last time
+	 */
+	public Direction getLastDirection() {
+		return lastDirection;
 	}
 
 }
