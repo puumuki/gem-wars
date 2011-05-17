@@ -1,8 +1,9 @@
-package gemwars.ui.components;
+package gemwars.ui.components.menu;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.newdawn.slick.GameContainer;
@@ -14,7 +15,7 @@ import org.newdawn.slick.font.effects.GradientEffect;
 import org.newdawn.slick.font.effects.OutlineEffect;
 import gameobjects.IGameObject;
 
-public class Menu implements IGameObject {
+public class Menu implements IGameObject, Iterable<IMenuItem> {
 
 	public int positionX;
 	
@@ -22,7 +23,7 @@ public class Menu implements IGameObject {
 
 	private int activeIndex = 0;
 	
-	private List<MenuItem> menuitems = new ArrayList<MenuItem>();
+	private List<IMenuItem> menuitems = new ArrayList<IMenuItem>();
 	
 	private UnicodeFont font;
 	
@@ -39,13 +40,13 @@ public class Menu implements IGameObject {
         java.awt.Color bottomColor = new java.awt.Color( 0xbbff00 );
         
         OutlineEffect outlineEffect = new OutlineEffect(5, Color.black);
-        
-        font.getEffects().add(outlineEffect);
+                
         font.getEffects().add(new GradientEffect(topColor, bottomColor, 1f));
+        
         font.loadGlyphs();
 	}
 	
-	public void add( MenuItem item ) {
+	public void add( IMenuItem item ) {
 		this.menuitems.add(item);		
 		item.setFont(font);
 		Collections.sort(menuitems);
@@ -53,7 +54,7 @@ public class Menu implements IGameObject {
 	
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
-		for( MenuItem item : menuitems ) {
+		for( IMenuItem item : menuitems ) {
 			item.update(cont, delta);
 		}
 		
@@ -80,10 +81,27 @@ public class Menu implements IGameObject {
 		menuitems.get(activeIndex).setActive(true);		
 	}
 
+	public int size() {
+		return menuitems.size();
+	}
+	
+	public int getActiveIndex() {
+		return activeIndex;
+	}
+	
+	public IMenuItem getMenuItem( int index ) {
+		return menuitems.get(index);
+	}
+	
 	@Override
 	public void render(GameContainer cont, Graphics g) throws SlickException {		
-		for( MenuItem item : menuitems ) {
+		for( IMenuItem item : menuitems ) {
 			item.render(cont, g);
 		}
+	}
+
+	@Override
+	public Iterator<IMenuItem> iterator() {
+		return menuitems.iterator();
 	}	
 }

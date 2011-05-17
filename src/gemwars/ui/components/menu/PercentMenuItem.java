@@ -1,4 +1,4 @@
-package gemwars.ui.components;
+package gemwars.ui.components.menu;
 
 import gameobjects.IGameObject;
 
@@ -8,65 +8,25 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 
-public class MenuItem implements Comparable<MenuItem>, IGameObject {
+public class PercentMenuItem extends BasicMenuItem implements IMenuItem {
 	
-	/**
-	 * This absolute position that is relative to game screen horizontally.
-	 */
-	public int positionX;
-	
-	/**
-	 * This absolute position that is relative to game screen vertically. 
-	 */
-	public int positionY;
-	
-	private String text;
-
 	private float value = 0;
+	
 	private float step = 0.0005f;
+	
 	private float maxValue = 1;
+	
 	private float minValue = 0;
 	
-	private boolean isActive;
-	
-	private int index;
-	
-	private UnicodeFont font;
-
-	public MenuItem( int x, int y, String text ) {
-		this.text = text;
 		
-		this.positionX = x;
-		this.positionY = y;
+
+	public PercentMenuItem( int x, int y, String text ) {
+
+		super(x, y, text);
 		
 		java.awt.Font awtFont = new java.awt.Font("Ariel", java.awt.Font.PLAIN, 20);
         font = new UnicodeFont(awtFont);        
 	}	
-	
-	public void setFont(UnicodeFont font) {
-		this.font = font;
-	}
-	
-	public void setText(String text) {
-		this.text = text;
-	}
-	
-	
-	public void setIndex(int index) {
-		this.index = index;
-	}
-	
-	public int getIndex() {
-		return index;
-	}
-	
-	public boolean getActive() {
-		return isActive;
-	}
-	
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
 
 
 	@Override
@@ -95,6 +55,7 @@ public class MenuItem implements Comparable<MenuItem>, IGameObject {
 		}
 	}
 
+
 	@Override
 	public void render(GameContainer cont, Graphics g) throws SlickException {		
 		
@@ -109,16 +70,41 @@ public class MenuItem implements Comparable<MenuItem>, IGameObject {
 	}
 	
 
-	@Override
-	public int compareTo(MenuItem item) {
-		
-		if(item.getIndex() > index ) {
-			return 1;
-		}
-		else if( item.getIndex() < index ) {
-			return -1;
-		}
-		
-		return 0;
+	public Object getValue() {
+		return value;
+	}
+	
+	public float getStep() {
+		return step;
+	}
+
+	public void setStep(float step) {
+		this.step = step;
+	}
+
+	public float getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(float maxValue) {
+		if( this.maxValue > minValue ) {
+			this.maxValue = maxValue;	
+		}		
+	}
+
+	public float getMinValue() {
+		return minValue;
+	}
+
+	public void setMinValue(float minValue) {
+		if( minValue < maxValue ) {
+			this.minValue = minValue;
+		}		
+	}
+
+	public void setValue(float value) {
+		if( value >= minValue && value < maxValue ) {
+			this.value = value;
+		}		
 	}
 }

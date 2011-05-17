@@ -1,7 +1,12 @@
 package gemwars;
 
 
+import io.Options;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,20 +17,21 @@ import org.newdawn.slick.font.effects.GradientEffect;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.util.Log;
+
 import gameobjects.GearPair;
-import gemwars.ui.components.Menu;
-import gemwars.ui.components.MenuItem;
+import gemwars.ui.components.menu.BasicMenuItem;
+import gemwars.ui.components.menu.BooleanMenuItem;
+import gemwars.ui.components.menu.IMenuItem;
+import gemwars.ui.components.menu.Menu;
+import gemwars.ui.components.menu.PercentMenuItem;
 
 /**
  * OptionState is a game state where user can change setting like key setting, and sound music volume.
  * 
  * @author TeeMuki
  */
-public class ConfigurationMenuState extends BasicGameState  {
-
-	
+public class ConfigurationMenuState extends BasicGameState  {	
 	
 	private int stateID;
 			
@@ -39,6 +45,11 @@ public class ConfigurationMenuState extends BasicGameState  {
 		this.stateID = id;				
 	}
 	
+	private static final String SOUND_MENUITEM_TEXT = "Sound volume";
+	private static final String MUSIC_MENUITEM_TEXT = "Music volume";
+	private static final String FULLSCREEN_MENUITEM_TEXT = "Fullscreen";
+	private static final String SAVE_MENUITEM_TEXT = "Active & Save";
+	private static final String RETURN_MENUITEM_TEXT = "Return to Main Menu";
 	
 	
 	@SuppressWarnings("unchecked")
@@ -65,11 +76,23 @@ public class ConfigurationMenuState extends BasicGameState  {
         font.getEffects().add(new GradientEffect(topColor, bottomColor, 1f));
         font.loadGlyphs();        
                 
-        menu = new Menu();
+        menu = new Menu();          
         
-        menu.add( new MenuItem(50, 50, "Sound Volume "));
-        menu.add( new MenuItem(50, 75, "Testi Volume "));
-        menu.add( new MenuItem(50, 100, "Music Volume "));        
+        PercentMenuItem item = new PercentMenuItem(50, 50, SOUND_MENUITEM_TEXT);
+        item.setValue(Options.getInstance().getSoundVolume());        
+        menu.add(item);        
+                
+        item = new PercentMenuItem(50, 75, MUSIC_MENUITEM_TEXT);
+        item.setValue(Options.getInstance().getMusicVolume()); 
+        menu.add(item);
+       
+        BooleanMenuItem booleanItem = new BooleanMenuItem(50, 100, FULLSCREEN_MENUITEM_TEXT);
+        booleanItem.setValue(Options.getInstance().getFullscreen());
+        
+        menu.add(booleanItem);
+        
+        menu.add( new BasicMenuItem(50, 150, SAVE_MENUITEM_TEXT));
+        menu.add( new BasicMenuItem(50, 175, RETURN_MENUITEM_TEXT));
 	}		
 
 	/**
@@ -90,14 +113,12 @@ public class ConfigurationMenuState extends BasicGameState  {
 	
 	@Override
 	public void render(GameContainer cont, StateBasedGame state, Graphics g) throws SlickException {			
-		g.setBackground(Color.white);
+		g.setBackground(Color.black);
 		g.setFont(font);
 		
 		for( GearPair pair : gearPairs ) {
 			pair.render(cont, g);
 		}
-		
-		//g.drawString("To return to the main menu, try to press the 'Escape'-key", 50, 50);
 		
 		menu.render(cont, g);
 	}
@@ -112,10 +133,60 @@ public class ConfigurationMenuState extends BasicGameState  {
 		
 		Input input = cont.getInput();
 		
-		if( input.isKeyPressed(Input.KEY_ESCAPE) ) {								
-			state.enterState(Gemwars.MAINMENUSTATE, 
-							new FadeOutTransition(), 
-							new FadeInTransition());
-		}			
+		if(input.isKeyPressed(Input.KEY_ENTER)) {
+			IMenuItem item = menu.getMenuItem( menu.getActiveIndex());
+			
+			if(item.getText().equals(RETURN_MENUITEM_TEXT)) {
+				state.enterState(Gemwars.MAINMENUSTATE);
+			}
+			
+			if(item.getText().equals(SAVE_MENUITEM_TEXT)) {				
+				saveConfigurations(cont);				
+			}
+		}
+	}
+
+	private void saveConfigurations( GameContainer cont ) {
+		
+		Options options = Options.getInstance();
+		
+		for( IMenuItem menuItem : menu ) {
+			
+			if( menuItem.getText().equals(SOUND_MENUITEM_TEXT)) {
+				PercentMenuItem sound = (PercentMenuItem) menuItem;
+				options.setSoundVolume((Float)sound.getValue());
+			}					
+			
+			if( menuItem.getText().equals(MUSIC_MENUITEM_TEXT)) {
+				PercentMenuItem music = (PercentMenuItem) menuItem;
+				options.setSoundVolume((Float)music.getValue());
+			}
+			
+			if( menuItem.getText().equals(FULLSCREEN_MENUITEM_TEXT)) {
+				BooleanMenuItem fullcreen = (BooleanMenuItem) menuItem;
+				options.setFullscreen((Boolean)fullcreen.getValue());
+			}
+		}
+	
+		cont.setSoundVolume(options.getSoundVolume());
+		cont.setMusicVolume(options.getMusicVolume());
+		
+		try {
+			cont.setFullscreen(options.getFullscreen());
+		} catch (SlickException e) {
+			Log.error("Failed to set fullscreen mode -> setting fullscreen mode back to false.", e);
+			options.setFullscreen(false);
+		}
+		
+		
+		try {
+			options.save( new File(Options.CONFIGURATION_FILE) );
+		} catch (IllegalArgumentException e) {
+			Log.error("Failed to save configurations.", e);
+		} catch (IllegalAccessException e) {
+			Log.error("Failed to save configurations.", e);
+		} catch (IOException e) {
+			Log.error("Failed to save configurations, IOExceptions.", e);
+		}
 	}
 }

@@ -31,7 +31,7 @@ public class GearPair implements IGameObject {
 		
 		this.rotationSpeed = (random.nextDouble()-0.5) / 100;
 		
-		int color = random.nextInt(255);
+		int color = random.nextInt(155) + 100;
 		
 		Color filterColor = new Color( color, color, color, random.nextInt(200) );
 
