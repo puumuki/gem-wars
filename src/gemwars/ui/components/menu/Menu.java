@@ -1,5 +1,7 @@
 package gemwars.ui.components.menu;
 
+import io.ResourceManager;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +12,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.GradientEffect;
 import org.newdawn.slick.font.effects.OutlineEffect;
@@ -27,8 +30,11 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
 	
 	private UnicodeFont font;
 	
+	private Sound sound;
+	
 	public Menu() throws SlickException {	
-		initFont();        
+		initFont();
+		sound = ResourceManager.getInstance().getSound("MENU_SOUND");
 	}
 
 	private void initFont() throws SlickException {
@@ -67,7 +73,9 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
 				activeIndex++;
 			} else {
 				activeIndex = 0;
-			}			
+			}
+			
+			sound.play();
 		}
 		
 		if( input.isKeyPressed(Input.KEY_UP)) {
@@ -75,7 +83,9 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
 				activeIndex--;
 			} else {
 				activeIndex = menuitems.size() - 1;
-			}			
+			}
+			
+			sound.play();
 		}
 		
 		menuitems.get(activeIndex).setActive(true);		

@@ -140,7 +140,9 @@ public class Map extends AEntity {
 		// time up?
 		if ((time*1000 - timer.timeElapsedInMilliseconds()) <= 0) {
 			for (Player player : players) {
-				player.kill();
+				if( player.isDead() == false ) {
+					player.kill();	
+				}			
 			}
 		}
 
@@ -594,5 +596,17 @@ public class Map extends AEntity {
 	
 	public boolean getGoalAnimation() {
 		return goalAnimation;
+	}
+	
+	public boolean isAllPlayersDeath() {
+		boolean isThereAnyOneLeft = true;
+		
+		for (Player player : players) {
+			if( player.isDead() == false ) {
+				isThereAnyOneLeft = false;
+			}
+		}
+		
+		return isThereAnyOneLeft;
 	}
 }

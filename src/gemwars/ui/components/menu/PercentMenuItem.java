@@ -40,8 +40,6 @@ public class PercentMenuItem extends BasicMenuItem implements IMenuItem {
 			}
 			
 			if( input.isKeyDown(Input.KEY_RIGHT) && value < maxValue ) {
-				System.out.println( text );
-				
 				value += step * delta;
 			}
 			

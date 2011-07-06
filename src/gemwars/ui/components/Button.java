@@ -236,8 +236,6 @@ public class Button extends InputAdapter implements IGameObject {
 	public void centerizeText() {
 		textOffsetX = (getWidth() - font.getWidth(buttonText))/2; 
 		textOffsetY = (getHeight() - font.getHeight(buttonText))/2;
-		
-		System.out.println( buttonText+" "+textOffsetX + font.getHeight(buttonText));
 	}
 	
 	/**

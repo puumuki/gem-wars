@@ -283,10 +283,8 @@ public class GameplayState extends BasicGameState {
 			map.checkMonsterKills(p);
 			
 			// has the player died in some manner?
-			if (p.isDead())
-			{
+			if (p.isDead()) {
 				if (deathTimer.isActive() == false) {
-					Log.debug("Removing dead player at [" + p.positionX + "," + p.positionY + "]");
 					map.drawDiamondMatrix(p.positionX, p.positionY);
 					
 					deathTimer.start();
@@ -295,11 +293,10 @@ public class GameplayState extends BasicGameState {
 					deathTimer.stop();
 					deathTimer.reset();
 					
-					if (map.getPlayer(0).lives <= 0) {
-						
+					if (map.isAllPlayersDeath()) {						
 						state.enterState(Gemwars.GAMEOVERSTATE, 								
-								new FadeOutTransition(), 
-								new FadeInTransition());
+										new FadeOutTransition(), 
+										new FadeInTransition());
 					}
 					else
 					{
@@ -354,4 +351,6 @@ public class GameplayState extends BasicGameState {
 	public int getID() {
 		return stateID;
 	}
+	
+
 }

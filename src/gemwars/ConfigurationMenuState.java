@@ -48,8 +48,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 	private static final String SOUND_MENUITEM_TEXT = "Sound volume";
 	private static final String MUSIC_MENUITEM_TEXT = "Music volume";
 	private static final String FULLSCREEN_MENUITEM_TEXT = "Fullscreen";
-	private static final String SAVE_MENUITEM_TEXT = "Active & Save";
-	private static final String RETURN_MENUITEM_TEXT = "Return to Main Menu";
+	private static final String RETURN_MENUITEM_TEXT = "Done";
 	
 	
 	@SuppressWarnings("unchecked")
@@ -78,21 +77,22 @@ public class ConfigurationMenuState extends BasicGameState  {
                 
         menu = new Menu();          
         
-        PercentMenuItem item = new PercentMenuItem(50, 50, SOUND_MENUITEM_TEXT);
+        int posX = 0;
+        
+        PercentMenuItem item = new PercentMenuItem(posX, 0, SOUND_MENUITEM_TEXT);
         item.setValue(Options.getInstance().getSoundVolume());        
         menu.add(item);        
                 
-        item = new PercentMenuItem(50, 75, MUSIC_MENUITEM_TEXT);
+        item = new PercentMenuItem(posX, 25, MUSIC_MENUITEM_TEXT);
         item.setValue(Options.getInstance().getMusicVolume()); 
         menu.add(item);
        
-        BooleanMenuItem booleanItem = new BooleanMenuItem(50, 100, FULLSCREEN_MENUITEM_TEXT);
+        BooleanMenuItem booleanItem = new BooleanMenuItem(posX, 50, FULLSCREEN_MENUITEM_TEXT);
         booleanItem.setValue(Options.getInstance().getFullscreen());
         
         menu.add(booleanItem);
         
-        menu.add( new BasicMenuItem(50, 150, SAVE_MENUITEM_TEXT));
-        menu.add( new BasicMenuItem(50, 175, RETURN_MENUITEM_TEXT));
+        menu.add( new BasicMenuItem(posX, 75, RETURN_MENUITEM_TEXT));
 	}		
 
 	/**
@@ -120,7 +120,14 @@ public class ConfigurationMenuState extends BasicGameState  {
 			pair.render(cont, g);
 		}
 		
+		int x = (int)cont.getWidth() / 4;
+		int y = (int)cont.getWidth() / 4;
+		
+		g.translate(x, y);
+		
 		menu.render(cont, g);
+		
+		g.resetTransform();
 	}
 	
 	@Override
@@ -135,13 +142,10 @@ public class ConfigurationMenuState extends BasicGameState  {
 		
 		if(input.isKeyPressed(Input.KEY_ENTER)) {
 			IMenuItem item = menu.getMenuItem( menu.getActiveIndex());
-			
-			if(item.getText().equals(RETURN_MENUITEM_TEXT)) {
-				state.enterState(Gemwars.MAINMENUSTATE);
-			}
-			
-			if(item.getText().equals(SAVE_MENUITEM_TEXT)) {				
+						
+			if(item.getText().equals(RETURN_MENUITEM_TEXT)) {				
 				saveConfigurations(cont);				
+				state.enterState(Gemwars.MAINMENUSTATE);
 			}
 		}
 	}
