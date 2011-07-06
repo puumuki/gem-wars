@@ -1,5 +1,7 @@
 package gameobjects;
 
+import java.awt.Point;
+
 import gameobjects.map.Map;
 import io.ResourceManager;
 
@@ -22,6 +24,11 @@ public class Monster extends AEntity {
 	
 	private double distance;
 	
+	/**
+	 * This is used when moster is reseted after player is died 
+	 */
+	private Point startingPosition;
+	
 	public int positionX;
 	public int positionY;
 	
@@ -43,6 +50,8 @@ public class Monster extends AEntity {
 		
 		positionX = x;
 		positionY = y;
+		
+		startingPosition = new Point(x, y);
 		
 		this.map = map;
 		
@@ -92,12 +101,21 @@ public class Monster extends AEntity {
 	}
 	
 	/**
+	 * Reset monster position to starting position where it was when it was created.
+	 */
+	public void putBackToStartingPosition() {
+		positionX = startingPosition.x;
+		positionX = startingPosition.y;
+		direction = Direction.STATIONARY;
+	}
+	
+	/**
 	 * The AI of the monster.
 	 * <p>
 	 * Monsters "hug" the wall on their left. If they encounter a wall, they turn left until they can get out of the situation.
 	 * However, if there is no wall, they should go forwards in some manner... TODO: this still needs to be implemented.
 	 * 
-	 * @throws SlickException if something goes awry
+	 * @throws SlickException if something goes wrong...
 	 */
 	private void changeDirection() throws SlickException {
 		if( direction == Direction.RIGHT ) {

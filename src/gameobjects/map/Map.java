@@ -120,9 +120,11 @@ public class Map extends AEntity {
 		
 		objectLayer.update(cont, delta);
 		
-		Player p = players.get(0);
-		if (p.direction != Direction.STATIONARY) {
-			centerCameraToPlayer(cont, p);
+		//FIXME: We are not taking count another player, the camera is centered always to first player		
+		Player playerOne = players.get(0);
+		
+		if (playerOne.direction != Direction.STATIONARY) {
+			centerCameraToPlayer(cont, playerOne);
 		}
 		
 		// remove dead monsters
@@ -133,12 +135,13 @@ public class Map extends AEntity {
 			monster.update(cont, delta);
 		}
 		
+		//FIXME: We should count gem count from all players here
 		if (goalOpen == false && players.get(0).getGems() >= gemCount) {
 			openGoal();
 		}
 		
 		// time up?
-		if ((time*1000 - timer.timeElapsedInMilliseconds()) <= 0) {
+		if(isTimeUp()) {
 			for (Player player : players) {
 				if( player.isDead() == false ) {
 					player.kill();	
@@ -149,6 +152,33 @@ public class Map extends AEntity {
 		for( Player player : players ) {
 			player.update(cont, delta);
 		}
+	}
+
+	public void resetPlayers() {
+		//This should be called after all players are dead
+		//It could be reset players to starting positions and keep their stuff
+		//map should too keep it state unchanged after a player dies.
+		
+		List<Point>startingPositions = getStartingPositions();
+		
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);			
+			Point startingPos = startingPositions.get(i);
+			
+			player.positionX = startingPos.x;
+			player.positionY = startingPos.y;
+			
+			//Player shall come back from heavens to finish the his work
+			player.setDead(false);
+		}
+		
+		//Should we reset enemies?
+		
+		
+	}
+	
+	public boolean isTimeUp() {
+		return (time*1000 - timer.timeElapsedInMilliseconds()) <= 0;
 	}
 
 	/**
