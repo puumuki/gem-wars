@@ -31,12 +31,12 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	/**
 	 * Entity starting position
 	 */
-	public int starPosX;
+	public int startPosX;
 	
 	/**
 	 * Entity starting positionY;
 	 */
-	public int starPosY;
+	public int startPosY;
 	
 	/**
 	 * How fast the entity is moving. If the value is negative the object is stationary.
@@ -82,8 +82,8 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	 * Reset a entity to the initial positions
 	 */
 	public void resetToStaringPosition() {
-		this.positionX = starPosX;
-		this.positionY = starPosY;
+		this.positionX = startPosX;
+		this.positionY = startPosY;
 	}
 	
 	/**
@@ -91,9 +91,11 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	 */
 	public void initPosition(int x, int y) {
 		setPos(x, y);
-		resetToStaringPosition();
+		startPosX = x;
+		startPosY = y;
 	}
 	
+	//TODO: Should this throw an exception when a given parameter is negative?
 	public void setPos( int x, int y ) {
 		positionX = x;
 		positionY = y;
