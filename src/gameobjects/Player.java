@@ -85,15 +85,9 @@ public class Player extends AEntity {
 		this.speed = 0.15;
 	}
 	
-	public Player( int positionX, int positionY ) {
-		
-		this();
-		
-		this.positionX = positionX;
-		this.positionY = positionY;
-		
-		this.starPosX = positionX;
-		this.starPosY = positionY;
+	public Player( int positionX, int positionY ) {		
+		this();		
+		initPosition(positionX, positionY);
 	}
 	
 	public Player(int posX, int posY, Map map) {

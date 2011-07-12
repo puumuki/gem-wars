@@ -162,19 +162,14 @@ public class Map extends AEntity {
 		List<Point>startingPositions = getStartingPositions();
 		
 		for (int i = 0; i < players.size(); i++) {
-			Player player = players.get(i);			
-			Point startingPos = startingPositions.get(i);
+			Player player = players.get(i);	
 			
-			player.positionX = startingPos.x;
-			player.positionY = startingPos.y;
+			player.resetToStaringPosition();
+			player.score = 0;
 			
 			//Player shall come back from heavens to finish the his work
 			player.setDead(false);
-		}
-		
-		//Should we reset enemies?
-		
-		
+		}		
 	}
 	
 	public boolean isTimeUp() {
@@ -578,11 +573,9 @@ public class Map extends AEntity {
 			for (int y = posY - 1; y <= posY + 1; y++) {
 				if (!isColliding(x, y)) {
 					Gem g = new Gem(ItemTypes.RED_GEM, this);
-					Item i = new Item(ItemTypes.GROUND);
-					g.positionX = x;
-					g.positionY = y;
-					i.positionX = x;
-					i.positionY = y;
+					Item i = new Item(ItemTypes.GROUND);					
+					g.initPosition(x, y);
+					i.initPosition(x, y);
 					groundLayer.setTile(x, y, i);
 					objectLayer.setTile(x, y, g);
 				}
@@ -641,16 +634,17 @@ public class Map extends AEntity {
 		return isThereAnyOneLeft;
 	}
 	
+	public void resetGems() {
+		
+	}
+	
 	/**
 	 * Method does't load the entire map again but it just reset players, monsters
 	 * gems and other stuff that need to be replaced to their orginal positions after
 	 * player dies or  a new game is started.
 	 */
 	public void resetMap() {
-		for (Player player : players) {
-			player.resetToStaringPosition();
-			player.score = 0;
-		}
+		resetPlayers();
 		
 		//Reset gems
 		

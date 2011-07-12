@@ -86,6 +86,19 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 		this.positionY = starPosY;
 	}
 	
+	/**
+	 * Init positions with given values, this means starting position and current positions.
+	 */
+	public void initPosition(int x, int y) {
+		setPos(x, y);
+		resetToStaringPosition();
+	}
+	
+	public void setPos( int x, int y ) {
+		positionX = x;
+		positionY = y;
+	}
+	
 	@Override
 	public int compareTo(AEntity o) {
 		
