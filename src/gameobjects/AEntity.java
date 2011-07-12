@@ -1,5 +1,7 @@
 package gameobjects;
 
+import java.awt.Point;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -25,6 +27,16 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	 * Which way the object is moving or if it is moving at all
 	 */
 	public Direction direction = Direction.STATIONARY;
+	
+	/**
+	 * Entity starting position
+	 */
+	public int starPosX;
+	
+	/**
+	 * Entity starting positionY;
+	 */
+	public int starPosY;
 	
 	/**
 	 * How fast the entity is moving. If the value is negative the object is stationary.
@@ -65,6 +77,14 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	@Override
 	public abstract void update(GameContainer cont, 
 								int delta) throws SlickException ;
+	
+	/**
+	 * Reset a entity to the initial positions
+	 */
+	public void resetToStaringPosition() {
+		this.positionX = starPosX;
+		this.positionY = starPosY;
+	}
 	
 	@Override
 	public int compareTo(AEntity o) {

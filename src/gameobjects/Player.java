@@ -45,21 +45,23 @@ public class Player extends AEntity {
 	public int collectedGemCount;
 		
 	boolean areWeMoving = false;
-	
 
 	private Sound gemCollectedSound;
 	
 	private Image stationary;
+	
 	/**
 	 * This image is used to prevent stuttering while walking
 	 */
 	private Image stationaryTemp;
+	
 	private Animation walkingRight;
 	private Animation walkingLeft;
 	private Animation walkingUp;
 	private Animation walkingDown;
 	private Animation pushLeft;
 	private Animation pushRight;
+	
 	private Image deadImage;
 	
 	private Map map;
@@ -76,7 +78,7 @@ public class Player extends AEntity {
 	/**
 	 * Initialises the player. This should not be called directly! 
 	 */
-	public Player() {
+	private Player() {
 		playerNumber = __staticPlayerNumber++;		
 		postProcessAnimations();
 		initSounds();
@@ -90,6 +92,8 @@ public class Player extends AEntity {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		
+		this.starPosX = positionX;
+		this.starPosY = positionY;
 	}
 	
 	public Player(int posX, int posY, Map map) {
@@ -369,5 +373,5 @@ public class Player extends AEntity {
 	
 	public void setMap(Map map) {
 		this.map = map;
-	}
+	}	
 }

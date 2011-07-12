@@ -94,6 +94,7 @@ public class MapLoader {
 				} catch (NumberFormatException e) {
 					time = 60;
 				}
+				
 				map.setTime(time); // TODO: take Options.gameSpeed into account!
 				
 				// Then layers, one at a time

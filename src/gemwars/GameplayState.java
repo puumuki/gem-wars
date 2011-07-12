@@ -32,6 +32,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.Log;
 
 import utils.TimeCounter;
+import utils.UniqueID;
 
 /**
  * The Gameplay state is the one where the game itself happens.
@@ -50,6 +51,7 @@ public class GameplayState extends BasicGameState {
     }
     
     private List<File> availableMaps;
+    
     private List<File> singlePlayerMaps;
     
     private int currentMapIndex = 0;
@@ -209,6 +211,10 @@ public class GameplayState extends BasicGameState {
 		}
 		
 */
+		if( input.isKeyPressed(Input.KEY_R)) {
+			map.resetMap();
+		}
+		
 		if( isMapChanged ) {
 
 			currentMapIndex++;
@@ -232,8 +238,15 @@ public class GameplayState extends BasicGameState {
 		}
 		
 		//Screen Capture
-		//TODO: Make this save each capture to separate files ;)
 		if (input.isKeyPressed( Input.KEY_F10)) {
+			
+			File file = null;
+			
+			do {
+				file = new File("gemwars_" + UniqueID.nextUniqueID() + ".png" );
+			} while( file.exists() );
+						
+			
 			Image target = new Image(cont.getWidth(), cont.getHeight());
 			cont.getGraphics().copyArea(target, 0, 0);
 			ImageOut.write( target, "screenshot.png", false);
@@ -247,6 +260,11 @@ public class GameplayState extends BasicGameState {
 		}
 		
 
+	}
+	
+
+	public void resetMap() {
+		
 	}
 	
 	private void resetGoal() {

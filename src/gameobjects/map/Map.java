@@ -613,6 +613,7 @@ public class Map extends AEntity {
 
 	public void moveBoulder(int posX, int posY, Direction d) {
 		Item item = objectLayer.getTile(posX, posY);
+		
 		if(item.itemType == ItemTypes.DARK_BOULDER || item.itemType == ItemTypes.WHITE_BOULDER) {
 			Boulder b = (Boulder)item;
 			b.move(d);
@@ -638,5 +639,23 @@ public class Map extends AEntity {
 		}
 		
 		return isThereAnyOneLeft;
+	}
+	
+	/**
+	 * Method does't load the entire map again but it just reset players, monsters
+	 * gems and other stuff that need to be replaced to their orginal positions after
+	 * player dies or  a new game is started.
+	 */
+	public void resetMap() {
+		for (Player player : players) {
+			player.resetToStaringPosition();
+			player.score = 0;
+		}
+		
+		//Reset gems
+		
+		//Reset monster positions
+		
+		//Bitch the bitches 
 	}
 }
