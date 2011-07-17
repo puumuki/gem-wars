@@ -82,15 +82,15 @@ public class Player extends AEntity {
 		playerNumber = __staticPlayerNumber++;		
 		postProcessAnimations();
 		initSounds();
-		this.speed = 0.15;
+		this.speed = 0.20;
 	}
 	
-	public Player( int positionX, int positionY ) {		
+	public Player( int positionX, int positionY ) throws SlickException {		
 		this();		
 		initPosition(positionX, positionY);
 	}
 	
-	public Player(int posX, int posY, Map map) {
+	public Player(int posX, int posY, Map map) throws SlickException {
 		this(posX, posY);
 		this.map = map;
 	}

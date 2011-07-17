@@ -12,28 +12,28 @@ import org.newdawn.slick.SlickException;
 public class TestEntityClass {
 
 	@Test
-	public void testCreatingAEntity() {
+	public void testCreatingAEntity() throws SlickException {
 		
 		AEntity entity = getEntity();
 		
-		entity.setPos(5, -4);
+		entity.setPos(5, 4);
 		
 		Assert.assertEquals( 5, entity.positionX );
-		Assert.assertEquals( -4, entity.positionY );
+		Assert.assertEquals( 4, entity.positionY );
 		
-		entity.initPosition(3, -3);
+		entity.initPosition(3, 3);
 		
 		Assert.assertEquals( 3, entity.positionX );
-		Assert.assertEquals( -3, entity.positionY );
+		Assert.assertEquals( 3, entity.positionY );
 		Assert.assertEquals( 3, entity.startPosX );
-		Assert.assertEquals( -3, entity.startPosY );
+		Assert.assertEquals( 3, entity.startPosY );
 		
-		entity.setPos(50, -30);
+		entity.setPos(50, 30);
 		
 		entity.resetToStaringPosition();
 		
 		Assert.assertEquals(3, entity.positionX);
-		Assert.assertEquals(-3, entity.positionY);
+		Assert.assertEquals(3, entity.positionY);
 	}
 	
 	@Test
@@ -56,7 +56,9 @@ public class TestEntityClass {
 	
 	
 	private AEntity getEntity() {
-		AEntity entity = new AEntity() {			
+		
+		AEntity entity = new AEntity() {	
+			
 			@Override
 			public void update(GameContainer cont, int delta) throws SlickException {}
 			

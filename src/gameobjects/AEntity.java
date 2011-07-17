@@ -55,6 +55,11 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	public double distance;
 	
 	/**
+	 * If this is set to true entity should not be drawn of effect any how to the game play	
+	 */
+	public boolean hide;
+	
+	/**
 	 * The entity is rendered to the screen when this method is called.
 	 * 
 	 * @param cont Don't read any input or update physics in this method.
@@ -81,22 +86,29 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	/**
 	 * Reset a entity to the initial positions
 	 */
-	public void resetToStaringPosition() {
+	public void resetToStaringPosition() {	
 		this.positionX = startPosX;
 		this.positionY = startPosY;
 	}
 	
 	/**
 	 * Init positions with given values, this means starting position and current positions.
+	 * @throws SlickException 
 	 */
-	public void initPosition(int x, int y) {
+	public void initPosition(int x, int y) throws SlickException {
 		setPos(x, y);
 		startPosX = x;
 		startPosY = y;
 	}
 	
 	//TODO: Should this throw an exception when a given parameter is negative?
-	public void setPos( int x, int y ) {
+	public void setPos( int x, int y ) throws SlickException {
+		
+		if( x < 0 || y < 0 ) {
+			throw new SlickException("Position that are trying to be set is an negative, " +
+									  "value shoud be positive. X:" + x + " Y:" + y );
+		}
+		
 		positionX = x;
 		positionY = y;
 	}

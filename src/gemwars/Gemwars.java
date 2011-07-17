@@ -79,6 +79,7 @@ public class Gemwars extends StateBasedGame {
         app.start();
 	}
 	
+	
 	private static Options loadConfigurations() throws SlickException {
 		Options properties = Options.getInstance();
 		

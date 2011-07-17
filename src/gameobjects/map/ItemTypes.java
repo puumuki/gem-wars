@@ -29,7 +29,7 @@ public enum ItemTypes {
 	
 	private final int textureIndex;
 	
-	ItemTypes( int index) {
+	ItemTypes(int index) {
 		this.textureIndex = index;
 	}
 
@@ -48,5 +48,15 @@ public enum ItemTypes {
 		}
 		
 		return type;
+	}
+	
+	public static boolean isGem( ItemTypes type ) {
+		if(    type == RED_GEM 
+			|| type == ItemTypes.GREEN_GEM 
+			|| type == ItemTypes.RED_GEM) {
+			return true;
+		}
+		
+		return false;
 	}
 }

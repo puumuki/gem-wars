@@ -230,12 +230,13 @@ public class Map extends AEntity {
 	/**
 	 * Find he starting positions from the map and 
 	 * creates Player-objects to those starting positions.
+	 * @throws SlickException 
 	 */
-	public void initPlayers() {
+	public void initPlayers() throws SlickException {
 		initPlayers(null);
 	}
 	
-	public void initPlayers(List<Player> players) {
+	public void initPlayers(List<Player> players) throws SlickException {
 		if(players == null)
 		{
 			for(Point startingPosition : getStartingPositions() ) {
@@ -577,7 +578,7 @@ public class Map extends AEntity {
 					g.initPosition(x, y);
 					i.initPosition(x, y);
 					groundLayer.setTile(x, y, i);
-					objectLayer.setTile(x, y, g);
+					objectLayer.setTile(x, y, g);					
 				}
 			}
 		}
@@ -635,7 +636,18 @@ public class Map extends AEntity {
 	}
 	
 	public void resetGems() {
+		Item[][] items = objectLayer.tiles;
 		
+		Log.debug("Width " + width + " Height " + height);
+		
+		for (int y = 0; y < height; y++) {						
+			for (int x = 0; x < width; x++) {
+				if( ItemTypes.isGem(items[x][y].itemType)) {					
+					Log.debug("Reseting gem to position in " 
+								+ new Point(x, y));			
+				}
+			}
+		}
 	}
 	
 	/**
@@ -646,7 +658,10 @@ public class Map extends AEntity {
 	public void resetMap() {
 		resetPlayers();
 		
-		//Reset gems
+		//Problem here is that gems are deleted from memory, game logic should be refactored for this part.
+		//Gems should be keeped in memory all the time, they could be moved to deleted gem list or they could be marked
+		//as deleted gems, this requires some nessecary rethinkin Me Think tooXDXDXDXD
+		resetGems();
 		
 		//Reset monster positions
 		
