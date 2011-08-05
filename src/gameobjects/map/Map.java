@@ -630,6 +630,7 @@ public class Map extends AEntity {
 		for (Player player : players) {
 			if( player.getLives() > 0 ) {
 				isThereAnyOneLeft = false;
+				break;
 			}
 		}
 		
