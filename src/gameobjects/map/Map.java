@@ -414,16 +414,8 @@ public class Map extends AEntity {
 	 * @return true if tile is containing a gem, false if not.
 	 */
 	public boolean isTileContainingGem(int x, int y ) {
-		Item item = objectLayer.getTile(x, y);
-		
-		if( item.itemType == ItemTypes.RED_GEM 
-			|| item.itemType == ItemTypes.BLUE_GEM 
-			|| item.itemType == ItemTypes.GREEN_GEM ) {
-		
-			return true;			
-		}
-		
-		return false;
+		Item item = objectLayer.getTile(x, y);		
+		return ItemTypes.isGem(item.itemType);
 	}
 	
 	/**
@@ -666,7 +658,7 @@ public class Map extends AEntity {
 		
 		//Problem here is that gems are deleted from memory, game logic should be refactored for this part.
 		//Gems should be keeped in memory all the time, they could be moved to deleted gem list or they could be marked
-		//as deleted gems, this requires some nessecary rethinkin Me Think tooXDXDXDXD
+		//as deleted gems, this requires some nessecary rethinkin Me Think too XDXDXDXD
 		resetGems();
 		
 		//Reset monster positions

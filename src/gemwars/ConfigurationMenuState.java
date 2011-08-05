@@ -163,7 +163,7 @@ public class ConfigurationMenuState extends BasicGameState  {
 			
 			if( menuItem.getText().equals(MUSIC_MENUITEM_TEXT)) {
 				PercentMenuItem music = (PercentMenuItem) menuItem;
-				options.setSoundVolume((Float)music.getValue());
+				options.setMusicVolume((Float)music.getValue());
 			}
 			
 			if( menuItem.getText().equals(FULLSCREEN_MENUITEM_TEXT)) {
