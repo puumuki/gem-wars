@@ -55,7 +55,7 @@ public class Monster extends AEntity {
 		
 		this.map = map;
 		
-		speed = 0.15;
+		speed = 0.25; // slightly faster than the player to keep the game interesting
 		
 		this.direction = Direction.STATIONARY;
 	}
@@ -68,16 +68,16 @@ public class Monster extends AEntity {
 		int drawY = positionY * Item.TILE_HEIGHT;
 		
 		if( direction == Direction.UP ) {
-			walkingUp.draw(drawX, (int)(drawY + Item.TILE_HEIGHT - distance) );
+			walkingUp.draw(drawX, Math.round(drawY + Item.TILE_HEIGHT - distance) );
 		}
 		if( direction == Direction.DOWN ) {
-			walkingDown.draw(drawX, (int) (drawY - Item.TILE_HEIGHT + distance ));
+			walkingDown.draw(drawX, Math.round(drawY - Item.TILE_HEIGHT + distance ));
 		}
 		if( direction == Direction.LEFT ) {
-			walkingLeft.draw((int)(drawX + Item.TILE_WIDTH - distance), drawY);
+			walkingLeft.draw(Math.round(drawX + Item.TILE_WIDTH - distance), drawY);
 		}
 		if( direction == Direction.RIGHT ) {
-			walkingRight.draw((int)(drawX - Item.TILE_WIDTH + distance), drawY);
+			walkingRight.draw(Math.round(drawX - Item.TILE_WIDTH + distance), drawY);
 		}
 
 		// to debug, uncomment:
@@ -113,7 +113,7 @@ public class Monster extends AEntity {
 	 * The AI of the monster.
 	 * <p>
 	 * Monsters "hug" the wall on their left. If they encounter a wall, they turn left until they can get out of the situation.
-	 * However, if there is no wall, they should go forwards in some manner... TODO: this still needs to be implemented.
+	 * However, if there is no wall, they should go forward in some manner... TODO: this still needs to be implemented.
 	 * 
 	 * @throws SlickException if something goes wrong...
 	 */
@@ -124,7 +124,7 @@ public class Monster extends AEntity {
 				direction = Direction.UP;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX + 1, positionY)) // can it move forwards
+			else if (!map.isMonsterColliding(positionX + 1, positionY)) // can it move forward
 				positionX++;
 			else
 				direction = Direction.UP; // giving up, testing another direction
@@ -136,7 +136,7 @@ public class Monster extends AEntity {
 				direction = Direction.LEFT;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX, positionY - 1)) // can it move forwards
+			else if (!map.isMonsterColliding(positionX, positionY - 1)) // can it move forward
 				positionY--;
 			else
 				direction = Direction.LEFT; // giving up, testing another direction
@@ -148,7 +148,7 @@ public class Monster extends AEntity {
 				direction = Direction.DOWN;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX - 1 , positionY)) // can it move forwards
+			else if (!map.isMonsterColliding(positionX - 1 , positionY)) // can it move forward
 				positionX--;
 			else
 				direction = Direction.DOWN; // giving up, testing another direction
@@ -160,7 +160,7 @@ public class Monster extends AEntity {
 				direction = Direction.RIGHT;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX, positionY + 1)) // can it move forwards
+			else if (!map.isMonsterColliding(positionX, positionY + 1)) // can it move forward
 				positionY++;
 			else
 				direction = Direction.RIGHT; // giving up, testing another direction
