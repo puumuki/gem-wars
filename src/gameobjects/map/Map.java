@@ -628,7 +628,7 @@ public class Map extends AEntity {
 		boolean isThereAnyOneLeft = true;
 		
 		for (Player player : players) {
-			if( player.isDead() == false ) {
+			if( player.getLives() > 0 ) {
 				isThereAnyOneLeft = false;
 			}
 		}

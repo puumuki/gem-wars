@@ -360,8 +360,11 @@ public class Player extends AEntity {
 	 * Kills the player
 	 */
 	public void kill() {
-		lives--;
-		dead = true;
+		if (dead == false)
+		{
+			lives--;
+			dead = true;
+		}
 	}
 
 	/**
