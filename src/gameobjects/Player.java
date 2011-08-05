@@ -53,7 +53,7 @@ public class Player extends AEntity {
 	/**
 	 * This image is used to prevent stuttering while walking
 	 */
-	private Image stationaryTemp;
+	private Image tempImage;
 	
 	private Animation walkingRight;
 	private Animation walkingLeft;
@@ -105,37 +105,38 @@ public class Player extends AEntity {
 		int drawX = positionX * Item.TILE_WIDTH;
 		int drawY = positionY * Item.TILE_HEIGHT;
 		
+		
 		if (isDead() == true) {
 			grap.drawImage(deadImage, drawX, drawY);
 		}
 		else
 		{
 			if( direction == Direction.UP ) {
-				grap.drawAnimation(walkingUp, drawX, (int)(drawY - distance) );
+				grap.drawAnimation(walkingUp, drawX, Math.round(drawY - distance) );
 			}
 			if( direction == Direction.DOWN ) {
-				grap.drawAnimation(walkingDown, drawX, (int) (drawY + distance ));
+				grap.drawAnimation(walkingDown, drawX, Math.round(drawY + distance ));
 			}
 			if( direction == Direction.LEFT ) {
 				if (pushingStone)
-					grap.drawAnimation(pushLeft, (int)(drawX - distance), drawY);
+					grap.drawAnimation(pushLeft, Math.round(drawX - distance), drawY);
 				else
-					grap.drawAnimation(walkingLeft, (int)(drawX - distance), drawY);
+					grap.drawAnimation(walkingLeft, Math.round(drawX - distance), drawY);
 			}
 			if( direction == Direction.RIGHT ) {
 				if (pushingStone)
-					grap.drawAnimation(pushRight, (int)(drawX + distance), drawY);
+					grap.drawAnimation(pushRight, Math.round(drawX + distance), drawY);
 				else
-					grap.drawAnimation(walkingRight, (int)(drawX + distance), drawY);			
+					grap.drawAnimation(walkingRight, Math.round(drawX + distance), drawY);			
 			}
 			if( direction == Direction.STATIONARY ) {
-				grap.drawImage(stationaryTemp, drawX, drawY);	
+				grap.drawImage(tempImage, drawX, drawY);	
 			}
 		}
 		
 		// to debug, uncomment
 		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
-		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance+"\n"+pushTimer.timeElapsedInMilliseconds(), drawX, drawY);
+		grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance+"\n"+pushTimer.timeElapsedInMilliseconds(), drawX, drawY);
 	}
 
 	@Override
@@ -153,59 +154,7 @@ public class Player extends AEntity {
 				kill();
 			}
 			
-			//If no key is pressed is going to be stationary		
-			if(direction == Direction.STATIONARY ) {
-				
-				pushingStone = false;
-				
-				if( input.isKeyDown(Input.KEY_DOWN )) {
-					if (!map.isColliding(positionX, positionY + 1))
-						direction = Direction.DOWN;
-				}
-				
-				if( input.isKeyDown(Input.KEY_UP)) {
-					if (!map.isColliding(positionX, positionY - 1))
-						direction = Direction.UP;
-				}
-				
-				if( input.isKeyDown(Input.KEY_LEFT)) {
-					if (!map.isColliding(positionX - 1 , positionY))
-						direction = Direction.LEFT;
-					else if (map.canPush(positionX - 1, positionY, Direction.LEFT)) {
-						if(pushTimer.isActive() == false) {
-							pushingStone = true;
-							direction = Direction.LEFT;
-							pushTimer.start();
-						}
-						
-					}
-				}
-				
-				if( input.isKeyDown(Input.KEY_RIGHT)) {
-					if (!map.isColliding(positionX + 1, positionY))
-						direction = Direction.RIGHT;
-					else if (map.canPush(positionX + 1, positionY, Direction.RIGHT)) {
-						if(pushTimer.isActive() == false) {
-							pushingStone = true;
-							direction = Direction.RIGHT;
-							pushTimer.start();
-						}
-					}
-				}
-				stationaryTemp = stationary;
-				
-				
-			}
 			
-
-			
-			if ((!input.isKeyDown(Input.KEY_LEFT) && pushTimer.isActive() && direction == Direction.LEFT)
-					|| (!input.isKeyDown(Input.KEY_RIGHT) && pushTimer.isActive() && direction == Direction.RIGHT)) {
-				pushTimer.stop();
-				pushTimer.reset();
-				pushingStone = false;
-				direction = Direction.STATIONARY;
-			}
 			
 			if( direction != Direction.STATIONARY 
 				&& distance <= Item.TILE_HEIGHT ) {
@@ -224,24 +173,105 @@ public class Player extends AEntity {
 			} else {
 				if( direction == Direction.LEFT ) {
 					positionX--;
-					stationaryTemp = walkingLeft.getCurrentFrame();
+					tempImage = walkingLeft.getCurrentFrame();
 				}
 				if( direction == Direction.RIGHT ) {
 					positionX++;
-					stationaryTemp = walkingRight.getCurrentFrame();
+					tempImage = walkingRight.getCurrentFrame();
 				}
 				if( direction == Direction.UP ) {
 					positionY--;
-					stationaryTemp = walkingUp.getCurrentFrame();
+					tempImage = walkingUp.getCurrentFrame();
 				}
 				if( direction == Direction.DOWN ) {
 					positionY++;
-					stationaryTemp = walkingDown.getCurrentFrame();
+					tempImage = walkingDown.getCurrentFrame();
 				}
 				
-				distance = 0;						
-				direction = Direction.STATIONARY;
+				if (distance != 0)
+					distance = distance - Item.TILE_HEIGHT;
+				
+				// direction = Direction.STATIONARY;
 
+				if( input.isKeyDown(Input.KEY_DOWN ) ) {
+					if (!map.isColliding(positionX, positionY + 1)) {
+						direction = Direction.DOWN;
+						distance += speed * delta; 
+					}
+					else {
+						distance = 0;
+						direction = Direction.STATIONARY;
+					}
+				}
+				
+				else if( input.isKeyDown(Input.KEY_UP)) {
+					if (!map.isColliding(positionX, positionY - 1)) {
+						direction = Direction.UP;
+						distance += speed * delta;
+					}
+					else {
+						distance = 0;
+						direction = Direction.STATIONARY;
+					}
+				}
+				
+				else if( input.isKeyDown(Input.KEY_LEFT)) {
+					if (!map.isColliding(positionX - 1 , positionY)) {
+						direction = Direction.LEFT;
+						distance += speed * delta;
+					}
+					else if (map.canPush(positionX - 1, positionY, Direction.LEFT)) {
+						if(pushTimer.isActive() == false) {
+							pushingStone = true;
+							direction = Direction.LEFT;
+							pushTimer.start();
+						}
+						
+					}
+					else {
+						distance = 0;
+						direction = Direction.STATIONARY;
+					}
+				}
+				
+				else if( input.isKeyDown(Input.KEY_RIGHT)) {
+					if (!map.isColliding(positionX + 1, positionY)) {
+						direction = Direction.RIGHT;
+						distance += speed * delta;
+					}
+					else if (map.canPush(positionX + 1, positionY, Direction.RIGHT)) {
+						if(pushTimer.isActive() == false) {
+							pushingStone = true;
+							direction = Direction.RIGHT;
+							pushTimer.start();
+						}
+					}
+					else {
+						distance = 0;
+						direction = Direction.STATIONARY;
+					}
+				}
+				
+				else {
+					
+					direction = Direction.STATIONARY;
+				}
+				
+				
+				if (direction == Direction.STATIONARY)
+				{
+					pushingStone = false;
+					distance = 0;
+				}
+				
+				
+			}
+			if ((!input.isKeyDown(Input.KEY_LEFT) && pushTimer.isActive() && direction == Direction.LEFT)
+					|| (!input.isKeyDown(Input.KEY_RIGHT) && pushTimer.isActive() && direction == Direction.RIGHT)) {
+				pushTimer.stop();
+				pushTimer.reset();
+				pushingStone = false;
+				direction = Direction.STATIONARY;
 			}
 			
 		}
@@ -289,7 +319,7 @@ public class Player extends AEntity {
 		pushLeft = ResourceManager.getInstance().getAnimation("PLAYER_PUSH_LEFT");
 
 		stationary = walkingDown.getImage(0);
-		stationaryTemp = stationary;
+		tempImage = stationary;
 		
 		deadImage = ResourceManager.fetchImage("ITEM_TEXTURES").getSubImage(0, 0, Item.TILE_WIDTH, Item.TILE_HEIGHT);
 	}

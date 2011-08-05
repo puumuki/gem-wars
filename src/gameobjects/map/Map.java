@@ -204,16 +204,16 @@ public class Map extends AEntity {
 		cameraPositionY = -1 * p.positionY * Item.TILE_HEIGHT + cont.getHeight() / 2 - Item.TILE_HEIGHT / 2;
 		
 		if (p.direction == Direction.DOWN) {
-				cameraPositionY -= p.getDistance();
+				cameraPositionY -= Math.round(p.getDistance());
 		}
 		if (p.direction == Direction.UP) {
-			cameraPositionY += p.getDistance();
+			cameraPositionY += Math.round(p.getDistance());
 		}
 		if (p.direction == Direction.LEFT) {
-			cameraPositionX += p.getDistance();
+			cameraPositionX += Math.round(p.getDistance());
 		}
 		if (p.direction == Direction.RIGHT) {
-			cameraPositionX -= p.getDistance();
+			cameraPositionX -= Math.round(p.getDistance());
 		}
 		
 		if (cameraPositionX < -1 * (mapMaxX - cont.getWidth()))
