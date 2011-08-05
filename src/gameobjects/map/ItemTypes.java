@@ -51,9 +51,9 @@ public enum ItemTypes {
 	}
 	
 	public static boolean isGem( ItemTypes type ) {
-		if(    type == RED_GEM 
+		if( type == ItemTypes.RED_GEM 
 			|| type == ItemTypes.GREEN_GEM 
-			|| type == ItemTypes.RED_GEM) {
+			|| type == ItemTypes.BLUE_GEM) {
 			return true;
 		}
 		
