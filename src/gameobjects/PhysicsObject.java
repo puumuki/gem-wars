@@ -22,7 +22,7 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	/**
 	 * Link to the map we are in
 	 */
-	private Map map;
+	protected Map map;
 	
 	/**
 	 * Creates a new physics object
@@ -99,7 +99,7 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	}
 
 	/**
-	 * Makes some neat calculations to move the objects
+	 * Makes some neat calculations to move the objects. This is called on every update.
 	 */
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {

@@ -27,8 +27,6 @@ public class Boulder extends PhysicsObject implements IDynamic {
 	
 	private Renderable currentAnimation;
 
-	private Map map;
-	
 	private double friction;
 	
 	private boolean pushed;
@@ -45,7 +43,7 @@ public class Boulder extends PhysicsObject implements IDynamic {
 		this.map = map;
 		init();
 		
-		speed = 0.15;
+		speed = 0.20;
 		
 		// TODO: set friction
 	}
@@ -109,15 +107,18 @@ public class Boulder extends PhysicsObject implements IDynamic {
 	
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
-		super.update(cont, delta);
 		if ((super.getLastDirection() == Direction.LEFT || super.getLastDirection() == Direction.RIGHT)
 				&& pushed == true){
-			direction = Direction.STATIONARY;
 			pushed = false;
 		}
+		super.update(cont, delta);
 	}
 	
-	public void move(Direction d) {
+	/**
+	 * Used to push the boulder in a new location.
+	 * @param d the enum'd direction we are pushing the boulder.
+	 */
+	public void push(Direction d) {
 		distance = 0;
 		direction = d;
 		pushed = true;

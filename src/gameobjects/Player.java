@@ -214,9 +214,9 @@ public class Player extends AEntity {
 						pushTimer.stop();
 						pushTimer.reset();
 						if (direction == Direction.LEFT)
-							map.moveBoulder(positionX - 1, positionY, direction);
+							map.pushBoulder(positionX - 1, positionY, direction);
 						if (direction == Direction.RIGHT)
-							map.moveBoulder(positionX + 1, positionY, direction);
+							map.pushBoulder(positionX + 1, positionY, direction);
 					}
 				}
 				else

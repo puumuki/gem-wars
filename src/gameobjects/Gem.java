@@ -54,7 +54,7 @@ public class Gem extends PhysicsObject implements IDynamic {
 
 		gemImage = gemDown.getImage(0);
 		
-		speed = 0.15;
+		speed = 0.20;
 	}
 	
 	@Override

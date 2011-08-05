@@ -605,12 +605,18 @@ public class Map extends AEntity {
 		return false;
 	}
 
-	public void moveBoulder(int posX, int posY, Direction d) {
+	/**
+	 * A player pushes the boulder into a new location.
+	 * @param posX x-pos of the boulder
+	 * @param posY y-pos of the boulder
+	 * @param d direction of the push
+	 */
+	public void pushBoulder(int posX, int posY, Direction d) {
 		Item item = objectLayer.getTile(posX, posY);
 		
 		if(item.itemType == ItemTypes.DARK_BOULDER || item.itemType == ItemTypes.WHITE_BOULDER) {
 			Boulder b = (Boulder)item;
-			b.move(d);
+			b.push(d);
 		}
 	}
 	
