@@ -136,7 +136,7 @@ public class Player extends AEntity {
 		
 		// to debug, uncomment
 		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
-		grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance+"\n"+pushTimer.timeElapsedInMilliseconds(), drawX, drawY);
+		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance+"\n"+pushTimer.timeElapsedInMilliseconds(), drawX, drawY);
 	}
 
 	@Override

@@ -148,8 +148,8 @@ public class GameplayState extends BasicGameState {
 		if (goalTimer.isActive()) {
 			if (goaltime > 0) {
 				for (Player p : map.getPlayers()) {
-					// increment the player's score by 5 points for every second that was left on the clock
-					p.score += 5;
+					// increment the player's score by 100 points for every second that was left on the clock
+					p.score += 100;
 				}
 				goaltime--;
 				if(!bonusSound.playing())

@@ -142,11 +142,14 @@ public class Map extends AEntity {
 		
 		// time up?
 		if(isTimeUp()) {
-			for (Player player : players) {
+			timer.stop();
+			
+		/*	for (Player player : players) {
 				if( player.isDead() == false ) {
 					player.kill();	
 				}			
 			}
+			*/
 		}
 
 		for( Player player : players ) {
