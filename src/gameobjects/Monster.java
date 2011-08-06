@@ -81,22 +81,27 @@ public class Monster extends AEntity {
 		}
 
 		// to debug, uncomment:
-		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
+		grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
 	}
 
 	@Override
 	public void update(GameContainer cont, int delta) throws SlickException {
+		if(direction == Direction.STATIONARY) { // corrects a bug on start
+			direction = Direction.RIGHT;
+			distance = 0;
+			changeDirection();
+		}
+		
 		if( direction != Direction.STATIONARY 
 			&& distance <= Item.TILE_HEIGHT) {
 			
 			distance += speed * delta;
 		}
 		else {
-			distance = 0;
+			if (distance > 0)
+				distance = distance - Item.TILE_HEIGHT;
 			changeDirection();
 		}
-		if(direction == Direction.STATIONARY) // corrects a bug on start
-			direction = Direction.RIGHT;
 
 	}
 	
@@ -113,57 +118,74 @@ public class Monster extends AEntity {
 	 * The AI of the monster.
 	 * <p>
 	 * Monsters "hug" the wall on their left. If they encounter a wall, they turn left until they can get out of the situation.
-	 * However, if there is no wall, they should go forward in some manner... TODO: this still needs to be implemented.
+	 * However, if there is no wall, they should go forward in some manner... TODO: still some bugs remain.
 	 * 
 	 * @throws SlickException if something goes wrong...
 	 */
 	private void changeDirection() throws SlickException {
 		if( direction == Direction.RIGHT ) {
-			if (!map.isMonsterColliding(positionX, positionY - 1)) { // can it turn left
+			if (!map.isMonsterColliding(positionX, positionY - 1) && map.isMonsterColliding(positionX + 1, positionY - 1)) {
+				// can it turn left and is there a wall behind it on its left
 				positionY--;
 				direction = Direction.UP;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX + 1, positionY)) // can it move forward
+			else if (!map.isMonsterColliding(positionX + 1, positionY)) { // can it move forward
 				positionX++;
-			else
+				return;
+			} else {
+				positionY--;
 				direction = Direction.UP; // giving up, testing another direction
+				return;
+			}
 		}
 		
 		if( direction == Direction.UP ) {
-			if (!map.isMonsterColliding(positionX - 1, positionY)) { // can it turn left
+			if (!map.isMonsterColliding(positionX - 1, positionY) && map.isMonsterColliding(positionX - 1, positionY + 1)) { // can it turn left
 				positionX--;
 				direction = Direction.LEFT;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX, positionY - 1)) // can it move forward
+			else if (!map.isMonsterColliding(positionX, positionY - 1)) { // can it move forward
 				positionY--;
-			else
+				return;
+			} else {
+				positionX--;
 				direction = Direction.LEFT; // giving up, testing another direction
+				return;
+			}
 		}
 		
 		if( direction == Direction.LEFT ) {
-			if (!map.isMonsterColliding(positionX, positionY + 1)) { // can it turn left
+			if (!map.isMonsterColliding(positionX, positionY + 1) && map.isMonsterColliding(positionX + 1, positionY + 1)) { // can it turn left
 				positionY++;
 				direction = Direction.DOWN;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX - 1 , positionY)) // can it move forward
+			else if (!map.isMonsterColliding(positionX - 1 , positionY)) { // can it move forward
 				positionX--;
-			else
+				return;
+			} else {
+				positionY++;
 				direction = Direction.DOWN; // giving up, testing another direction
+				return;	
+			}
 		}
 		
 		if( direction == Direction.DOWN ) {
-			if (!map.isMonsterColliding(positionX + 1, positionY)) { // can it turn left
+			if (!map.isMonsterColliding(positionX + 1, positionY) && map.isMonsterColliding(positionX + 1, positionY - 1)) { // can it turn left
 				positionX++;
 				direction = Direction.RIGHT;
 				return;
 			}
-			else if (!map.isMonsterColliding(positionX, positionY + 1)) // can it move forward
+			else if (!map.isMonsterColliding(positionX, positionY + 1)) { // can it move forward
 				positionY++;
-			else
+				return;
+			} else {
+				positionX++;
 				direction = Direction.RIGHT; // giving up, testing another direction
+				return;
+			}
 		}
 	}
 	

@@ -50,10 +50,10 @@
 	<resource type="animation" id="GEM_RED_RIGHT" tw="56" th="56" duration="42">resources\images\gem_red_right.png</resource>
 	
 	<!-- monsters -->
-	<resource type="animation" id="MONSTER_LEFT" tw="56" th="56" duration="42">resources\images\monster_left.png</resource>
-	<resource type="animation" id="MONSTER_RIGHT" tw="56" th="56" duration="42">resources\images\monster_right.png</resource>
-	<resource type="animation" id="MONSTER_UP" tw="56" th="56" duration="42">resources\images\monster_up.png</resource>
-	<resource type="animation" id="MONSTER_DOWN" tw="56" th="56" duration="42">resources\images\monster_down.png</resource>
+	<resource type="animation" id="MONSTER_LEFT" tw="56" th="56" duration="16">resources\images\monster_left.png</resource>
+	<resource type="animation" id="MONSTER_RIGHT" tw="56" th="56" duration="16">resources\images\monster_right.png</resource>
+	<resource type="animation" id="MONSTER_UP" tw="56" th="56" duration="16">resources\images\monster_up.png</resource>
+	<resource type="animation" id="MONSTER_DOWN" tw="56" th="56" duration="16">resources\images\monster_down.png</resource>
 
 	
 	<!-- gameplay sounds -->
