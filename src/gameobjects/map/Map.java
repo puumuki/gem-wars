@@ -92,6 +92,19 @@ public class Map extends AEntity {
     
     private TimeCounter timer = new TimeCounter();
 	
+    /**
+     * Pauses the timer when given value is false and 
+     * restart it when the value is true.
+     * 
+     * @param active
+     */
+    public void enableTimer( boolean active ) {
+    	if( active )
+    		timer.start();
+    	else
+    		timer.stop();
+    }
+    
 	@Override
 	public void render(GameContainer cont, Graphics graph) throws SlickException {
 		

@@ -133,7 +133,7 @@ public class GameplayState extends BasicGameState {
 			throws SlickException {
 		
 		map.render(cont, graph);
-		
+				
 		if (goalTimer.isActive()) {
 			graph.setColor(new Color(0,0,0,goalBlackingAlpha));
 			graph.fillRect(0, 0, cont.getWidth(), cont.getHeight());
@@ -273,11 +273,21 @@ public class GameplayState extends BasicGameState {
 		}
 		
 
-	}
-	
-
-	public void resetMap() {
-		
+		if(input.isKeyPressed(Input.KEY_P) || input.isKeyPressed(Input.KEY_PAUSE)) {
+			
+			Image background = new Image(cont.getWidth(), cont.getHeight());
+			cont.getGraphics().copyArea(background, 0, 0);
+			
+			map.enableTimer(false);			
+			
+			PauseState pausedState = (PauseState)state.getState(Gemwars.PAUSE_GAME_STATE);
+			
+			pausedState.setBackground(background.copy());
+						
+			state.enterState(Gemwars.PAUSE_GAME_STATE, 								
+							new EmptyTransition(), 
+							new BlobbyTransition());
+		}
 	}
 	
 	private void resetGoal() {
