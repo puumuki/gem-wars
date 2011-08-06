@@ -188,8 +188,10 @@ public class Player extends AEntity {
 					tempImage = walkingDown.getCurrentFrame();
 				}
 				
-				if (distance != 0)
+				if (distance != 0) {
+					pushingStone = false;
 					distance = distance - Item.TILE_HEIGHT;
+				}
 				
 				// direction = Direction.STATIONARY;
 
