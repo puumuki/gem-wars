@@ -48,7 +48,7 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	 * @return true, if it can
 	 */
 	private boolean canRollRight() {
-		if(map.getObjectLayer().getTile(positionX + 1, positionY + 1).itemType != ItemTypes.MAGIC_GREY_WALL &&
+		if(map.getGroundLayer().getTile(positionX + 1, positionY).itemType != ItemTypes.MAGIC_GREY_WALL &&
 				canDrop(positionX + 1, positionY + 1) && canDrop(positionX + 1, positionY) && gemOrBoulderUnder())
 			return true;
 			
@@ -60,7 +60,7 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	 * @return true, if it can
 	 */
 	private boolean canRollLeft() {
-		if(map.getObjectLayer().getTile(positionX - 1, positionY + 1).itemType != ItemTypes.MAGIC_GREY_WALL &&
+		if(map.getGroundLayer().getTile(positionX - 1, positionY).itemType != ItemTypes.MAGIC_GREY_WALL &&
 				canDrop(positionX - 1, positionY + 1) && canDrop(positionX - 1, positionY) && gemOrBoulderUnder())
 			return true;
 			
