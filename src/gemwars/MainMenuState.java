@@ -333,7 +333,7 @@ public class MainMenuState extends BasicGameState {
 					new EmptyTransition(), 
 					new BlobbyTransition());
 		}
-		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+		if (input.isKeyPressed(Input.KEY_ESCAPE) || input.isKeyPressed(Input.KEY_LEFT)) {
 			currentSelection = 0;
 			inSinglePlayerSubmenu = false;
 		}

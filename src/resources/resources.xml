@@ -28,12 +28,12 @@
 	<resource type="animation" id="MAGIC_WALL" tw="56" th="56" duration="42">resources\images\magic_wall.png</resource>
 	
 	<!-- player -->
-	<resource type="animation" id="PLAYER_LEFT" tw="56" th="56" duration="42">resources\images\player_left.png</resource>
-	<resource type="animation" id="PLAYER_RIGHT" tw="56" th="56" duration="42">resources\images\player_right.png</resource>
-	<resource type="animation" id="PLAYER_UP" tw="56" th="56" duration="42">resources\images\player_up.png</resource>
-	<resource type="animation" id="PLAYER_DOWN" tw="56" th="56" duration="42">resources\images\player_down.png</resource>
-	<resource type="animation" id="PLAYER_PUSH_LEFT" tw="56" th="56" duration="42">resources\images\player_push_left.png</resource>
-	<resource type="animation" id="PLAYER_PUSH_RIGHT" tw="56" th="56" duration="42">resources\images\player_push_right.png</resource>
+	<resource type="animation" id="PLAYER_LEFT" tw="56" th="56" duration="16">resources\images\player_left.png</resource>
+	<resource type="animation" id="PLAYER_RIGHT" tw="56" th="56" duration="16">resources\images\player_right.png</resource>
+	<resource type="animation" id="PLAYER_UP" tw="56" th="56" duration="16">resources\images\player_up.png</resource>
+	<resource type="animation" id="PLAYER_DOWN" tw="56" th="56" duration="16">resources\images\player_down.png</resource>
+	<resource type="animation" id="PLAYER_PUSH_LEFT" tw="56" th="56" duration="16">resources\images\player_push_left.png</resource>
+	<resource type="animation" id="PLAYER_PUSH_RIGHT" tw="56" th="56" duration="16">resources\images\player_push_right.png</resource>
 	
 	<!-- rocks -->
 	<resource type="animation" id="ROCK_WHITE_DOWN" tw="56" th="56" duration="42">resources\images\rock_white_down.png</resource>

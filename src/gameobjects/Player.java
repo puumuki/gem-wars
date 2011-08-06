@@ -255,7 +255,7 @@ public class Player extends AEntity {
 				}
 				
 				else {
-					
+					distance = 0;
 					direction = Direction.STATIONARY;
 				}
 				
@@ -275,6 +275,7 @@ public class Player extends AEntity {
 				pushTimer.reset();
 				pushingStone = false;
 				direction = Direction.STATIONARY;
+				distance = 0;
 			}
 			
 		}
