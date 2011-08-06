@@ -50,7 +50,7 @@ public class Gem extends PhysicsObject implements IDynamic {
 			gemLeft = GemwarsUtils.reverseAnimation(gemRight);
 		}
 		else
-			throw new SlickException("Incorrect gem type");
+			throw new SlickException("Incorrect gem type: " + gemtype.toString());
 
 		gemImage = gemDown.getImage(0);
 		

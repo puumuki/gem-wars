@@ -1,6 +1,7 @@
 package gameobjects;
 
 import gameobjects.map.ItemTypes;
+import gameobjects.map.LayerTypes;
 import gameobjects.map.Map;
 
 import org.newdawn.slick.GameContainer;
@@ -47,7 +48,8 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	 * @return true, if it can
 	 */
 	private boolean canRollRight() {
-		if(canDrop(positionX + 1, positionY + 1) && canDrop(positionX + 1, positionY) && gemOrBoulderUnder())
+		if(map.getObjectLayer().getTile(positionX + 1, positionY + 1).itemType != ItemTypes.MAGIC_GREY_WALL &&
+				canDrop(positionX + 1, positionY + 1) && canDrop(positionX + 1, positionY) && gemOrBoulderUnder())
 			return true;
 			
 		return false;
@@ -58,7 +60,8 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 	 * @return true, if it can
 	 */
 	private boolean canRollLeft() {
-		if(canDrop(positionX - 1, positionY + 1) && canDrop(positionX - 1, positionY) && gemOrBoulderUnder())
+		if(map.getObjectLayer().getTile(positionX - 1, positionY + 1).itemType != ItemTypes.MAGIC_GREY_WALL &&
+				canDrop(positionX - 1, positionY + 1) && canDrop(positionX - 1, positionY) && gemOrBoulderUnder())
 			return true;
 			
 		return false;
@@ -95,6 +98,8 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 			}
 			return true;
 		}
+		else if (map.getGroundLayer().getTile(x, y).itemType == ItemTypes.MAGIC_GREY_WALL && canDrop(x, y+1))
+			return true; // the magic wall needs the block under it to be empty
 		return false;
 	}
 
@@ -132,6 +137,30 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 				positionY++;
 				map.getObjectLayer().setTile(positionX, positionY, this);
 				
+				// are we in a magic wall?
+				if (inMagicWall()) {
+					ItemTypes newItemType = MagicWall.getTransformedItemType(itemType);
+					Item newItem;
+					if(newItemType == ItemTypes.BLUE_GEM 
+						|| newItemType == ItemTypes.GREEN_GEM 
+						|| newItemType == ItemTypes.RED_GEM ) {
+						
+						newItem = new Gem(newItemType, map);
+					}
+					else if(newItemType == ItemTypes.DARK_BOULDER 
+							|| newItemType == ItemTypes.WHITE_BOULDER) {
+						
+						newItem = new Boulder(newItemType, map);
+					}
+					else
+						newItem = new Item(newItemType);
+					
+					newItem.setPos(positionX, positionY);
+					newItem.layer = LayerTypes.LAYER_OBJECTS.ordinal();
+					map.getObjectLayer().setTile(positionX, positionY, newItem);
+					newItem.direction = Direction.DOWN; // these two lines are needed for
+					newItem.distance += 0.1;			// the item to appear smoothly under the magic tile
+				}
 				
 			 // if not, can it roll right (there is a gem or a boulder under it)?
 			} else if (canRollRight()) {
@@ -156,6 +185,17 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 		
 	}
 	
+	/**
+	 * Checks if the object is located in a magic wall
+	 * @return true if it is, false if it isn't
+	 */
+	private boolean inMagicWall() {
+		if (map.getGroundLayer().getTile(positionX, positionY - 1).itemType == ItemTypes.MAGIC_GREY_WALL)
+			return true;
+		
+		return false;
+	}
+
 	/**
 	 * This is needed for checking if a boulder was last pushed
 	 * @return direction we moved the last time

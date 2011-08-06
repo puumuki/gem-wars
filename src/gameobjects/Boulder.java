@@ -101,6 +101,7 @@ public class Boulder extends PhysicsObject implements IDynamic {
 		
 		// to debug, uncomment:
 		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
+		//grap.drawString(this.itemType.toString() + "\n" + direction + " "+distance, drawX, drawY);
 		//grap.drawString(direction + "\n" + map.getGroundLayer().getTile(positionX, positionY + 1).itemType.toString(), drawX, drawY);
 
 	}

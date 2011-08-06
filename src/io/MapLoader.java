@@ -204,7 +204,18 @@ public class MapLoader {
 										
 										l.setTile(x, y, tile);
 									}
-
+									
+									// if we have a magic wall, we put it also in the special layer
+									try {
+										if (l.getType() == LayerTypes.LAYER_SPECIAL.ordinal() && map.getGroundLayer().getTile(x, y).itemType == ItemTypes.MAGIC_GREY_WALL) {
+											l.setTile(x, y, map.getGroundLayer().getTile(x, y));
+											//Log.debug("Setting a new magic wall on teh special layer at " +x+","+y);
+										}
+									}
+									catch (IndexOutOfBoundsException ie) {
+										Log.error("No ground layer under magic grey wall at " + x + "," + y);
+									}
+									
 									start = end+1;
 								}
 							}

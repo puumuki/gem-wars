@@ -113,8 +113,8 @@ public class Map extends AEntity {
 						(float)cameraPositionY);
 		
 		groundLayer.render(cont, graph);
-		specialLayer.render(cont, graph);
 		objectLayer.render(cont, graph);
+		specialLayer.render(cont, graph);
 				
 		for( Player player : players ) {
 			player.render(cont, graph);
