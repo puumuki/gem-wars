@@ -3,6 +3,7 @@ package gemwars;
 import gameobjects.Item;
 import gameobjects.map.ItemTypes;
 
+import io.MapLoader;
 import io.Options;
 import io.ResourceManager;
 
@@ -16,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -71,6 +73,10 @@ public class MainMenuState extends BasicGameState {
 	
 	private Item item;
 	
+	private boolean inSinglePlayerSubmenu = false;
+	private int singlePlayerMenuSelected = 0;
+	private List<File> singlePlayerMaps;
+	
 	public MainMenuState(int stateID) {
 		this.stateID = stateID;
 	}
@@ -120,6 +126,14 @@ public class MainMenuState extends BasicGameState {
         item.positionX = 200;
         item.positionY = 30;
         
+        
+        // TODO: move this out of here
+        File file = new File("src/resources/maps/");
+		
+		if( file.exists() == false ) {
+			file = new File("resources/maps/");
+		}
+        singlePlayerMaps =  MapLoader.loadSinglePlayerMaps(file);
 	}
 	
 	/**
@@ -152,31 +166,91 @@ public class MainMenuState extends BasicGameState {
 			throws SlickException {
 		background.draw(0,0);
 		
-		drawCredits(gc, g);
-		
-		
-		switch (currentSelection) {
-		case 2:
-			menuanimations.get("multi").draw(menuAnimX, menuAnimY);
-			multiplayerOption.draw(menuX, menuY);
-			break;
-		case 3:
-			menuanimations.get("options").draw(menuAnimX, menuAnimY);
-			optionsOption.draw(menuX, menuY);
-			break;
-		case 4:
-			menuanimations.get("exit").draw(menuAnimX, menuAnimY);
-			exitOption.draw(menuX, menuY);
-			break;
-		default:
-			currentSelection = 1;
-			menuanimations.get("single").draw(menuAnimX, menuAnimY);
-			newGameOption.draw(menuX, menuY);
-			break;
+		// are we in the singleplayer submenu?
+		if (inSinglePlayerSubmenu)
+		{
+			renderSinglePlayerSubmenu(gc, game, g);
+		}
+		else
+		{
+			drawCredits(gc, g);
+			
+			switch (currentSelection) {
+			case 2:
+				menuanimations.get("multi").draw(menuAnimX, menuAnimY);
+				multiplayerOption.draw(menuX, menuY);
+				break;
+			case 3:
+				menuanimations.get("options").draw(menuAnimX, menuAnimY);
+				optionsOption.draw(menuX, menuY);
+				break;
+			case 4:
+				menuanimations.get("exit").draw(menuAnimX, menuAnimY);
+				exitOption.draw(menuX, menuY);
+				break;
+			default:
+				currentSelection = 1;
+				menuanimations.get("single").draw(menuAnimX, menuAnimY);
+				newGameOption.draw(menuX, menuY);
+				break;
+			}
 		}
 		
 		item.render(gc, g);
 	}
+
+	@SuppressWarnings("unchecked")
+	private void renderSinglePlayerSubmenu(GameContainer gc,
+			StateBasedGame game, Graphics g) throws SlickException {
+		
+		menuanimations.get("single").draw(menuAnimX, menuAnimY);
+		
+		// TODO: this does not work with subfolders yet
+		
+		java.awt.Font awtFont = new java.awt.Font("Verdana", java.awt.Font.PLAIN, 13);
+        UnicodeFont font = new UnicodeFont(awtFont);
+        font.addAsciiGlyphs();
+        font.getEffects().add(new ColorEffect(new Color(255,255,255)));
+        font.getEffects().add(new OutlineEffect(1, new Color(255,255,255,150)));
+        font.loadGlyphs();
+        StringBuilder text = new StringBuilder();
+        int i = 0;
+        int start = 0, end = 0;
+        int mapCount = singlePlayerMaps.size();
+    	if (singlePlayerMenuSelected < 5)
+    	{
+    		start = 0;
+    		end = 10;
+    	}
+    	else if (singlePlayerMenuSelected < mapCount - 5)
+    	{
+    		start = singlePlayerMenuSelected - 5;
+    		end = singlePlayerMenuSelected + 5;
+    	}
+    	else
+    	{
+    		start = mapCount - 11;
+    		end = mapCount;
+    	}
+        for (File map : singlePlayerMaps) {
+        	if (i >= start)
+        	{
+	        	if (singlePlayerMenuSelected == i)
+	        		text.append(map.getName() + "\n");
+	        	else
+	        		text.append(map.getName() + "\n");
+        	}
+        	i++;
+        	if (i > end)
+        		break;
+        	
+        }
+		font.drawString(265, 180, text.toString());
+		int selectorY = (singlePlayerMenuSelected - start) * font.getLineHeight() + 180;
+		font.drawString(245, selectorY, ">");
+		
+	}
+
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
@@ -184,52 +258,89 @@ public class MainMenuState extends BasicGameState {
 		
 		Input input = gc.getInput();
 
-		if( input.isKeyPressed(Input.KEY_ENTER)) {
-			switch (selected) {
-			case 1: // single player
-				game.enterState(Gemwars.GAMEPLAYSTATE, 								
-								new EmptyTransition(), 
-								new BlobbyTransition());
-				break;
-			case 2: // multiplayer
-				if( Desktop.isDesktopSupported() ) {
-					Desktop desktop = Desktop.getDesktop();
-					
-					if( desktop.isSupported(Desktop.Action.BROWSE)) {
-				        
-						URI uri = null;
-				        
-				        try {
-				            uri = new URI( Options.getInstance().getGemwarsFormUrl() );
-				            desktop.browse(uri);
-				        }
-				        catch(IOException ioe) {
-				            Log.error("Can't open open gemwars url, oh pleas borwser manually to url: " + uri.toString() );
-				        }
-				        catch(URISyntaxException use) {
-				        	Log.error("Can't open open gemwars url, oh pleas borwser manually to url: " + uri.toString() );
-				        }
-					}
-				}				
-				break;
-			case 3: // options
-				game.enterState(Gemwars.CONFIGURATION_MENU_STATE, 
-								new FadeOutTransition(), 
-								new FadeInTransition());
-				break;
-			case 4: // exit			
-				gc.exit();
-				break;
-			default:
-				break;
+		// are we in the singleplayer submenu?
+		if (inSinglePlayerSubmenu)
+		{
+			updateSinglePlayerSubmenu(gc, game, delta);
+			
+		}
+		else
+		{
+			if( input.isKeyPressed(Input.KEY_ENTER)) {
+				switch (selected) {
+				case 1: // single player
+					/*game.enterState(Gemwars.GAMEPLAYSTATE, 								
+									new EmptyTransition(), 
+									new BlobbyTransition());*/
+					inSinglePlayerSubmenu = true;
+					break;
+				case 2: // multiplayer
+					if( Desktop.isDesktopSupported() ) {
+						Desktop desktop = Desktop.getDesktop();
+						
+						if( desktop.isSupported(Desktop.Action.BROWSE)) {
+					        
+							URI uri = null;
+					        
+					        try {
+					            uri = new URI( Options.getInstance().getGemwarsFormUrl() );
+					            desktop.browse(uri);
+					        }
+					        catch(IOException ioe) {
+					            Log.error("Can't open open gemwars url, oh pleas borwser manually to url: " + uri.toString() );
+					        }
+					        catch(URISyntaxException use) {
+					        	Log.error("Can't open open gemwars url, oh pleas borwser manually to url: " + uri.toString() );
+					        }
+						}
+					}				
+					break;
+				case 3: // options
+					game.enterState(Gemwars.CONFIGURATION_MENU_STATE, 
+									new FadeOutTransition(), 
+									new FadeInTransition());
+					break;
+				case 4: // exit			
+					gc.exit();
+					break;
+				default:
+					break;
+				}
 			}
+			if (input.isKeyPressed(Input.KEY_ESCAPE))
+				gc.exit();
 		}
 		
-		if (input.isKeyPressed(Input.KEY_ESCAPE))
-			gc.exit();
 
 	}
 	
+	private void updateSinglePlayerSubmenu(GameContainer gc,
+			StateBasedGame game, int delta) {
+		
+		Input input = gc.getInput();
+		
+		if (input.isKeyPressed(Input.KEY_UP)) {
+			if (singlePlayerMenuSelected > 0)
+				singlePlayerMenuSelected--;
+		}
+		if (input.isKeyPressed(Input.KEY_DOWN)) {
+			if (singlePlayerMenuSelected < singlePlayerMaps.size() - 1)
+				singlePlayerMenuSelected++;
+		}
+		if (input.isKeyPressed(Input.KEY_ENTER)) {
+			((GameplayState)game.getState(Gemwars.GAMEPLAYSTATE)).setCurrentMapIndex(singlePlayerMenuSelected);
+			game.enterState(Gemwars.GAMEPLAYSTATE,
+					new EmptyTransition(), 
+					new BlobbyTransition());
+		}
+		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+			currentSelection = 0;
+			inSinglePlayerSubmenu = false;
+		}
+		
+	}
+
+
 	@Override
 	public void keyPressed(int key, char c) {
 		if (key == Input.KEY_UP) {

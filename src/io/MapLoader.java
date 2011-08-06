@@ -294,4 +294,19 @@ public class MapLoader {
 		
 		return maps;
 	}
+
+	/**
+	 * Loads all multiplayer race maps in a certain directory (and recursively)
+	 * @param path directory we are looking in
+	 * @return list of maps
+	 */
+	public static List<File> loadMultiplayerRaceMaps(File path) {
+		List<File> maps = new ArrayList<File>();
+		
+		searchRecursivelyForMapFiles( maps, path, "race[0-9]*.gem");
+		
+		Collections.sort(maps);
+		
+		return maps;
+	}
 }

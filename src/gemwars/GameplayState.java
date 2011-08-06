@@ -54,7 +54,20 @@ public class GameplayState extends BasicGameState {
     
     private List<File> singlePlayerMaps;
     
-    private int currentMapIndex = 0;
+    public List<File> getSinglePlayerMaps() {
+		return singlePlayerMaps;
+	}
+
+	private int currentMapIndex = 0;
+	public int getCurrentMapIndex() {
+		return currentMapIndex;
+	}
+
+	public void setCurrentMapIndex(int currentMapIndex) {
+		this.currentMapIndex = currentMapIndex -1;
+		isMapChanged = true;
+	}
+
 	boolean isMapChanged = false;
 
     private Map map;

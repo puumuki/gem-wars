@@ -262,6 +262,7 @@ public class Player extends AEntity {
 				{
 					pushingStone = false;
 					distance = 0;
+					tempImage = stationary;
 				}
 				
 				
