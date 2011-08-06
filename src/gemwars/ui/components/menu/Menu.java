@@ -35,17 +35,26 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
 	private String selector = ">>";
 	
 	public Menu() throws SlickException {	
-		initFont();
+		
+		java.awt.Color topColor = new java.awt.Color( 0xeeee00 );
+        java.awt.Color bottomColor = new java.awt.Color( 0xbbff00 );
+		
+        initFont(topColor, bottomColor);
+        
+		sound = ResourceManager.getInstance().getSound("MENU_SOUND");
+	}
+	
+	public Menu( Color fontTopColor, Color fontBottomColor ) throws SlickException {
+		initFont(fontTopColor, fontBottomColor);
 		sound = ResourceManager.getInstance().getSound("MENU_SOUND");
 	}
 
-	private void initFont() throws SlickException {
+	private void initFont( Color topColor, Color bottomColor ) throws SlickException {
 		java.awt.Font awtFont = new java.awt.Font("Ariel", java.awt.Font.PLAIN, 30);
         font = new UnicodeFont(awtFont);
         font.addAsciiGlyphs();       
         
-        java.awt.Color topColor = new java.awt.Color( 0xeeee00 );
-        java.awt.Color bottomColor = new java.awt.Color( 0xbbff00 );
+        
         
         OutlineEffect outlineEffect = new OutlineEffect(5, Color.black);
                 

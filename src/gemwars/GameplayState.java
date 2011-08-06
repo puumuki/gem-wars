@@ -258,16 +258,11 @@ public class GameplayState extends BasicGameState {
 			cont.getGraphics().copyArea(target, 0, 0);
 			ImageOut.write( target, "screenshot.png", false);
 			target.destroy();
-		}
-		
-		if( input.isKeyPressed(Input.KEY_ESCAPE) ) {								
-			state.enterState(Gemwars.MAINMENUSTATE, 								
-					new EmptyTransition(), 
-					new BlobbyTransition());
-		}
-		
+		}				
 
-		if(input.isKeyPressed(Input.KEY_P) || input.isKeyPressed(Input.KEY_PAUSE)) {			
+		if(input.isKeyPressed(Input.KEY_P) 
+			|| input.isKeyPressed(Input.KEY_PAUSE) 
+			|| input.isKeyPressed(Input.KEY_ESCAPE)) {			
 			pauseGame(cont, state);														
 		}
 	}

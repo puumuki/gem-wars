@@ -28,21 +28,27 @@ public class PauseState extends BasicGameState {
 	private Color orginalColor;
 	
 	private UnicodeFont font;
+			
+	private final String PAUSE_TEXT = "Game Paused";
 	
-	private final String PAUSE_TEXT = "Paused, press P or Pause to continue";
+	private Point menuPosition;
 	
-	private Point textPosition;
+	private int textWidth;
 	
 	private final static int RESUME_BTN_INDEX = 0;
 	private final static int RESTART_BTN_INDEX = 1;
 	private final static int QUIT_BTN_INDEX = 2;
+	
+	private final static Color MENU_BACKGROUND_COLOR = new Color(0f, 0f, 0f, 0.28f);
+	private final static Color BACKGROUND_FILTER_COLOR = new Color(1.0f, 1.0f, 1.0f, 0.8f);	
+	
 	
 	public PauseState( int stateID ) {
 		this.stateID = stateID;	
 	}
 	
 	private void loadFont() throws SlickException {
-		java.awt.Font awtFont = new java.awt.Font("Arial", java.awt.Font.PLAIN, 25);
+		java.awt.Font awtFont = new java.awt.Font("Arial", java.awt.Font.BOLD, 25);
         font = new UnicodeFont(awtFont);
         font.addAsciiGlyphs();
         java.awt.Color topColor = new java.awt.Color(1f,0f,0f,1f);
@@ -52,13 +58,13 @@ public class PauseState extends BasicGameState {
 	}
 	
 	private void initPauseTextPosition( GameContainer container ) {
-		int textWidth = font.getWidth(PAUSE_TEXT);
+		textWidth = font.getWidth(PAUSE_TEXT);
 		int textHeight = font.getHeight(PAUSE_TEXT);
 		
 		int x = (int)( container.getWidth() / 2 - textWidth / 2);
-		int y = (int)( container.getHeight() / 2 - textHeight / 2);
+		int y = (int)( container.getHeight() / 2 - textHeight / 2)- 50;
 		
-        textPosition = new Point(x, y);
+        menuPosition = new Point(x, y);
 	}
 	
 	
@@ -84,33 +90,33 @@ public class PauseState extends BasicGameState {
 	}
 
 	public void initPauseMenu() throws SlickException {
-		int x = 200;
-		int y = 200;
+		pauseStateMenu = new Menu( new java.awt.Color( 0xffffff ), new java.awt.Color( 0xffffff ) );
 		
-		pauseStateMenu = new Menu();
-		
-		pauseStateMenu.add( new BasicMenuItem(x, y, "Resume"));
-		pauseStateMenu.add( new BasicMenuItem(x, y + 20, "Restart level"));
-		pauseStateMenu.add( new BasicMenuItem(x, y + 40, "Quit"));
+		pauseStateMenu.add( new BasicMenuItem(menuPosition.x-20, menuPosition.y + 20, "Resume"));
+		pauseStateMenu.add( new BasicMenuItem(menuPosition.x-20, menuPosition.y + 40, "Restart level"));
+		pauseStateMenu.add( new BasicMenuItem(menuPosition.x-20, menuPosition.y + 60, "Quit"));			
 	}
 
 	
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		background.draw(0, 0, new Color(1, 1, 1, 0.75f));
-		font.drawString(textPosition.x, textPosition.y, PAUSE_TEXT);
+		
+		int menuHeight = 110;
+		
+		background.draw(0, 0, BACKGROUND_FILTER_COLOR);
+		
+		g.setColor(MENU_BACKGROUND_COLOR);		
+		g.fillRect(menuPosition.x - 30, menuPosition.y-10, textWidth + 60, menuHeight );
+		
+		font.drawString(menuPosition.x, menuPosition.y, PAUSE_TEXT);
 		pauseStateMenu.render(container, g);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		Input input = container.getInput();
-		
-		if( input.isKeyPressed(Input.KEY_P) || input.isKeyPressed(Input.KEY_PAUSE)) {		
-			
-		}
-		
+				
 		if( input.isKeyPressed(Input.KEY_ENTER )) {
 			int index = pauseStateMenu.getActiveIndex();
 			

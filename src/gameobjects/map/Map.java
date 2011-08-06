@@ -412,13 +412,12 @@ public class Map extends AEntity {
 	 * @return true, if unwalkable, false, if can be walked on
 	 */
 	public boolean isColliding(int x, int y) {
-		if (objectLayer.getTile(x, y).itemType != ItemTypes.BLUE_GEM
-				&& objectLayer.getTile(x, y).itemType != ItemTypes.RED_GEM
-				&& objectLayer.getTile(x, y).itemType != ItemTypes.GREEN_GEM 
-				&& objectLayer.getTile(x, y).itemType != ItemTypes.EMPTY)
+		if (!ItemTypes.isGem(objectLayer.getTile(x, y).itemType) 
+			&& objectLayer.getTile(x, y).itemType != ItemTypes.EMPTY)
 			return true;
 		else if (x >= 0 && x < collisionLayer[y].length && y >= 0 && y < collisionLayer.length)
 			return collisionLayer[y][x];
+		
 		return true;
 	}
 	
