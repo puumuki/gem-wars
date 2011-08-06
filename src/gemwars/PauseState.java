@@ -1,5 +1,6 @@
 package gemwars;
 
+import gameobjects.map.Map;
 import gemwars.ui.components.menu.BasicMenuItem;
 import gemwars.ui.components.menu.Menu;
 
@@ -42,6 +43,7 @@ public class PauseState extends BasicGameState {
 	private final static Color MENU_BACKGROUND_COLOR = new Color(0f, 0f, 0f, 0.28f);
 	private final static Color BACKGROUND_FILTER_COLOR = new Color(1.0f, 1.0f, 1.0f, 0.8f);	
 	
+	private Map currentMap;
 	
 	public PauseState( int stateID ) {
 		this.stateID = stateID;	
@@ -80,6 +82,7 @@ public class PauseState extends BasicGameState {
 	public void leave(GameContainer container, StateBasedGame game)	throws SlickException {
 		super.leave(container, game);		
 		container.getGraphics().setColor(orginalColor);
+		container.getInput().clearKeyPressedRecord();
 	}
 	
 	@Override
@@ -136,6 +139,10 @@ public class PauseState extends BasicGameState {
 		}
 		
 		pauseStateMenu.update(container, delta);
+	}
+	
+	public void setMap( Map map ) {
+		this.currentMap = map;
 	}
 
 	public void setBackground(Image background) {

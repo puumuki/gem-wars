@@ -32,7 +32,9 @@ public class Player extends AEntity {
 	/**
 	 * Lives that the player has left.
 	 */
-	public int lives = 3;
+	public int lives = INITIAL_LIVE_COUNT;
+	
+	public static final int INITIAL_LIVE_COUNT = 3;
 	
 	/**
 	 * Player score from the collected gems.

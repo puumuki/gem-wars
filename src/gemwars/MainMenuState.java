@@ -46,30 +46,27 @@ public class MainMenuState extends BasicGameState {
 
 	int stateID = -1;
 	
-	Image background = null;
-	Image newGameOption = null;
-	Image multiplayerOption = null;
-	Image optionsOption = null;
-	Image exitOption = null;
+	private Image background = null;
+	private Image newGameOption = null;
+	private Image multiplayerOption = null;
+	private Image optionsOption = null;
+	private Image exitOption = null;
 	
-	Sound menusound = null;
-	Music menumusic = null;
-	Music gamemusic = null;
-	
-	HashMap<String, Animation> menuanimations = new HashMap<String, Animation>();
-	
-	UnicodeFont fontti = null;
+	private Sound menusound = null;
+	private Music menumusic = null;
+		
+	private HashMap<String, Animation> menuanimations = new HashMap<String, Animation>();
+			
+	private UnicodeFont mapSelectionFont;
 	
 	private static int menuX = 38;
 	private static int menuY = 240;
 	
 	private static int menuAnimX = 43;
 	private static int menuAnimY = 40;
-	
-	float alpha = 0;
-
-	int currentSelection = 1;
-	int selected = 0;
+		
+	private int currentSelection = 1;
+	private int selected = 0;
 	
 	private Item item;
 	
@@ -80,7 +77,6 @@ public class MainMenuState extends BasicGameState {
 	public MainMenuState(int stateID) {
 		this.stateID = stateID;
 	}
-	
 	
 	/**
 	 * Initialisation of the main menu (loading resources etc)
@@ -118,14 +114,10 @@ public class MainMenuState extends BasicGameState {
 		menuanimations.put("multi", ResourceManager.getInstance().getAnimation("MENUANI_MP"));
 		menuanimations.put("options", ResourceManager.getInstance().getAnimation("MENUANI_OPTIONS"));
 		menuanimations.put("exit", ResourceManager.getInstance().getAnimation("MENUANI_EXIT"));
-		
-        Font font = new Font("Arial", Font.BOLD, 20);
-        fontti = new UnicodeFont(font);
-       
+		            
         item = new Item(ItemTypes.DARK_BOULDER);
         item.positionX = 200;
-        item.positionY = 30;
-        
+        item.positionY = 30;        
         
         // TODO: move this out of here
         File file = new File("src/resources/maps/");
@@ -134,6 +126,8 @@ public class MainMenuState extends BasicGameState {
 			file = new File("resources/maps/");
 		}
         singlePlayerMaps =  MapLoader.loadSinglePlayerMaps(file);
+        
+        mapSelectionFont = initMapChoosingFont();
 	}
 	
 	/**
@@ -200,19 +194,14 @@ public class MainMenuState extends BasicGameState {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void renderSinglePlayerSubmenu(GameContainer gc,
-			StateBasedGame game, Graphics g) throws SlickException {
+	private void renderSinglePlayerSubmenu(GameContainer gc, 
+										   StateBasedGame game, 
+										   Graphics g) throws SlickException {
 		
 		menuanimations.get("single").draw(menuAnimX, menuAnimY);
 		
-		// TODO: this does not work with subfolders yet
-		
-		java.awt.Font awtFont = new java.awt.Font("Verdana", java.awt.Font.PLAIN, 13);
-        UnicodeFont font = new UnicodeFont(awtFont);
-        font.addAsciiGlyphs();
-        font.getEffects().add(new ColorEffect(new Color(255,255,255)));
-        font.getEffects().add(new OutlineEffect(1, new Color(255,255,255,150)));
-        font.loadGlyphs();
+		// TODO: this does not work with subfolders yet		
+
         StringBuilder text = new StringBuilder();
         int i = 0;
         int start = 0, end = 0;
@@ -245,10 +234,21 @@ public class MainMenuState extends BasicGameState {
         		break;
         	
         }
-		font.drawString(265, 180, text.toString());
-		int selectorY = (singlePlayerMenuSelected - start) * font.getLineHeight() + 180;
-		font.drawString(245, selectorY, ">");
+		mapSelectionFont.drawString(265, 180, text.toString());
+		int selectorY = (singlePlayerMenuSelected - start) * mapSelectionFont.getLineHeight() + 180;
+		mapSelectionFont.drawString(245, selectorY, ">");
 		
+	}
+
+
+	public UnicodeFont initMapChoosingFont() throws SlickException {
+		java.awt.Font awtFont = new java.awt.Font("Verdana", java.awt.Font.PLAIN, 13);
+        UnicodeFont font = new UnicodeFont(awtFont);
+        font.addAsciiGlyphs();
+        font.getEffects().add(new ColorEffect(new Color(255,255,255)));
+        font.getEffects().add(new OutlineEffect(1, new Color(255,255,255,150)));
+        font.loadGlyphs();
+		return font;
 	}
 
 
@@ -363,14 +363,8 @@ public class MainMenuState extends BasicGameState {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void drawCredits(GameContainer gc, Graphics g)
-			throws SlickException {
-		java.awt.Font awtFont = new java.awt.Font("Verdana", java.awt.Font.PLAIN, 13);
-        UnicodeFont font = new UnicodeFont(awtFont);
-        font.addAsciiGlyphs();
-        font.getEffects().add(new ColorEffect(new Color(255,255,255)));
-        font.getEffects().add(new OutlineEffect(1, new Color(255,255,255,150)));
-        font.loadGlyphs();
+	public void drawCredits(GameContainer gc, Graphics g) throws SlickException {
+		
 		String text = "GemWars is a game with a long development\n" +
 				"history comparable to Duke Nukem Forever.\n\n" +
 				"This Java version is the work of\n" +
@@ -378,12 +372,12 @@ public class MainMenuState extends BasicGameState {
 				"The following people have had a part in\nGemWars' development in the past:\n" +
 				"Jarkko Laine, Lauri Laine, Joona Nuutinen,\nMatti Manninen, Skyler York, Antti Kanninen\n\n" +
 				"We thank them for the pioneering work.";
-		font.drawString(245, 170, text);
+		
+		mapSelectionFont.drawString(245, 170, text);
 	}
 
 	@Override
 	public int getID() {
 		return stateID;
 	}
-
 }

@@ -131,6 +131,13 @@ public class ConfigurationMenuState extends BasicGameState  {
 	}
 	
 	@Override
+	public void leave(GameContainer container, StateBasedGame game)	throws SlickException {
+	
+		super.leave(container, game);		
+		container.getInput().clearKeyPressedRecord();
+	}
+	
+	@Override
 	public void update(GameContainer cont, StateBasedGame state, int delta)	throws SlickException {
 		for( GearPair pair : gearPairs ) {
 			pair.update(cont, delta);
