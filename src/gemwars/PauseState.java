@@ -1,5 +1,9 @@
 package gemwars;
 
+import gemwars.ui.components.menu.BasicMenuItem;
+import gemwars.ui.components.menu.Menu;
+
+import java.awt.MenuItem;
 import java.awt.Point;
 
 import org.newdawn.slick.Color;
@@ -15,6 +19,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class PauseState extends BasicGameState {
 
+	private Menu pauseStateMenu;
+	
 	private Image background;
 	
 	private int stateID;
@@ -27,8 +33,12 @@ public class PauseState extends BasicGameState {
 	
 	private Point textPosition;
 	
+	private final static int RESUME_BTN_INDEX = 0;
+	private final static int RESTART_BTN_INDEX = 1;
+	private final static int QUIT_BTN_INDEX = 2;
+	
 	public PauseState( int stateID ) {
-		this.stateID = stateID;
+		this.stateID = stateID;	
 	}
 	
 	private void loadFont() throws SlickException {
@@ -69,7 +79,19 @@ public class PauseState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game)	throws SlickException {
 		loadFont();
-		initPauseTextPosition(container);
+		initPauseTextPosition(container);		
+		initPauseMenu();	
+	}
+
+	public void initPauseMenu() throws SlickException {
+		int x = 200;
+		int y = 200;
+		
+		pauseStateMenu = new Menu();
+		
+		pauseStateMenu.add( new BasicMenuItem(x, y, "Resume"));
+		pauseStateMenu.add( new BasicMenuItem(x, y + 20, "Restart level"));
+		pauseStateMenu.add( new BasicMenuItem(x, y + 40, "Quit"));
 	}
 
 	
@@ -78,6 +100,7 @@ public class PauseState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		background.draw(0, 0, new Color(1, 1, 1, 0.75f));
 		font.drawString(textPosition.x, textPosition.y, PAUSE_TEXT);
+		pauseStateMenu.render(container, g);
 	}
 
 	@Override
@@ -85,8 +108,28 @@ public class PauseState extends BasicGameState {
 		Input input = container.getInput();
 		
 		if( input.isKeyPressed(Input.KEY_P) || input.isKeyPressed(Input.KEY_PAUSE)) {		
-			game.enterState(Gemwars.GAMEPLAYSTATE);
+			
 		}
+		
+		if( input.isKeyPressed(Input.KEY_ENTER )) {
+			int index = pauseStateMenu.getActiveIndex();
+			
+			switch( index ) {
+				case RESUME_BTN_INDEX:
+				game.enterState(Gemwars.GAMEPLAYSTATE);
+				break;
+				case QUIT_BTN_INDEX:
+				game.enterState(Gemwars.MAINMENUSTATE);
+				break;
+				case RESTART_BTN_INDEX:
+				//Implement this bitch!
+				break;
+				default:
+				throw new SlickException("We should never be here :|");
+			}
+		}
+		
+		pauseStateMenu.update(container, delta);
 	}
 
 	public void setBackground(Image background) {

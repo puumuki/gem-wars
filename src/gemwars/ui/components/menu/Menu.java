@@ -32,6 +32,8 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
 	
 	private Sound sound;
 	
+	private String selector = ">>";
+	
 	public Menu() throws SlickException {	
 		initFont();
 		sound = ResourceManager.getInstance().getSound("MENU_SOUND");
@@ -50,6 +52,10 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
         font.getEffects().add(new GradientEffect(topColor, bottomColor, 1f));
         
         font.loadGlyphs();
+	}
+	
+	public void setSelector(String selector) {
+		this.selector = selector;
 	}
 	
 	public void add( IMenuItem item ) {

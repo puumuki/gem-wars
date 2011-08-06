@@ -139,13 +139,7 @@ public class GameplayState extends BasicGameState {
 			graph.fillRect(0, 0, cont.getWidth(), cont.getHeight());
 		}
 		
-		drawUI(cont, graph);
-		
-		/*
-		graph.drawString("SCORE: " + map.getPlayer(0).getScore(), 500, 0);
-		graph.drawString(" GEMS: " + map.getPlayer(0).getGems() + "/" + map.getGemCount(), 500, 15);
-		graph.drawString("LIVES: " + map.getPlayer(0).getLives(), 500, 30);
-		*/
+		drawUI(cont, graph);		
 	}
 
 	@Override
@@ -273,21 +267,23 @@ public class GameplayState extends BasicGameState {
 		}
 		
 
-		if(input.isKeyPressed(Input.KEY_P) || input.isKeyPressed(Input.KEY_PAUSE)) {
-			
-			Image background = new Image(cont.getWidth(), cont.getHeight());
-			cont.getGraphics().copyArea(background, 0, 0);
-			
-			map.enableTimer(false);			
-			
-			PauseState pausedState = (PauseState)state.getState(Gemwars.PAUSE_GAME_STATE);
-			
-			pausedState.setBackground(background.copy());
-						
-			state.enterState(Gemwars.PAUSE_GAME_STATE, 								
-							new EmptyTransition(), 
-							new BlobbyTransition());
+		if(input.isKeyPressed(Input.KEY_P) || input.isKeyPressed(Input.KEY_PAUSE)) {			
+			pauseGame(cont, state);														
 		}
+	}
+
+	public void pauseGame(GameContainer cont, StateBasedGame state)
+			throws SlickException {
+		Image background = new Image(cont.getWidth(), cont.getHeight());
+		cont.getGraphics().copyArea(background, 0, 0);
+		
+		map.enableTimer(false);			
+		
+		PauseState pausedState = (PauseState)state.getState(Gemwars.PAUSE_GAME_STATE);
+		
+		pausedState.setBackground(background.copy());
+					
+		state.enterState(Gemwars.PAUSE_GAME_STATE );
 	}
 	
 	private void resetGoal() {
