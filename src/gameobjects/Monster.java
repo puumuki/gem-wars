@@ -82,7 +82,7 @@ public class Monster extends AEntity {
 		}
 
 		// to debug, uncomment:
-		grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
+		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
 	}
 
 	@Override
@@ -177,7 +177,8 @@ public class Monster extends AEntity {
 				positionY++;
 				return;
 			} else {
-				direction = Direction.STATIONARY; // giving up, testing another direction
+				direction = Direction.RIGHT; // giving up, testing another direction
+				distance = Item.TILE_HEIGHT + 0.01; // to fix problems with 1x1 blocks
 			}
 		}
 	}
