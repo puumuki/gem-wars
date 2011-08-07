@@ -9,6 +9,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.Log;
 
 /**
  * Enemies of the player. Stupid ants that move according to 
@@ -81,7 +82,7 @@ public class Monster extends AEntity {
 		}
 
 		// to debug, uncomment:
-		//grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
+		grap.drawString(positionX + "," + positionY + " = " + drawX + "," + drawY + "\n" + direction + " "+distance, drawX, drawY);
 	}
 
 	@Override
@@ -118,13 +119,13 @@ public class Monster extends AEntity {
 	 * The AI of the monster.
 	 * <p>
 	 * Monsters "hug" the wall on their left. If they encounter a wall, they turn left until they can get out of the situation.
-	 * However, if there is no wall, they should go forward in some manner... TODO: still some bugs remain.
+	 * However, if there is no wall, they should go forward...
 	 * 
 	 * @throws SlickException if something goes wrong...
 	 */
 	private void changeDirection() throws SlickException {
 		if( direction == Direction.RIGHT ) {
-			if (!map.isMonsterColliding(positionX, positionY - 1) && map.isMonsterColliding(positionX + 1, positionY - 1)) {
+			if (!map.isMonsterColliding(positionX, positionY - 1) && map.isMonsterColliding(positionX - 1, positionY - 1)) {
 				// can it turn left and is there a wall behind it on its left
 				positionY--;
 				direction = Direction.UP;
@@ -134,9 +135,7 @@ public class Monster extends AEntity {
 				positionX++;
 				return;
 			} else {
-				positionY--;
 				direction = Direction.UP; // giving up, testing another direction
-				return;
 			}
 		}
 		
@@ -150,9 +149,7 @@ public class Monster extends AEntity {
 				positionY--;
 				return;
 			} else {
-				positionX--;
 				direction = Direction.LEFT; // giving up, testing another direction
-				return;
 			}
 		}
 		
@@ -166,9 +163,7 @@ public class Monster extends AEntity {
 				positionX--;
 				return;
 			} else {
-				positionY++;
 				direction = Direction.DOWN; // giving up, testing another direction
-				return;	
 			}
 		}
 		
@@ -182,9 +177,7 @@ public class Monster extends AEntity {
 				positionY++;
 				return;
 			} else {
-				positionX++;
-				direction = Direction.RIGHT; // giving up, testing another direction
-				return;
+				direction = Direction.STATIONARY; // giving up, testing another direction
 			}
 		}
 	}
