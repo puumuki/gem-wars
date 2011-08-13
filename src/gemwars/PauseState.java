@@ -1,11 +1,13 @@
 package gemwars;
 
+import gameobjects.Player;
 import gameobjects.map.Map;
 import gemwars.ui.components.menu.BasicMenuItem;
 import gemwars.ui.components.menu.Menu;
 
 import java.awt.MenuItem;
 import java.awt.Point;
+import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -76,6 +78,9 @@ public class PauseState extends BasicGameState {
 		super.enter(container, game);
 		orginalColor = container.getGraphics().getColor();
 		container.getGraphics().setColor(Color.white);
+		
+		GameplayState gameState = (GameplayState)game.getState(Gemwars.GAMEPLAYSTATE);
+		currentMap = gameState.getCurrentMap();
 	}
 	
 	@Override
@@ -131,7 +136,18 @@ public class PauseState extends BasicGameState {
 				game.enterState(Gemwars.MAINMENUSTATE);
 				break;
 				case RESTART_BTN_INDEX:
-				//Implement this bitch!
+					
+				List<Player> players = currentMap.getPlayers();
+				
+				for (Player player : players) {
+					player.kill();
+				}
+				
+				GameplayState gameState = (GameplayState)game.getState(Gemwars.GAMEPLAYSTATE);
+				gameState.reloadMap(container);
+				
+				game.enterState(Gemwars.GAMEPLAYSTATE);
+				
 				break;
 				default:
 				throw new SlickException("We should never be here :|");
@@ -141,10 +157,6 @@ public class PauseState extends BasicGameState {
 		pauseStateMenu.update(container, delta);
 	}
 	
-	public void setMap( Map map ) {
-		this.currentMap = map;
-	}
-
 	public void setBackground(Image background) {
 		this.background = background;
 	}	

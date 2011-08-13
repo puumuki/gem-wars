@@ -412,6 +412,12 @@ public class Map extends AEntity {
 	 * @return true, if unwalkable, false, if can be walked on
 	 */
 	public boolean isColliding(int x, int y) {
+		
+		if( x < 0 || x >= objectLayer.getWidth() || 
+			y < 0 || y > objectLayer.getHeight()) {
+			return false;
+		}	
+		
 		if (!ItemTypes.isGem(objectLayer.getTile(x, y).itemType) 
 			&& objectLayer.getTile(x, y).itemType != ItemTypes.EMPTY)
 			return true;
@@ -555,7 +561,7 @@ public class Map extends AEntity {
 	 * @param number the player number
 	 * @return the player we want
 	 */
-	public Player getPlayer(int number) {
+	public Player getPlayer(int number) {				
 		return players.get(number);
 	}
 

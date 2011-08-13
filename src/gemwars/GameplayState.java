@@ -330,20 +330,22 @@ public class GameplayState extends BasicGameState {
 										new FadeOutTransition(), 
 										new FadeInTransition());
 					}
-					else
-					{
-						try {
-							
-							Map tempMap = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex), map.getPlayers());
-							this.map = tempMap;
-	
-							tempMap.enter(cont);
-						} catch (IOException e) {
-							throw new SlickException(e.getMessage());
-						}
+					else {
+						reloadMap(cont);
 					}
 				}
 			}
+		}
+	}
+
+	public void reloadMap(GameContainer cont) throws SlickException {
+		try {
+			
+			Map tempMap = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex), map.getPlayers());
+			this.map = tempMap;
+			tempMap.enter(cont);
+		} catch (IOException e) {
+			throw new SlickException(e.getMessage());
 		}
 	}
 	
@@ -384,5 +386,8 @@ public class GameplayState extends BasicGameState {
 		return stateID;
 	}
 	
+	public Map getCurrentMap() {
+		return map;
+	}
 
 }
