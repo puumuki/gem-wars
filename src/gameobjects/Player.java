@@ -295,6 +295,25 @@ public class Player extends AEntity {
 	}
 	
 
+	public void addScore( int amount ) {
+		
+		int oldScore = score;
+						
+		this.score += amount;
+		
+		if( this.score > nextExtraLifeStep( oldScore ) ) {
+			lives++;
+		}
+	}
+	
+	public static int nextExtraLifeStep( int scores ) {
+		return 101;
+	}
+	
+	public void setScore( int score ) {
+		this.score = score;
+	}
+	
 	/**
 	 * collect a gem
 	 */
@@ -304,7 +323,7 @@ public class Player extends AEntity {
 		boolean isCollected = map.isTileContainingGem(positionX + point.x, positionY + point.y);
 		if( isCollected
 				&& map.getObjectLayer().getTile(positionX + point.x, positionY + point.y).direction == Direction.STATIONARY) {
-			score += ((Gem)map.getObjectLayer().getTile(positionX + point.x, positionY + point.y)).getValue();
+			addScore( ((Gem)map.getObjectLayer().getTile(positionX + point.x, positionY + point.y)).getValue());
 			collectedGemCount++;
 			gemCollectedSound.play((float)1.0, Options.getInstance().getSoundVolume());
 			map.destroyGem(positionX + point.x, positionY + point.y);

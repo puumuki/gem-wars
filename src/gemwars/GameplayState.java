@@ -59,12 +59,31 @@ public class GameplayState extends BasicGameState {
 	}
 
 	private int currentMapIndex = 0;
+	
 	public int getCurrentMapIndex() {
 		return currentMapIndex;
 	}
 
+	
+	public void changeMap( File mapFile ) {
+		
+		int mapIndex = currentMapIndex + 1;
+		
+		for (int i=0; i<singlePlayerMaps.size(); i++) {
+			
+			File map = singlePlayerMaps.get(i);
+			
+			if( map.equals(mapFile)) {
+				mapIndex = i;
+				break;
+			}
+		}
+		
+		setCurrentMapIndex(mapIndex);
+	}
+	
 	public void setCurrentMapIndex(int currentMapIndex) {
-		this.currentMapIndex = currentMapIndex -1;
+		this.currentMapIndex = currentMapIndex-1;
 		isMapChanged = true;
 	}
 
@@ -156,7 +175,7 @@ public class GameplayState extends BasicGameState {
 			if (goaltime > 0) {
 				for (Player p : map.getPlayers()) {
 					// increment the player's score by 100 points for every second that was left on the clock
-					p.score += 100;
+					p.addScore( 100 );
 				}
 				goaltime--;
 				if(!bonusSound.playing())

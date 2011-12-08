@@ -100,9 +100,9 @@ public class PauseState extends BasicGameState {
 	public void initPauseMenu() throws SlickException {
 		pauseStateMenu = new Menu( new java.awt.Color( 0xffffff ), new java.awt.Color( 0xffffff ) );
 		
-		pauseStateMenu.add( new BasicMenuItem(menuPosition.x-20, menuPosition.y + 20, "Resume"));
-		pauseStateMenu.add( new BasicMenuItem(menuPosition.x-20, menuPosition.y + 40, "Restart level"));
-		pauseStateMenu.add( new BasicMenuItem(menuPosition.x-20, menuPosition.y + 60, "Quit"));			
+		pauseStateMenu.add( "resume", new BasicMenuItem(menuPosition.x-20, menuPosition.y + 20, "Resume"));
+		pauseStateMenu.add( "restart", new BasicMenuItem(menuPosition.x-20, menuPosition.y + 40, "Restart level"));
+		pauseStateMenu.add( "quit", new BasicMenuItem(menuPosition.x-20, menuPosition.y + 60, "Quit"));			
 	}
 
 	

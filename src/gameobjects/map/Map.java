@@ -181,7 +181,7 @@ public class Map extends AEntity {
 			Player player = players.get(i);	
 			
 			player.resetToStaringPosition();
-			player.score = 0;
+			player.setScore(0);
 			
 			//Player shall come back from heavens to finish the his work
 			player.setDead(false);
@@ -565,6 +565,8 @@ public class Map extends AEntity {
 		return players.get(number);
 	}
 
+
+	
 	public void add(Monster monster) {
 		monsters.add(monster);
 	}

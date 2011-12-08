@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 <!-- MENU -->
-	<resource type="image" id="MENU_BG">resources\images\menutaus.png</resource>
-	<resource type="image" id="MENU_OPTIONS">resources\images\menu1.png</resource>
 	<resource type="image" id="MENU_LVL_BG">resources\images\lvltaus.png</resource>
 	<resource type="image" id="MENU_PASS_BG">resources\images\passtaus.png</resource>
 	<resource type="image" id="MENU_PASSWORD_BUTTONS">resources\images\pwordnapit.png</resource>
 	<resource type="image" id="MENU_START">resources\images\startb.png</resource>
 	<resource type="image" id="SMALL_GEAR">resources\images\smallgear.png</resource>
 	<resource type="image" id="BIG_GEAR">resources\images\biggear.png</resource>
-	<resource type="image" id="BUTTON_UP">resources\images\button.png</resource>
-	<resource type="image" id="BUTTON_DOWN">resources\images\button_background.jpg</resource>
+	
+	
+	<resource type="image" id="MENU_DIAMONDANIMATION">resources\images\timanttiani.png</resource>
+	<resource type="image" id="MENU_BG">resources\images\menubackground.png</resource>
+	<resource type="image" id="MENU_TITLE">resources\images\gemwarstitle.png</resource>
+	<resource type="image" id="MENU_NEWGAME">resources\images\newgame.png</resource>
+	<resource type="image" id="MENU_OPTIONS">resources\images\options.png</resource>
+	<resource type="image" id="MENU_ABOUT">resources\images\about.png</resource>
+	<resource type="image" id="MENU_QUIT">resources\images\quit.png</resource>
 	
 	<!-- animations use 24 fps at the moment (42 ms) -->
 	<resource type="animation" id="MENUANI_SP" tw="136" th="136" duration="42">resources\images\menuani_singleplayer.png</resource>

@@ -81,18 +81,18 @@ public class ConfigurationMenuState extends BasicGameState  {
         
         PercentMenuItem item = new PercentMenuItem(posX, 0, SOUND_MENUITEM_TEXT);
         item.setValue(Options.getInstance().getSoundVolume());        
-        menu.add(item);        
+        menu.add( "soundvolume", item);        
                 
         item = new PercentMenuItem(posX, 25, MUSIC_MENUITEM_TEXT);
         item.setValue(Options.getInstance().getMusicVolume()); 
-        menu.add(item);
+        menu.add( "musicvolume", item);
        
         BooleanMenuItem booleanItem = new BooleanMenuItem(posX, 50, FULLSCREEN_MENUITEM_TEXT);
         booleanItem.setValue(Options.getInstance().getFullscreen());
         
-        menu.add(booleanItem);
+        menu.add( "fullscreen",booleanItem);
         
-        menu.add( new BasicMenuItem(posX, 75, RETURN_MENUITEM_TEXT));
+        menu.add( "return",new BasicMenuItem(posX, 75, RETURN_MENUITEM_TEXT));
 	}		
 
 	/**
