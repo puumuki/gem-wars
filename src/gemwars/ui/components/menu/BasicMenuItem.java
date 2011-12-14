@@ -22,6 +22,9 @@ public class BasicMenuItem implements IMenuItem {
 	 */
 	protected boolean isActive;
 	
+	/**
+	 * Font used to render menu item text
+	 */
 	protected UnicodeFont font;
 
 	/**
@@ -35,7 +38,10 @@ public class BasicMenuItem implements IMenuItem {
 	public int positionY;
 	
 	
-	private boolean value = false;
+	/**
+	 * Basic value
+	 */
+	private Object value = false;
 	
 	public BasicMenuItem( int posX, int posY, String text ) {
 		this.text = text;

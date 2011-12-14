@@ -2,8 +2,14 @@ package gemwars.ui.components.menu;
 
 import java.io.File;
 
+/**
+ *	FileMenuItem is a menu item that contains reference to java.io.File object. 
+ */
 public class FileMenuItem extends BasicMenuItem {
 
+	/**
+	 * File that is associated with a menu item
+	 */
 	private File file;
 	
 	public FileMenuItem(int posX, int posY, String text, File file ) {
@@ -12,7 +18,11 @@ public class FileMenuItem extends BasicMenuItem {
 		
 	}
 
+	/**
+	 * @return associated file object
+	 */
 	public File getFile() {
 		return file;
 	}	
 }
+

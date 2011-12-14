@@ -18,12 +18,14 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.GradientEffect;
 import org.newdawn.slick.font.effects.OutlineEffect;
+
+import gameobjects.AEntity;
 import gameobjects.IGameObject;
 
 /**
  * Simple UI-component to creating cool looking menus. 
  */
-public class Menu implements IGameObject, Iterable<IMenuItem> {
+public class Menu extends AEntity implements IGameObject, Iterable<IMenuItem> {
 	
 	/**
 	 * Menu vertical position
@@ -75,6 +77,7 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
 	public Menu( Color fontTopColor, Color fontBottomColor ) throws SlickException {
 		initFont(fontTopColor, fontBottomColor);
 		sound = ResourceManager.getInstance().getSound("MENU_SOUND");
+		hide = false;
 	}
 
 	private void initFont( Color topColor, Color bottomColor ) throws SlickException {
@@ -203,9 +206,11 @@ public class Menu implements IGameObject, Iterable<IMenuItem> {
 	}
 	
 	@Override
-	public void render(GameContainer cont, Graphics g) throws SlickException {		
-		for( IMenuItem item : menuitems ) {
-			item.render(cont, g);
+	public void render(GameContainer cont, Graphics g) throws SlickException {
+		if( hide == false ) {
+			for( IMenuItem item : menuitems ) {
+				item.render(cont, g);
+			}
 		}
 	}
 

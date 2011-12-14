@@ -1,14 +1,11 @@
 package gemwars;
 
-import gemwars.ui.components.menu.FileMenuItem;
 import gemwars.ui.components.menu.ImageMenuItem;
 import gemwars.ui.components.menu.Menu;
 
-import io.MapLoader;
 import io.Options;
 import io.ResourceManager;
 
-import java.awt.Color;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -18,7 +15,6 @@ import java.io.FileInputStream;
 
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -27,39 +23,50 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.OutlineEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.BlobbyTransition;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.util.Log;
+
 
 /**
  * Main menu state for the main menu
- *
  */
 public class MainMenuState extends BasicGameState {
 
-	int stateID = -1;
+	private int stateID = -1;
 	
 	private Image background = null;
+	
+	/**
+	 * Title text "GemWars"
+	 */
 	private Image title;
 	
+	/**
+	 * The classic never ending Gemwars loop
+	 */
 	private Music menumusic = null;
-		
-	private HashMap<String, Animation> menuanimations = new HashMap<String, Animation>();
-			
-	private UnicodeFont mapSelectionFont;
 	
+	private HashMap<String, Animation> menuanimations = new HashMap<String, Animation>();
+				
+	/**
+	 * AboutText contains story on the Gemwars
+	 */
+	private AboutText aboutTextEntity;
+	
+	/**
+	 * Menu containing ( new game, options, about, quit )
+	 */
 	private Menu mainmenu;
 	
+	/**
+	 * Animation bottom right
+	 */
 	private Animation diamandAni;
 	
+	/**
+	 * If this flag is true map the game state is changed to GamePlayStat, 
+	 * it triggeded by map selection menu listener.
+	 */
 	private boolean changeMap;
 	
 	/**
@@ -96,9 +103,8 @@ public class MainMenuState extends BasicGameState {
 			e.printStackTrace();
 		}		                 
         
-
-        mapSelectionFont = initMapChoosingFont();
-        
+		aboutTextEntity = new AboutText(30, 140);
+		
         menumusic = ResourceManager.fetchMusic("MENU_MUSIC");        
         background = ResourceManager.fetchImage("MENU_BG");
         title = ResourceManager.fetchImage("MENU_TITLE");
@@ -109,6 +115,7 @@ public class MainMenuState extends BasicGameState {
         mainmenu.positionY = 50;        
         
         int verticalOffset = 75;
+        
         Image menuImage = ResourceManager.fetchImage("MENU_NEWGAME");
         mainmenu.add( "newgame", new ImageMenuItem( new Point(mainmenu.positionX, 
         										   mainmenu.positionY + verticalOffset ) ,
@@ -128,15 +135,13 @@ public class MainMenuState extends BasicGameState {
         menuImage = ResourceManager.fetchImage("MENU_QUIT");
         mainmenu.add( "quit", new ImageMenuItem( new Point(mainmenu.positionX, 
         										   mainmenu.positionY  + verticalOffset *4),
-        										   menuImage));   
-        
-        
+        										   menuImage));        
 
         diamandAni = new DiamondAnimation();         
         maplist = new MapList( 150, 20);
         maplist.addMapChosenEventListener( new MapSelectionListener() );
 	}
-	
+
 	/**
 	 * What do we do when we enter this state
 	 */
@@ -165,25 +170,17 @@ public class MainMenuState extends BasicGameState {
 		g.setColor(org.newdawn.slick.Color.white);
 		g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 		
-		background.draw(0,0);
+		background.draw(0,0 );
 		title.draw(  title.getWidth() / 4, 50 );
 		mainmenu.render(gc, g);
 		diamandAni.draw( gc.getWidth() - diamandAni.getWidth() - 10,
-						 gc.getHeight() - diamandAni.getHeight() - 10);
+						 gc.getHeight() - diamandAni.getHeight() - 10, 
+						 DiamondAnimation.FILTER_COLOR);
+		
+		aboutTextEntity.render(gc, g);
 		
 		maplist.render(gc, g);
 	}
-
-	public UnicodeFont initMapChoosingFont() throws SlickException {
-		java.awt.Font awtFont = new java.awt.Font("Verdana", java.awt.Font.PLAIN, 13);
-        UnicodeFont font = new UnicodeFont(awtFont);
-        font.addAsciiGlyphs();
-        font.getEffects().add(new ColorEffect(new Color(255,255,255)));
-        font.getEffects().add(new OutlineEffect(1, new Color(255,255,255,150)));
-        font.loadGlyphs();
-		return font;
-	}
-
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int delta)
@@ -191,15 +188,27 @@ public class MainMenuState extends BasicGameState {
 		
 		diamandAni.update(delta);
 		
+		if( aboutTextEntity.hide == false ) {
+			aboutTextEntity.update(gc, delta);			
+		} else {
+			mainmenu.hide = false;
+		}
+		
 		//Only one menu can be updated at time. 
 		//Keyboard inputs can be checked reliable only one time with calling method Input.isKeyPressed();
 		if( maplist.hide == false ) {
 			maplist.update(gc, delta);
-		}
-		
+		}		
 		else {
 			mainmenu.update(gc, delta);						
 			handleMainMenuInputs(gc, game);
+		}		
+		
+		if( changeMap ) {			
+			GameplayState playState = (GameplayState)game.getState(Gemwars.GAMEPLAYSTATE);
+			playState.changeMap( maplist.getChosenMapFile() );
+			changeMap = false;			
+			game.enterState(Gemwars.GAMEPLAYSTATE);
 		}
 	}
 
@@ -216,35 +225,16 @@ public class MainMenuState extends BasicGameState {
 			}
 			
 			if( mainmenu.isActiveIndex("about") ) {
-				
+				aboutTextEntity.hide = false;
+				mainmenu.hide = true;			
 			}
 
 			if( mainmenu.isActiveIndex("quit") ) {
 				gc.exit();
 			}
 		}
-		
-		if( changeMap ) {			
-			GameplayState playState = (GameplayState)game.getState(Gemwars.GAMEPLAYSTATE);
-			playState.changeMap( maplist.getChosenMapFile() );
-			changeMap = false;			
-			game.enterState(Gemwars.GAMEPLAYSTATE);
-		}
 	}
 		
-	@SuppressWarnings("unchecked")
-	public void drawCredits(GameContainer gc, Graphics g) throws SlickException {
-		
-		String text = "GemWars is a game with a long development\n" +
-				"history comparable to Duke Nukem Forever.\n\n" +
-				"This Java version is the work of\n" +
-				"Miika Hämynen and Teemu Puukko.\n\n" +
-				"The following people have had a part in\nGemWars' development in the past:\n" +
-				"Jarkko Laine, Lauri Laine, Joona Nuutinen,\nMatti Manninen, Skyler York, Antti Kanninen\n\n" +
-				"We thank them for the pioneering work.";
-		
-		mapSelectionFont.drawString(245, 170, text);
-	}
 
 	@Override
 	public int getID() {

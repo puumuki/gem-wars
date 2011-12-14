@@ -57,7 +57,7 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	/**
 	 * If this is set to true entity should not be drawn of effect any how to the game play	
 	 */
-	public boolean hide;
+	public boolean hide = false;
 	
 	/**
 	 * The entity is rendered to the screen when this method is called.

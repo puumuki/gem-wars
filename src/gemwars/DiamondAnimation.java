@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import io.ResourceManager;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 
 public class DiamondAnimation extends Animation {
 
+	public static final Color FILTER_COLOR = new Color(1f, 1f, 1f, 0.8f); 
+	
 	public DiamondAnimation() {
 
 		int duration = 50;
