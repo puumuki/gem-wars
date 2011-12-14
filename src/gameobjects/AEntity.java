@@ -7,9 +7,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 /**
- * @author Teemuki
- *
  * Base class for all the objects of the game. 
+ * So where is the encapsulation? 
+ * Class fields are public for performance reasons.
  */
 public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	
@@ -95,20 +95,13 @@ public abstract class AEntity implements Comparable<AEntity>, IGameObject {
 	 * Init positions with given values, this means starting position and current positions.
 	 * @throws SlickException 
 	 */
-	public void initPosition(int x, int y) throws SlickException {
+	public void initPosition(int x, int y) {
 		setPos(x, y);
 		startPosX = x;
 		startPosY = y;
 	}
 	
-	//TODO: Should this throw an exception when a given parameter is negative?
-	public void setPos( int x, int y ) throws SlickException {
-		
-		if( x < 0 || y < 0 ) {
-			throw new SlickException("Position that are trying to be set is an negative, " +
-									  "value shoud be positive. X:" + x + " Y:" + y );
-		}
-		
+	public void setPos( int x, int y ) {	
 		positionX = x;
 		positionY = y;
 	}
