@@ -55,7 +55,7 @@ public class MapLoader {
 		Map map = null;
 		
 		if( file.isFile() == false ) {
-			throw new IOException("Given file is not file.");
+			throw new IOException("File not found " + file.getAbsolutePath());
 		}
 		Scanner f = null;
 		
