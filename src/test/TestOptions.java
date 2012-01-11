@@ -1,6 +1,6 @@
 package test;
 
-import io.Options;
+import fi.gemwars.io.Options;
 
 import java.io.File;
 import java.io.FileInputStream;

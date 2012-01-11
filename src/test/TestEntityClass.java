@@ -1,7 +1,7 @@
 package test;
 
 import junit.framework.Assert;
-import gameobjects.AEntity;
+import fi.gemwars.gameobjects.AEntity;
 
 import org.junit.Test;
 import org.newdawn.slick.GameContainer;

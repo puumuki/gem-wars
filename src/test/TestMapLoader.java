@@ -6,11 +6,11 @@ import java.util.List;
 
 
 
-import gameobjects.Item;
-import gameobjects.map.ItemTypes;
-import gameobjects.map.Map;
+import fi.gemwars.gameobjects.Item;
+import fi.gemwars.gameobjects.map.ItemTypes;
+import fi.gemwars.gameobjects.map.Map;
+import fi.gemwars.io.MapLoader;
 
-import io.MapLoader;
 import org.junit.Assert;
 import org.junit.Test;
 import org.newdawn.slick.SlickException;
