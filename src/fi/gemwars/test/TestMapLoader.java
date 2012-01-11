@@ -1,4 +1,4 @@
-package test;
+package fi.gemwars.test;
 
 import java.io.File;
 import java.io.IOException;

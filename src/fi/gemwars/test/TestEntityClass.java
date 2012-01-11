@@ -1,4 +1,4 @@
-package test;
+package fi.gemwars.test;
 
 import junit.framework.Assert;
 import fi.gemwars.gameobjects.AEntity;

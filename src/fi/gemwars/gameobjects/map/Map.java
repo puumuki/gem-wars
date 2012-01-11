@@ -8,7 +8,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
-import utils.TimeCounter;
 
 import fi.gemwars.gameobjects.AEntity;
 import fi.gemwars.gameobjects.Boulder;
@@ -17,6 +16,7 @@ import fi.gemwars.gameobjects.Gem;
 import fi.gemwars.gameobjects.Item;
 import fi.gemwars.gameobjects.Monster;
 import fi.gemwars.gameobjects.Player;
+import fi.gemwars.utils.TimeCounter;
 
 /**
  * The Map class is used to save all the data the game needs

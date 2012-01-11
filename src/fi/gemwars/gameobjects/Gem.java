@@ -3,6 +3,7 @@ package fi.gemwars.gameobjects;
 import fi.gemwars.gameobjects.map.ItemTypes;
 import fi.gemwars.gameobjects.map.Map;
 import fi.gemwars.io.ResourceManager;
+import fi.gemwars.utils.GemwarsUtils;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -10,7 +11,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import utils.GemwarsUtils;
 
 /**
  * A gem that the player can collect. Gems can kill the player if they fall on him. 

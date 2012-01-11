@@ -1,4 +1,4 @@
-package test;
+package fi.gemwars.test;
 
 import fi.gemwars.io.Options;
 

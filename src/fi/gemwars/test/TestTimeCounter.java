@@ -1,10 +1,11 @@
-package test;
+package fi.gemwars.test;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
-import utils.TimeCounter;
+import fi.gemwars.utils.TimeCounter;
+
 
 
 public class TestTimeCounter {

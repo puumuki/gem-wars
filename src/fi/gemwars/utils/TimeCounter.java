@@ -1,4 +1,4 @@
-package utils;
+package fi.gemwars.utils;
 
 /**
  * Used to calculate all game play time. 

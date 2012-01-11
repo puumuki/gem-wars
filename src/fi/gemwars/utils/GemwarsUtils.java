@@ -1,4 +1,4 @@
-package utils;
+package fi.gemwars.utils;
 
 import org.newdawn.slick.Animation;
 

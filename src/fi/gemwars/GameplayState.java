@@ -13,6 +13,8 @@ import fi.gemwars.io.MapLoader;
 import fi.gemwars.io.Options;
 import fi.gemwars.io.ResourceManager;
 import fi.gemwars.ui.GameUI;
+import fi.gemwars.utils.TimeCounter;
+import fi.gemwars.utils.UniqueID;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -29,8 +31,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.util.Log;
 
-import utils.TimeCounter;
-import utils.UniqueID;
 
 /**
  * The Gameplay state is the one where the game itself happens.

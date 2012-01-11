@@ -6,6 +6,7 @@ import java.awt.Point;
 import fi.gemwars.gameobjects.map.Map;
 import fi.gemwars.io.Options;
 import fi.gemwars.io.ResourceManager;
+import fi.gemwars.utils.TimeCounter;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -15,7 +16,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import utils.TimeCounter;
 
 /**
  * The Player class holds an implementation of human controller entity.
