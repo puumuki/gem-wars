@@ -7,8 +7,8 @@ package fi.gemwars.gameobjects.map;
  * The collision layer is treated separately in the game though.
  *
  */
-public enum LayerTypes {
 	
+public enum LayerTypes {
 	LAYER_GROUND(0),
 	LAYER_OBJECTS(1),
 	LAYER_SPECIAL(2),

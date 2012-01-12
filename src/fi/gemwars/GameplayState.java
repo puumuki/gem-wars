@@ -113,7 +113,8 @@ public class GameplayState extends BasicGameState {
 		singlePlayerMaps = MapLoader.loadSinglePlayerMaps(file);
 		
 		try {
-			map = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex));
+			MapLoader loader = new MapLoader();
+			map = loader.loadMap(singlePlayerMaps.get(currentMapIndex));
 		} catch (IndexOutOfBoundsException iobe) {
 			throw new SlickException("No maps found. ", iobe);
 		} catch (IOException e) {
@@ -251,12 +252,13 @@ public class GameplayState extends BasicGameState {
 			}
 			
 			try {
-				map = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex), map.getPlayers());
+				MapLoader loader = new MapLoader();
+				map = loader.loadMap(singlePlayerMaps.get(currentMapIndex), map.getPlayers());
 				
 				map.enter(cont);
 				isMapChanged = false;
 				resetGoal();
-			} catch (IOException e) {
+			} catch (SlickException e) {
 				Log.error(e);
 			}
 		}
@@ -355,15 +357,17 @@ public class GameplayState extends BasicGameState {
 		}
 	}
 
+	/**
+	 * Reload map after player dies or player want to replay the game.
+	 * 
+	 * @param cont
+	 * @throws SlickException
+	 */
 	public void reloadMap(GameContainer cont) throws SlickException {
-		try {
-			
-			Map tempMap = MapLoader.loadMap(singlePlayerMaps.get(currentMapIndex), map.getPlayers());
-			this.map = tempMap;
-			tempMap.enter(cont);
-		} catch (IOException e) {
-			throw new SlickException(e.getMessage());
-		}
+		MapLoader loader = new MapLoader();
+		Map tempMap = loader.loadMap(singlePlayerMaps.get(currentMapIndex),	map.getPlayers());
+		this.map = tempMap;
+		tempMap.enter(cont);
 	}
 	
 	/**

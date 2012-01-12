@@ -98,8 +98,10 @@ public abstract class PhysicsObject extends Item implements IDynamic {
 			}
 			return true;
 		}
-		else if (map.getGroundLayer().getTile(x, y).itemType == ItemTypes.MAGIC_GREY_WALL && canDrop(x, y+1))
+		else if (map.getGroundLayer().getTile(x, y).itemType == ItemTypes.MAGIC_GREY_WALL && canDrop(x, y+1)) {
 			return true; // the magic wall needs the block under it to be empty
+		}
+		
 		return false;
 	}
 

@@ -30,7 +30,14 @@ public class Item extends AEntity {
 	 */
 	public ItemTypes itemType;
 	
+	/**
+	 * Basic width for a Gemwars tile, same as height 56px
+	 */
 	public static final int TILE_WIDTH = 56;
+	
+	/**
+	 * Basic height for a Gemwars tile, same as width 56px
+	 */
 	public static final int TILE_HEIGHT = 56;
 			
 	/**

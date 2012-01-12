@@ -43,7 +43,9 @@ public class TestMapLoader {
 	public void loadMaps() throws IOException, SlickException {
 		Item item = new Item( ItemTypes.BLUE_GEM );			
 		
-		Map map = MapLoader.loadMap(new File( RESOURCE_BASE_PATH + "/maps/e1l1.gem"));
+		
+		MapLoader mapLoader = new MapLoader();
+		Map map = mapLoader.loadMap(new File( RESOURCE_BASE_PATH + "/maps/e1l1.gem"));
 		
 		Assert.assertEquals("Untitled", map.getName());
 		Assert.assertEquals("Unknown", map.getCreator());
@@ -66,7 +68,7 @@ public class TestMapLoader {
 		Assert.assertEquals( ItemTypes.BROWN_WALL, map.getGroundLayer().getTile(2,2).itemType);
 	}
 	
-	@Ignore
+	@Test
 	public void testCollisionInitialization() {
 		Map map = new Map();
 		map.createCollision(1000, 1000);

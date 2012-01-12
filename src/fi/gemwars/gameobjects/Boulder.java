@@ -10,25 +10,26 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Renderable;
 import org.newdawn.slick.SlickException;
-
 
 /**
  * A boulder that blocks the player and that he can push. Boulders can kill the player if they fall on him.
- *
  */
 public class Boulder extends PhysicsObject implements IDynamic {
-		
+	
+	/**
+	 * Image is shown when boulder is static state, 
+	 */
 	private Image staticStone;
 	
-	private Animation falling;
-	private Animation movingLeft, movingRight;	
+	/**
+	 * Animations when boulder is moving
+	 */
+	private Animation falling,  movingLeft, movingRight;
 	
-	private Renderable currentAnimation;
-
-	private double friction;
-	
+	/**
+	 * Indicates that player is moving the boulder
+	 */
 	private boolean pushed;
 	
 	/**
@@ -40,12 +41,12 @@ public class Boulder extends PhysicsObject implements IDynamic {
 	 */
 	public Boulder( ItemTypes boulderType,  Map map) throws SlickException {
 		super( boulderType , map);
+		
 		this.map = map;
+		
 		init();
 		
 		speed = 0.20;
-		
-		// TODO: set friction
 	}
 	
 	

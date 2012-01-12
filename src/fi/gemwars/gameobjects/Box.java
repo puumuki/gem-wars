@@ -11,6 +11,4 @@ public class Box extends Item {
 	public Box() {
 		super(ItemTypes.BOMB_BOX);
 	}
-	
-	//TODO: Should we have any functionality here? :)
 }
