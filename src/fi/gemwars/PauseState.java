@@ -5,7 +5,6 @@ import fi.gemwars.gameobjects.map.Map;
 import fi.gemwars.ui.components.menu.BasicMenuItem;
 import fi.gemwars.ui.components.menu.Menu;
 
-import java.awt.MenuItem;
 import java.awt.Point;
 import java.util.List;
 
@@ -20,21 +19,45 @@ import org.newdawn.slick.font.effects.GradientEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * PauseState is used when a game play is paused. When the game play is paused, actually we are
+ * changing the current game state to the PauseState. 
+ */
 public class PauseState extends BasicGameState {
 
+	private final String PAUSE_TEXT = "Game Paused";
+	
+	/**
+	 * Unique game state ID
+	 */
+	private int stateID = -1;
+	
+	/**
+	 * PauseState menu component
+	 * Items:
+	 * -Resume
+	 * -Restart
+	 * -Quit
+	 */
 	private Menu pauseStateMenu;
 	
+	/**
+	 * Menu position
+	 */
+	private Point menuPosition;
+	
+	/**
+	 * Game screenshot is used as a background image
+	 */
 	private Image background;
 	
-	private int stateID;
-	
+
+	/**
+	 * Temponary storage Font / Line color before to this game state is entered.
+	 */
 	private Color orginalColor;
 	
 	private UnicodeFont font;
-			
-	private final String PAUSE_TEXT = "Game Paused";
-	
-	private Point menuPosition;
 	
 	private int textWidth;
 	
@@ -70,8 +93,6 @@ public class PauseState extends BasicGameState {
 		
         menuPosition = new Point(x, y);
 	}
-	
-	
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
@@ -165,5 +186,4 @@ public class PauseState extends BasicGameState {
 	public int getID() {
 		return stateID;
 	}
-
 }

@@ -30,7 +30,6 @@ public class MainMenuState extends BasicGameState {
 
 	private int stateID = -1;
 	
-
 	/**
 	 * Background image
 	 */

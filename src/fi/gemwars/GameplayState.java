@@ -38,25 +38,27 @@ import org.newdawn.slick.util.Log;
  */
 public class GameplayState extends BasicGameState {
 
-    int stateID;
+	/**
+	 * Unique game state ID
+	 */
+    private int stateID = -1;
     
+    private Music gamemusic = null;
     
-    Music gamemusic = null;
+    /**
+     * Currently selected map
+     */
+    private int currentMapIndex = 0;
     
-    public GameplayState( int stateID ) 
-    {
-       this.stateID = stateID;
-    }
-    
-    private List<File> availableMaps;
-    
-    private List<File> singlePlayerMaps;
+    private List<File> singlePlayerMaps, availableMaps;
     
     public List<File> getSinglePlayerMaps() {
 		return singlePlayerMaps;
-	}
-
-	private int currentMapIndex = 0;
+	}	
+	
+	public GameplayState( int stateID ) {
+	       this.stateID = stateID;
+	    }
 	
 	public int getCurrentMapIndex() {
 		return currentMapIndex;
@@ -197,45 +199,15 @@ public class GameplayState extends BasicGameState {
 			
 		}
 		// normal gameplay
-		else {
-	
-			checkDeaths(cont, state, delta);
-	
+		else {	
+			checkDeaths(cont, state, delta);	
 			checkGoal(cont, state, delta);
 		}
 
-		// for debugging only
-		/*
-		if (input.isKeyPressed(Input.KEY_0)) {
-			for (Monster m : map.getMonsters())
-				m.kill();
-		}
-		*/
-				
-		//final double increment = 0.2; 
+		//Uncomment this to debug game on runtime
+		//debugHelper( input );
 		
-		//If we want a friction to movement we need to change logic here.
-		//final double friction = 0.2; 
-		
-		//By multiplying increment value with delta we keep camera movement
-		//speed constant with every platform.
-		
-/*
-		// For debugging only
-		if( input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) {
-			
-			if( input.isKeyPressed(Input.KEY_LEFT) ) {
-				currentMapIndex--;
-				isMapChanged=true;
-			}
-			
-			if( input.isKeyPressed(Input.KEY_RIGHT) ) {
-				currentMapIndex++;
-				isMapChanged=true;
-			}
-		}
-		
-*/
+
 		if( input.isKeyPressed(Input.KEY_R)) {
 			map.resetMap();
 		}
@@ -264,19 +236,8 @@ public class GameplayState extends BasicGameState {
 		}
 		
 		//Screen Capture
-		if (input.isKeyPressed( Input.KEY_F10)) {
-			
-			File file = null;
-			
-			do {
-				file = new File("gemwars_" + UniqueID.nextUniqueID() + ".png" );
-			} while( file.exists() );
-						
-			
-			Image target = new Image(cont.getWidth(), cont.getHeight());
-			cont.getGraphics().copyArea(target, 0, 0);
-			ImageOut.write( target, "screenshot.png", false);
-			target.destroy();
+		if (input.isKeyPressed( Input.KEY_F10)) {			
+			takeScreenShot(cont);
 		}				
 
 		if(input.isKeyPressed(Input.KEY_P) 
@@ -286,6 +247,55 @@ public class GameplayState extends BasicGameState {
 		}
 	}
 
+	public void takeScreenShot(GameContainer cont) throws SlickException {
+		File file = null;
+		
+		do {
+			file = new File("gemwars_" + UniqueID.nextUniqueID() + ".png" );
+		} while( file.exists() );
+					
+		
+		Image target = new Image(cont.getWidth(), cont.getHeight());
+		cont.getGraphics().copyArea(target, 0, 0);
+		ImageOut.write( target, "screenshot.png", false);
+		target.destroy();
+	}
+
+	/**
+	 * Little helper for runtime debuging
+	 * @param input
+	 */
+	private void debugHelper(Input input) {
+
+		if (input.isKeyPressed(Input.KEY_0)) {
+			for (Monster m : map.getMonsters())
+				m.kill();
+		}
+				
+		//final double increment = 0.2; 
+		
+		//If we want a friction to movement we need to change logic here.
+		//final double friction = 0.2; 
+		
+		//By multiplying increment value with delta we keep camera movement
+		//speed constant with every platform.
+		
+
+		// For debugging only
+		if( input.isKeyDown(Input.KEY_LCONTROL) || input.isKeyDown(Input.KEY_RCONTROL)) {
+			
+			if( input.isKeyPressed(Input.KEY_LEFT) ) {
+				currentMapIndex--;
+				isMapChanged=true;
+			}
+			
+			if( input.isKeyPressed(Input.KEY_RIGHT) ) {
+				currentMapIndex++;
+				isMapChanged=true;
+			}
+		}
+	}
+	
 	public void pauseGame(GameContainer cont, StateBasedGame state)
 			throws SlickException {
 		Image background = new Image(cont.getWidth(), cont.getHeight());
@@ -396,9 +406,18 @@ public class GameplayState extends BasicGameState {
 
 	private void drawUI(GameContainer cont, Graphics graph) throws SlickException {
 		if (goalTimer.isActive()) {
-			ui.render(cont, graph, goaltime, map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
+			ui.render(cont, graph, goaltime, 
+					  map.getPlayer(0).getScore(), 
+					  map.getPlayer(0).getGems(),  
+					  map.getGemCount(), 
+					  map.getPlayer(0).getLives());
 		} else {
-			ui.render(cont, graph, map.getRemainingTime(), map.getPlayer(0).getScore(), map.getPlayer(0).getGems(),  map.getGemCount(), map.getPlayer(0).getLives());
+			ui.render(cont, graph, 
+					  map.getRemainingTime(), 
+					  map.getPlayer(0).getScore(), 
+					  map.getPlayer(0).getGems(),  
+					  map.getGemCount(), 
+					  map.getPlayer(0).getLives());
 		}
 	}
 	
@@ -410,5 +429,4 @@ public class GameplayState extends BasicGameState {
 	public Map getCurrentMap() {
 		return map;
 	}
-
 }

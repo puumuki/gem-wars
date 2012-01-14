@@ -1,13 +1,10 @@
 package fi.gemwars;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
-
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -16,7 +13,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.OutlineEffect;
 
 import fi.gemwars.gameobjects.AEntity;
 import fi.gemwars.io.MapLoader;
@@ -68,7 +64,7 @@ public class MapList extends AEntity {
 		itemCap = 20;
 		this.hide = true;
 		
-        findMapFiles();		
+        initLevelsAndMapFiles();		
 		initFont();		
 		initMenu();
 	}
@@ -90,7 +86,7 @@ public class MapList extends AEntity {
 		menu.setFont(font);
 	}
 	
-	public void findMapFiles() {
+	public void initLevelsAndMapFiles() {
 		File file = new File("src/resources/maps/");
 		
 		if( file.exists() == false ) {

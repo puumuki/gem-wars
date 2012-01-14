@@ -64,6 +64,9 @@ public class Gemwars extends StateBasedGame {
 	 */
 	public static void main(String[] args) throws SlickException {	
 		
+		//TODO: Pass a configuration file path in args
+		//Like: java -jar gemwars.jar 'C:/conf.properties'; ?
+		
 		Options properties = loadConfigurations();
 		
         AppGameContainer app = new AppGameContainer(new Gemwars());        
