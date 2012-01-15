@@ -9,13 +9,13 @@ import fi.gemwars.event.GemwarsEvent;
 import fi.gemwars.event.GemwarsEventType;
 import fi.gemwars.event.GemwarsListener;
 import fi.gemwars.io.Options;
+import fi.gemwars.log.GemwarLogSystem;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-
+import org.newdawn.slick.util.Log;
 
 /**
  * Jumalallisen suojeluksen saattelema aloitamme tämän pelin saattamisen
@@ -58,30 +58,39 @@ public class Gemwars extends StateBasedGame {
 	}
 
 	/**
-	 * Pääohjelma
-	 * @param args ei käytössä
-	 * @throws  
+	 * Gemwars game entry point
+	 * @param args not in use
+	 * @throws SlickException 
 	 */
 	public static void main(String[] args) throws SlickException {	
 		
 		//TODO: Pass a configuration file path in args
 		//Like: java -jar gemwars.jar 'C:/conf.properties'; ?
-		
-		Options properties = loadConfigurations();
-		
-        AppGameContainer app = new AppGameContainer(new Gemwars());        
-        
-        app.setShowFPS(false);
-        
-        app.setDisplayMode(properties.getScreenWitdh(), 
-        				   properties.getScreenHeight(), 
-        				   properties.getFullscreen());
-        
-        app.setTargetFrameRate(properties.getTargetFrameRate());
-        app.setMusicVolume(properties.getMusicVolume());
-        app.setSoundVolume(properties.getSoundVolume());
-        
-        app.start();
+
+		try {
+			
+			GemwarLogSystem logginSystem = new GemwarLogSystem(System.out);
+			Log.setLogSystem(logginSystem);
+			
+			Options properties = loadConfigurations();
+			
+	        AppGameContainer app = new AppGameContainer(new Gemwars());        
+	        
+	        app.setShowFPS(false);
+	        
+	        app.setDisplayMode(properties.getScreenWitdh(), 
+	        				   properties.getScreenHeight(), 
+	        				   properties.getFullscreen());
+	        
+	        app.setTargetFrameRate(properties.getTargetFrameRate());
+	        app.setMusicVolume(properties.getMusicVolume());
+	        app.setSoundVolume(properties.getSoundVolume());
+	        
+	        app.start();
+	        
+		} catch (Exception e) {
+			Log.error(e);
+		}
 	}
 	
 	
