@@ -59,20 +59,16 @@ public class Gemwars extends StateBasedGame {
 
 	/**
 	 * Gemwars game entry point
-	 * @param args not in use
+	 * @param args from array's first index are read the configuration file path.
 	 * @throws SlickException 
 	 */
 	public static void main(String[] args) throws SlickException {	
 		
-		//TODO: Pass a configuration file path in args
-		//Like: java -jar gemwars.jar 'C:/conf.properties'; ?
-
 		try {
-			
 			GemwarLogSystem logginSystem = new GemwarLogSystem(System.out);
 			Log.setLogSystem(logginSystem);
 			
-			Options properties = loadConfigurations();
+			Options properties = loadConfigurations(args);
 			
 	        AppGameContainer app = new AppGameContainer(new Gemwars());        
 	        
@@ -94,19 +90,21 @@ public class Gemwars extends StateBasedGame {
 	}
 	
 	
-	private static Options loadConfigurations() throws SlickException {
+	private static Options loadConfigurations(String[] args) throws SlickException {
 		Options properties = Options.getInstance();
 		
+		File configurationFile = new File(Options.CONFIGURATION_FILE);
+		
+		if( args.length > 0 ) {
+			configurationFile = new File(args[0]);
+		}
+		
 		try {
-			properties.load( new File(Options.CONFIGURATION_FILE));
+			properties.load(configurationFile);
 		} catch (NumberFormatException e) {
 			throw new SlickException("Can't parse number from the string.", e);
 		} catch (IllegalArgumentException e) {
 			throw new SlickException("General error",e);
-		} catch (IllegalAccessException e) {
-			throw new SlickException("General error",e);
-		} catch (IOException e) {
-			throw new SlickException("Can't read confguration file. ",e);
 		}
 		
 		return properties;

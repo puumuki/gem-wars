@@ -3,11 +3,14 @@ package fi.gemwars.io;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
 /**
@@ -22,6 +25,8 @@ import org.newdawn.slick.util.Log;
  * If you have not set any value for @Property() then the field name is used as a key. 
  * 
  * Supported data types are: Boolean, Byte, String, Integer, Long, Float, Double
+ * 
+ * NO PRIMITIVE DATA TYPES!
  * 
  * When adding a new property do next steps:
  * 
@@ -54,7 +59,9 @@ public class Options {
 
 	@Property("gemwarsFormUrl")
 	private String gemwarsFormUrl = "http://teemuki.eu/gemwars/";
-	
+
+	//-- Add new property here and add setter getter for it. --
+		
 	private Options() {}
 
 	/**
@@ -104,68 +111,80 @@ public class Options {
 		return key.trim();
 	}
 
-	public void load(File file) throws RuntimeException, 
-										IllegalArgumentException, 
-										IllegalAccessException, 
-										IOException {
-
-		if( file.isFile() ) {
+	public void load(File file) throws SlickException {
+		 
+		try {
+			
+			Log.info("Starting loading configurations from " + file.getAbsolutePath());
+			Log.info("Configurations:");
+			
 			FileInputStream stream = new FileInputStream(file);
-
+		
 			Properties properties = new Properties();
 			properties.load(stream);				
-
+	
 			for( Field field : this.getClass().getDeclaredFields() ) {
 
-				Property annotation = field.getAnnotation(Property.class);
-
-				if( annotation  != null ) {
-
+				if( field.isAnnotationPresent(Property.class) ) {
+	
+					Property annotation = field.getAnnotation(Property.class);
+					
 					String key = readKey(field, annotation);
 					String value = properties.getProperty(key);
-
+	
 					if( value != null ) {					
-						try {
-
-							field.setAccessible(true);
-
-							//This is an ugly way to convert string to back datatypes. 
-							if( field.getType().equals( Double.class )) {
-								field.set(this, Double.parseDouble(value));
-							}
-							if( field.getType().equals( Float.class )) {
-								field.set(this, Float.parseFloat(value));
-							}
-							if( field.getType().equals( String.class )) {
-								field.set(this, value );
-							}
-							if( field.getType().equals( Integer.class )) {
-								field.set(this, Integer.parseInt(value) );
-							}						
-							if( field.getType().equals( Short.class )) {
-								field.set(this, Short.parseShort(value) );
-							}
-							if( field.getType().equals( Long.class )) {
-								field.set(this, Long.parseLong(value));
-							}
-							if( field.getType().equals( Byte.class )) {
-								field.set(this, Byte.parseByte(value));
-							}	
-						} catch (NumberFormatException e) {
-							String message = "Can't convert field [ " + field.getName() + " ] value " + value;						
-							throw new RuntimeException(message, e);
-						} 
+						populateField(field, value); 
 					}
-					else {
-						String message = "Usign default value [ " + field.getName() 
-											+ " ] value " + field.get(this);		
-						Log.info(message);
-					}
+					
+					Log.info( key + "=" + value );
 				}
-			}
-		}
+			}			
+		} catch (FileNotFoundException e) {
+			throw new SlickException("No configuration file could't be found. From path: " + file.getAbsolutePath());
+		} catch (IOException e) {
+			throw new SlickException("Fatal error reading configuration file. File path:  " + file.getAbsolutePath());
+		}	
 
 		Log.info("Configuration are now loaded from file :" + file.getAbsolutePath());
+	}
+
+	/**
+	 * Method populated this class fields by using reflection. 
+	 * 
+	 * @param field
+	 * @param value field value in string format
+	 * @throws SlickException thrown if converting string value fails
+	 */
+	protected void populateField(Field field, String value) throws SlickException {
+
+		field.setAccessible(true);
+
+		Class<?>fieldType = findFieldType(field);
+				
+		try {						
+			Constructor<?> consturctor = fieldType.getConstructor(String.class);			
+			Object result = consturctor.newInstance(value);
+			field.set(this, result);
+		} catch (Exception e) {
+			throw new SlickException("Problems read field named " + field.getName() 
+									  + " field type " + field.getType().getSimpleName(), e);
+		}					
+	}
+
+	private Class<?> findFieldType(Field field) {
+		Class<?>fieldTypes[] = {Double.class, Float.class, 
+								Long.class, Integer.class, 
+								Short.class, Byte.class,
+								Boolean.class,
+								String.class};
+		
+		for( Class<?>fieldType : fieldTypes ) {
+			if( field.getType().equals(fieldType) ) {
+				return fieldType;
+			}
+		}
+		
+		return null;
 	}
 	
 	public void setSoundVolume(float soundVolume) {
