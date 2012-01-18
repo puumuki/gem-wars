@@ -1,8 +1,7 @@
-package fi.gemwars;
+package fi.gemwars.gameobjects;
 
 import java.util.ArrayList;
 
-import fi.gemwars.gameobjects.AEntity;
 import fi.gemwars.io.ResourceManager;
 
 import org.newdawn.slick.Animation;

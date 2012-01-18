@@ -1,10 +1,10 @@
 package fi.gemwars;
 
+import fi.gemwars.gameobjects.DiamondAnimation;
 import fi.gemwars.io.Options;
 import fi.gemwars.io.ResourceManager;
 import fi.gemwars.ui.components.menu.ImageMenuItem;
 import fi.gemwars.ui.components.menu.Menu;
-
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -84,9 +84,7 @@ public class MainMenuState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame game)
 			throws SlickException {
 		
-		loadResourceFile();
-		
-                
+		loadResourceFile();               
         
 		aboutTextEntity = new AboutText(30, 140);
 		
