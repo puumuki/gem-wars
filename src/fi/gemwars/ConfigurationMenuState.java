@@ -192,12 +192,8 @@ public class ConfigurationMenuState extends BasicGameState  {
 		
 		try {
 			options.save( new File(Options.CONFIGURATION_FILE) );
-		} catch (IllegalArgumentException e) {
-			Log.error("Failed to save configurations.", e);
-		} catch (IllegalAccessException e) {
-			Log.error("Failed to save configurations.", e);
-		} catch (IOException e) {
-			Log.error("Failed to save configurations, IOExceptions.", e);
+		} catch (SlickException e) {
+			Log.error("Problems to save gemwars properties file. ", e);
 		}
 	}
 }

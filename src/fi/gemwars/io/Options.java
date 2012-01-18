@@ -76,28 +76,46 @@ public class Options {
 		return __instance;
 	}
 
-	public void save(File file) throws IllegalArgumentException, IllegalAccessException, IOException {
+	/**
+	 * Saves each Options class field that has @Property annotation to target file as key value pairs.
+	 * @param file target file
+	 * @throws SlickException
+	 */
+	public void save(File file) throws SlickException {
 
 		Properties properties = new Properties();
 
-		for( Field field : this.getClass().getDeclaredFields() ) {
-
-			Property annotation = field.getAnnotation(Property.class);
-
-			//This is how make sure that we are hanling property field
-			if( annotation != null ) {			
-
-				readKey(field, annotation);
-
-				//We use annotation value as a property key
-				properties.put( annotation.value(), field.get(this).toString() );
-
+		try {
+			for( Field field : this.getClass().getDeclaredFields() ) {
+	
+				Property annotation = field.getAnnotation(Property.class);
+	
+				//This is how make sure that we are hanling property field
+				if( annotation != null ) {			
+	
+					readKey(field, annotation);
+	
+					//We use annotation value as a property key
+					properties.put( annotation.value(), field.get(this).toString() );
+	
+				}
 			}
+		} catch (IllegalAccessException e) {
+			throw new SlickException("Cannot acces Options field for some reason. :(", e ); 
 		}
-
-		FileOutputStream stream = new FileOutputStream(file);
-		properties.store(stream, "Gemwars properties file is a Gem" );
-
+		
+		try {
+			FileOutputStream stream = new FileOutputStream(file);
+			properties.store(stream, "Gemwars properties file is a Gem" );
+			stream.close();
+		}
+		catch (FileNotFoundException e) {
+			throw new SlickException("Cannot locate properties file. Is file write protected? " + file.getAbsolutePath(), e);
+		}		
+		catch (IOException e) {
+			throw new SlickException("Problems to access properties file. Is file in use? " + file.getAbsolutePath(), e);
+		}
+		
 		Log.info("Configurations saved to a file : " + file.getAbsolutePath() );
 	}
 
@@ -138,7 +156,10 @@ public class Options {
 					
 					Log.info( key + "=" + value );
 				}
-			}			
+			}
+			
+			stream.close();
+			
 		} catch (FileNotFoundException e) {
 			throw new SlickException("No configuration file could't be found. From path: " + file.getAbsolutePath());
 		} catch (IOException e) {

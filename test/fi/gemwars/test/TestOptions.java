@@ -12,26 +12,20 @@ import junit.framework.Assert;
 
 
 import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.newdawn.slick.SlickException;
 
 public class TestOptions {
 	
-	@After
-	public void cleanUp() {
-		try {
-			File file = new File("testGemwars.properties");
-			
-			if( file.exists() ) {
-				file.delete();						
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-
-	public void testLoadingOptions() throws IllegalArgumentException, IllegalAccessException, IOException {			
+	@Rule
+	public TemporaryFolder testFolder = new TemporaryFolder();
+		
+	@Test
+	public void testLoadingOptions() throws IllegalArgumentException, IllegalAccessException, IOException, SlickException {			
+		
+		File target = testFolder.newFile("testGemwars.properties");
 		
 		
 		Options options = Options.getInstance();
@@ -39,17 +33,19 @@ public class TestOptions {
 		options.setSoundVolume(2.1f);		
 		options.setFullscreen(false);
 		
-		options.save( new File("testGemwars.properties"));
-		
+		options.save(target);
+				
 		Properties properties = new Properties();
 		
-		properties.load( new FileInputStream("testGemwars.properties"));
+		properties.load( new FileInputStream(target));
 		
 		properties.setProperty("screenwidth", "999");
 		properties.setProperty("screenheight", "888");
 		
 		FileOutputStream stream = new FileOutputStream(new File("testGemwars.properties"));
 		properties.store(stream, "");
+				
+		stream.close();
 		
 		options.load(new File("testGemwars.properties"));
 		
@@ -65,29 +61,34 @@ public class TestOptions {
 	
 	/**
 	 * When conversion from a string type to a number fails,
-	 * NumberFormatException is thrown wrapped in a RuntimeException 
+	 * NumberFormatException is thrown wrapped in a {@link SlickException} 
 	 * 
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws IOException
+	 * @throws SlickException 
 	 */
-	@Test( expected=RuntimeException.class)
-	public void testLoadingInvalidValue() throws IllegalArgumentException, IllegalAccessException, IOException {			
+	@Test( expected=SlickException.class)
+	public void testLoadingInvalidValue() throws IllegalArgumentException, IllegalAccessException, IOException, SlickException {			
+		
+		File target = new File("testGemwars.properties"); 
+		
 		Options options = Options.getInstance();
 
-		options.save( new File("testGemwars.properties"));
+		options.save(target);
 		
 		Properties properties = new Properties();
 		
-		properties.load( new FileInputStream("testGemwars.properties"));
+		properties.load( new FileInputStream(target));
 		
 		properties.setProperty("screenwidth", "asfedasf");
 
 		FileOutputStream stream = new FileOutputStream(new File("testGemwars.properties"));
 		properties.store(stream, "");
-		
-		options.load(new File("testGemwars.properties"));
-
 		stream.close();
+		
+		options.load(target);
+
+		
 	}
 }
