@@ -60,7 +60,7 @@ public class MainMenuState extends BasicGameState {
 	/**
 	 * Animation bottom right
 	 */
-	private Animation diamandAni;
+	private DiamondAnimation diamandAni;
 	
 	/**
 	 * If this flag is true map the game state is changed to GamePlayStat, 
@@ -122,7 +122,7 @@ public class MainMenuState extends BasicGameState {
         										   mainmenu.positionY  + verticalOffset *4),
         										   menuImage));        
 
-        diamandAni = new DiamondAnimation();         
+        diamandAni = new DiamondAnimation( gc.getWidth() - 200, gc.getHeight() - 200, 0.8f );         
         maplist = new MapList( 150, 20);
         maplist.addMapChosenEventListener( new MapSelectionListener() );
 	}
@@ -169,9 +169,7 @@ public class MainMenuState extends BasicGameState {
 		background.draw(0,0 );
 		title.draw(  title.getWidth() / 4, 50 );
 		mainmenu.render(gc, g);
-		diamandAni.draw( gc.getWidth() - diamandAni.getWidth() - 10,
-						 gc.getHeight() - diamandAni.getHeight() - 10, 
-						 DiamondAnimation.FILTER_COLOR);
+		diamandAni.render(gc, g);
 		
 		aboutTextEntity.render(gc, g);
 		
@@ -182,7 +180,7 @@ public class MainMenuState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame game, int delta)
 			throws SlickException {
 		
-		diamandAni.update(delta);
+		diamandAni.update(gc, delta);
 		
 		if( aboutTextEntity.hide == false ) {
 			aboutTextEntity.update(gc, delta);			

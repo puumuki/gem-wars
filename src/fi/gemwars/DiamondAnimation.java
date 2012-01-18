@@ -2,31 +2,45 @@ package fi.gemwars;
 
 import java.util.ArrayList;
 
+import fi.gemwars.gameobjects.AEntity;
 import fi.gemwars.io.ResourceManager;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
-public class DiamondAnimation extends Animation {
+public class DiamondAnimation extends AEntity {
 
 	public static final Color FILTER_COLOR = new Color(1f, 1f, 1f, 0.8f); 
 	
-	public DiamondAnimation() {
+	private float scale = 1;
+	
+	private Animation diamondAnimation;
+	
+	private static final int DIAMOND_FRAME_WIDTH = 207;
+	private static final int DIAMOND_FRAME_HEIGHT = 199;
+	
+	public DiamondAnimation( int posX, int posY, float scale ) {
 
+		this.positionX = posX;
+		this.positionY = posY;
+		this.scale = scale;
+		
 		int duration = 50;
-
-		int width = 207;
-		int height = 199;
+		
+		diamondAnimation = new Animation();
 
 		Image image = ResourceManager.fetchImage("MENU_DIAMONDANIMATION");
 
 		ArrayList<Image> frames = new ArrayList<Image>();
 		
 		//Extracts the frames
-		for (int y = 0; y < image.getHeight(); y += height) {
-			for (int x = 0; x < image.getWidth(); x += width) {
-				Image frame = image.getSubImage(x, y, width, height);				
+		for (int y = 0; y < image.getHeight(); y += DIAMOND_FRAME_HEIGHT) {
+			for (int x = 0; x < image.getWidth(); x += DIAMOND_FRAME_WIDTH) {
+				Image frame = image.getSubImage(x, y, DIAMOND_FRAME_WIDTH, DIAMOND_FRAME_HEIGHT);				
 				frames.add( frame );
 			}
 		}
@@ -37,7 +51,20 @@ public class DiamondAnimation extends Animation {
 		}
 		
 		for( Image frame : frames ) {
-			addFrame(frame, duration);
+			diamondAnimation.addFrame(frame, duration);
 		}
+	}
+
+	@Override
+	public void render(GameContainer cont, Graphics grap) throws SlickException {
+		diamondAnimation.draw(positionX, positionY, 
+							  diamondAnimation.getWidth() * scale, 
+							  diamondAnimation.getHeight() * scale, 
+							  DiamondAnimation.FILTER_COLOR);	 
+	}
+
+	@Override
+	public void update(GameContainer cont, int delta) throws SlickException {
+		diamondAnimation.update(delta);		
 	}
 }
