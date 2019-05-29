@@ -128,7 +128,7 @@ public class MainMenuState extends BasicGameState {
 	public void loadResourceFile() {
 
 		try {			
-			String path = "resources/resources.xml";			
+			String path = "resources.xml";
 			InputStream stream = getClass().getClassLoader().getResourceAsStream(path);			
 			ResourceManager.getInstance().loadResources(stream); 
 		} catch (Exception e) {

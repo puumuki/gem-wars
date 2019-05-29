@@ -1,0 +1,31 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+    }
+}
+
+dependencies {
+    compile 'org.slick2d:slick2d-core:1.0.2'
+    testCompile "junit:junit:4.+"
+}
+
+test {
+    useJUnit()
+}

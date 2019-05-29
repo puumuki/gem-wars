@@ -60,21 +60,19 @@ public class ResourceManager {
  
 	public void loadResources(InputStream is, boolean deferred) throws SlickException {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = null;
+        DocumentBuilder docBuilder;
 		try {
 			docBuilder = docBuilderFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			throw new SlickException("Could not load resources", e);
 		}
-		Document doc = null;
+		Document doc;
         try {
-			doc = docBuilder.parse (is);
-		} catch (SAXException e) {
-			throw new SlickException("Could not load resources", e);
-		} catch (IOException e) {
+			doc = docBuilder.parse(is);
+		} catch (SAXException | IOException e) {
 			throw new SlickException("Could not load resources", e);
 		}
- 
+
 		// normalize text representation
         doc.getDocumentElement ().normalize ();
  

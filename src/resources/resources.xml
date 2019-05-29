@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 <!-- MENU -->
-	<resource type="image" id="MENU_LVL_BG">resources\images\lvltaus.png</resource>
-	<resource type="image" id="MENU_PASS_BG">resources\images\passtaus.png</resource>
-	<resource type="image" id="MENU_PASSWORD_BUTTONS">resources\images\pwordnapit.png</resource>
-	<resource type="image" id="MENU_START">resources\images\startb.png</resource>
-	<resource type="image" id="SMALL_GEAR">resources\images\smallgear.png</resource>
-	<resource type="image" id="BIG_GEAR">resources\images\biggear.png</resource>
+	<resource type="image" id="MENU_LVL_BG">images/lvltaus.png</resource>
+	<resource type="image" id="MENU_PASS_BG">images/passtaus.png</resource>
+	<resource type="image" id="MENU_PASSWORD_BUTTONS">images/pwordnapit.png</resource>
+	<resource type="image" id="MENU_START">images/startb.png</resource>
+	<resource type="image" id="SMALL_GEAR">images/smallgear.png</resource>
+	<resource type="image" id="BIG_GEAR">images/biggear.png</resource>
 	
 	
-	<resource type="image" id="MENU_DIAMONDANIMATION">resources\images\timanttiani.png</resource>
-	<resource type="image" id="MENU_BG">resources\images\background.png</resource>
-	<resource type="image" id="MENU_TITLE">resources\images\gemwarstitle.png</resource>
-	<resource type="image" id="MENU_NEWGAME">resources\images\newgame.png</resource>
-	<resource type="image" id="MENU_OPTIONS">resources\images\options.png</resource>
-	<resource type="image" id="MENU_ABOUT">resources\images\about.png</resource>
-	<resource type="image" id="MENU_QUIT">resources\images\quit.png</resource>
+	<resource type="image" id="MENU_DIAMONDANIMATION">images/timanttiani.png</resource>
+	<resource type="image" id="MENU_BG">images/background.png</resource>
+	<resource type="image" id="MENU_TITLE">images/gemwarstitle.png</resource>
+	<resource type="image" id="MENU_NEWGAME">images/newgame.png</resource>
+	<resource type="image" id="MENU_OPTIONS">images/options.png</resource>
+	<resource type="image" id="MENU_ABOUT">images/about.png</resource>
+	<resource type="image" id="MENU_QUIT">images/quit.png</resource>
 	
 	<!-- animations use 24 fps at the moment (42 ms) -->
-	<resource type="animation" id="MENUANI_SP" tw="136" th="136" duration="42">resources\images\menuani_singleplayer.png</resource>
-	<resource type="animation" id="MENUANI_MP" tw="136" th="136" duration="42">resources\images\menuani_multiplayer.png</resource>
-	<resource type="animation" id="MENUANI_OPTIONS" tw="136" th="136" duration="42">resources\images\menuani_options.png</resource>
-	<resource type="animation" id="MENUANI_EXIT" tw="136" th="136" duration="42">resources\images\menuani_exit.png</resource>
+	<resource type="animation" id="MENUANI_SP" tw="136" th="136" duration="42">images/menuani_singleplayer.png</resource>
+	<resource type="animation" id="MENUANI_MP" tw="136" th="136" duration="42">images/menuani_multiplayer.png</resource>
+	<resource type="animation" id="MENUANI_OPTIONS" tw="136" th="136" duration="42">images/menuani_options.png</resource>
+	<resource type="animation" id="MENUANI_EXIT" tw="136" th="136" duration="42">images/menuani_exit.png</resource>
 	
 	<!-- menu sounds -->
-	<resource type="sound" id="MENU_SOUND">resources\sounds\menu.wav</resource>
-	<resource type="music" id="MENU_MUSIC">resources\music\menu.xm</resource>
+	<resource type="sound" id="MENU_SOUND">sounds/menu.wav</resource>
+	<resource type="music" id="MENU_MUSIC">music/menu.xm</resource>
 	
 	<!-- GAMEPLAY -->
 	<!-- tiles -->
-	<resource type="image" id="ITEM_TEXTURES">resources\images\winbd_all.png</resource>
-	<resource type="animation" id="MAGIC_WALL" tw="56" th="56" duration="42">resources\images\magic_wall.png</resource>
+	<resource type="image" id="ITEM_TEXTURES">images/winbd_all.png</resource>
+	<resource type="animation" id="MAGIC_WALL" tw="56" th="56" duration="42">images/magic_wall.png</resource>
 	
 	<!-- player -->
-	<resource type="animation" id="PLAYER_LEFT" tw="56" th="56" duration="16">resources\images\player_left.png</resource>
-	<resource type="animation" id="PLAYER_RIGHT" tw="56" th="56" duration="16">resources\images\player_right.png</resource>
-	<resource type="animation" id="PLAYER_UP" tw="56" th="56" duration="16">resources\images\player_up.png</resource>
-	<resource type="animation" id="PLAYER_DOWN" tw="56" th="56" duration="16">resources\images\player_down.png</resource>
-	<resource type="animation" id="PLAYER_PUSH_LEFT" tw="56" th="56" duration="16">resources\images\player_push_left.png</resource>
-	<resource type="animation" id="PLAYER_PUSH_RIGHT" tw="56" th="56" duration="16">resources\images\player_push_right.png</resource>
+	<resource type="animation" id="PLAYER_LEFT" tw="56" th="56" duration="16">images/player_left.png</resource>
+	<resource type="animation" id="PLAYER_RIGHT" tw="56" th="56" duration="16">images/player_right.png</resource>
+	<resource type="animation" id="PLAYER_UP" tw="56" th="56" duration="16">images/player_up.png</resource>
+	<resource type="animation" id="PLAYER_DOWN" tw="56" th="56" duration="16">images/player_down.png</resource>
+	<resource type="animation" id="PLAYER_PUSH_LEFT" tw="56" th="56" duration="16">images/player_push_left.png</resource>
+	<resource type="animation" id="PLAYER_PUSH_RIGHT" tw="56" th="56" duration="16">images/player_push_right.png</resource>
 	
 	<!-- rocks -->
-	<resource type="animation" id="ROCK_WHITE_DOWN" tw="56" th="56" duration="42">resources\images\rock_white_down.png</resource>
-	<resource type="animation" id="ROCK_WHITE_RIGHT" tw="56" th="56" duration="42">resources\images\rock_white_right.png</resource>
-	<resource type="animation" id="ROCK_DARK_DOWN" tw="56" th="56" duration="42">resources\images\rock_dark_down.png</resource>
-	<resource type="animation" id="ROCK_DARK_RIGHT" tw="56" th="56" duration="42">resources\images\rock_dark_right.png</resource>
+	<resource type="animation" id="ROCK_WHITE_DOWN" tw="56" th="56" duration="42">images/rock_white_down.png</resource>
+	<resource type="animation" id="ROCK_WHITE_RIGHT" tw="56" th="56" duration="42">images/rock_white_right.png</resource>
+	<resource type="animation" id="ROCK_DARK_DOWN" tw="56" th="56" duration="42">images/rock_dark_down.png</resource>
+	<resource type="animation" id="ROCK_DARK_RIGHT" tw="56" th="56" duration="42">images/rock_dark_right.png</resource>
 	
 	<!-- gems -->
-	<resource type="animation" id="GEM_BLUE_DOWN" tw="56" th="56" duration="42">resources\images\gem_blue_down.png</resource>
-	<resource type="animation" id="GEM_BLUE_RIGHT" tw="56" th="56" duration="42">resources\images\gem_blue_right.png</resource>
-	<resource type="animation" id="GEM_GREEN_DOWN" tw="56" th="56" duration="42">resources\images\gem_green_down.png</resource>
-	<resource type="animation" id="GEM_GREEN_RIGHT" tw="56" th="56" duration="42">resources\images\gem_green_right.png</resource>
-	<resource type="animation" id="GEM_RED_DOWN" tw="56" th="56" duration="42">resources\images\gem_red_down.png</resource>
-	<resource type="animation" id="GEM_RED_RIGHT" tw="56" th="56" duration="42">resources\images\gem_red_right.png</resource>
+	<resource type="animation" id="GEM_BLUE_DOWN" tw="56" th="56" duration="42">images/gem_blue_down.png</resource>
+	<resource type="animation" id="GEM_BLUE_RIGHT" tw="56" th="56" duration="42">images/gem_blue_right.png</resource>
+	<resource type="animation" id="GEM_GREEN_DOWN" tw="56" th="56" duration="42">images/gem_green_down.png</resource>
+	<resource type="animation" id="GEM_GREEN_RIGHT" tw="56" th="56" duration="42">images/gem_green_right.png</resource>
+	<resource type="animation" id="GEM_RED_DOWN" tw="56" th="56" duration="42">images/gem_red_down.png</resource>
+	<resource type="animation" id="GEM_RED_RIGHT" tw="56" th="56" duration="42">images/gem_red_right.png</resource>
 	
 	<!-- monsters -->
-	<resource type="animation" id="MONSTER_LEFT" tw="56" th="56" duration="16">resources\images\monster_left.png</resource>
-	<resource type="animation" id="MONSTER_RIGHT" tw="56" th="56" duration="16">resources\images\monster_right.png</resource>
-	<resource type="animation" id="MONSTER_UP" tw="56" th="56" duration="16">resources\images\monster_up.png</resource>
-	<resource type="animation" id="MONSTER_DOWN" tw="56" th="56" duration="16">resources\images\monster_down.png</resource>
+	<resource type="animation" id="MONSTER_LEFT" tw="56" th="56" duration="16">images/monster_left.png</resource>
+	<resource type="animation" id="MONSTER_RIGHT" tw="56" th="56" duration="16">images/monster_right.png</resource>
+	<resource type="animation" id="MONSTER_UP" tw="56" th="56" duration="16">images/monster_up.png</resource>
+	<resource type="animation" id="MONSTER_DOWN" tw="56" th="56" duration="16">images/monster_down.png</resource>
 
 	
 	<!-- gameplay sounds -->
-	<resource type="sound" id="GAME_COLLECT">resources\sounds\collect.wav</resource>
-	<resource type="music" id="GAME_MUSIC">resources\music\peli.XM</resource>
-	<resource type="sound" id="GAME_BONUS">resources\sounds\bonus.wav</resource>
+	<resource type="sound" id="GAME_COLLECT">sounds/collect.wav</resource>
+	<resource type="music" id="GAME_MUSIC">music/peli.XM</resource>
+	<resource type="sound" id="GAME_BONUS">sounds/bonus.wav</resource>
 	
 	<!-- UI -->
-	<resource type="animation" id="UI_CLOCK" tw="48" th="48" duration="42">resources\images\ui_clock.png</resource>
-	<resource type="animation" id="UI_COIN" tw="48" th="48" duration="42">resources\images\ui_coin.png</resource>
-	<resource type="animation" id="UI_GEM" tw="48" th="48" duration="42">resources\images\ui_gem.png</resource>
-	<resource type="animation" id="UI_HEAD" tw="48" th="48" duration="42">resources\images\ui_head.png</resource>
+	<resource type="animation" id="UI_CLOCK" tw="48" th="48" duration="42">images/ui_clock.png</resource>
+	<resource type="animation" id="UI_COIN" tw="48" th="48" duration="42">images/ui_coin.png</resource>
+	<resource type="animation" id="UI_GEM" tw="48" th="48" duration="42">images/ui_gem.png</resource>
+	<resource type="animation" id="UI_HEAD" tw="48" th="48" duration="42">images/ui_head.png</resource>
 	
 </resources>
 
