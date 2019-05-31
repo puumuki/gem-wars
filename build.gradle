@@ -5,22 +5,6 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/resources'
-        }
-    }
-    test {
-        java {
-            srcDir 'src/test'
-        }
-    }
-}
-
 dependencies {
     compile 'org.slick2d:slick2d-core:1.0.2'
     testCompile "junit:junit:4.+"

@@ -2,5 +2,7 @@
 .project
 .classpath
 .settings
+.vscode
 bin
 build
+testGemwars.properties
