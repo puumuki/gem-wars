@@ -23,7 +23,7 @@ import fi.gemwars.ui.components.menu.Menu;
  * MapList draws nice maps selection list
  */
 public class MapList extends AEntity {
-	
+	public static final String MAPFOLDER = "src/main/resources/maps/";
 	/**
 	 * Other components that are listening the maps changing
 	 */
@@ -87,11 +87,7 @@ public class MapList extends AEntity {
 	}
 	
 	public void initLevelsAndMapFiles() {
-		File file = new File("src/resources/maps/");
-		
-		if( file.exists() == false ) {
-			file = new File("resources/maps/");
-		}
+		File file = new File(MAPFOLDER);
 		
 		singlePlayerMaps =  MapLoader.loadSinglePlayerMaps(file);
 	}

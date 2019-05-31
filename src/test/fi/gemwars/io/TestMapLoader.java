@@ -66,6 +66,7 @@ public class TestMapLoader {
 	}
 
 	@Test
+	@Ignore
 	public void testCollisionInitialization() {
 		Map map = new Map();
 		map.createCollision(1000, 1000);

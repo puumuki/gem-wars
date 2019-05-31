@@ -41,75 +41,70 @@ public class GameplayState extends BasicGameState {
 	/**
 	 * Unique game state ID
 	 */
-    private int stateID = -1;
-    
-    private Music gamemusic = null;
-    
-    /**
-     * Currently selected map
-     */
-    private int currentMapIndex = 0;
-    
-    private List<File> singlePlayerMaps, availableMaps;
-    
-    public List<File> getSinglePlayerMaps() {
+	private int stateID = -1;
+
+	private Music gamemusic = null;
+
+	/**
+	 * Currently selected map
+	 */
+	private int currentMapIndex = 0;
+
+	private List<File> singlePlayerMaps, availableMaps;
+
+	public List<File> getSinglePlayerMaps() {
 		return singlePlayerMaps;
-	}	
-	
-	public GameplayState( int stateID ) {
-	       this.stateID = stateID;
-	    }
-	
+	}
+
+	public GameplayState(int stateID) {
+		this.stateID = stateID;
+	}
+
 	public int getCurrentMapIndex() {
 		return currentMapIndex;
 	}
 
-	
-	public void changeMap( File mapFile ) {
-		
+	public void changeMap(File mapFile) {
+
 		int mapIndex = currentMapIndex + 1;
-		
-		for (int i=0; i<singlePlayerMaps.size(); i++) {
-			
+
+		for (int i = 0; i < singlePlayerMaps.size(); i++) {
+
 			File map = singlePlayerMaps.get(i);
-			
-			if( map.equals(mapFile)) {
+
+			if (map.equals(mapFile)) {
 				mapIndex = i;
 				break;
 			}
 		}
-		
+
 		setCurrentMapIndex(mapIndex);
 	}
-	
+
 	public void setCurrentMapIndex(int currentMapIndex) {
-		this.currentMapIndex = currentMapIndex-1;
+		this.currentMapIndex = currentMapIndex - 1;
 		isMapChanged = true;
 	}
 
 	boolean isMapChanged = false;
 
-    private Map map;
-    
-    private GameUI ui;
-    
-    private TimeCounter deathTimer = new TimeCounter();
-    
-    // goal stuff
-    private TimeCounter goalTimer = new TimeCounter();
-    private int goaltime = 0;
-    private long goalEndTimeStart = 0;
-    private int goalBlackingAlpha = 0;
-    private Sound bonusSound;
-    
+	private Map map;
+
+	private GameUI ui;
+
+	private TimeCounter deathTimer = new TimeCounter();
+
+	// goal stuff
+	private TimeCounter goalTimer = new TimeCounter();
+	private int goaltime = 0;
+	private long goalEndTimeStart = 0;
+	private int goalBlackingAlpha = 0;
+	private Sound bonusSound;
+
 	@Override
 	public void init(GameContainer cont, StateBasedGame state) throws SlickException {
-		
-		File file = new File("src/resources/maps/");
-		
-		if( file.exists() == false ) {
-			file = new File("resources/maps/");
-		}
+
+		File file = new File(MapList.MAPFOLDER);
 		
 		availableMaps = MapLoader.findAvailableMaps(file);
 		singlePlayerMaps = MapLoader.loadSinglePlayerMaps(file);

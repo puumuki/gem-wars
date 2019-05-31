@@ -13,5 +13,21 @@ sourceSets {
 }
 dependencies {
     compile 'org.slick2d:slick2d-core:1.0.2'
+
     testCompile "junit:junit:4.+"
+}
+
+task natives {
+    def resolvedArtifacts = configurations.compile.resolvedConfiguration.resolvedArtifacts
+    osNatives('windows', resolvedArtifacts)
+    osNatives('linux', resolvedArtifacts)
+    osNatives('osx', resolvedArtifacts)
+}
+def osNatives(os, artifacts) {
+    copy {
+        def classifier = 'natives-' + os
+        def matches = artifacts.findAll { it.classifier == classifier }
+        from matches.collect { it.file }.collect { zipTree(it) }
+        into "$buildDir/natives/" + os
+    }
 }
