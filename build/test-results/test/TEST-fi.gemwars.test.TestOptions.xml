@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="fi.gemwars.test.TestOptions" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-05-31T18:42:32" hostname="yambitsu" time="0.064">
+  <properties/>
+  <testcase name="testLoadingOptions" classname="fi.gemwars.test.TestOptions" time="0.058"/>
+  <testcase name="testLoadingInvalidValue" classname="fi.gemwars.test.TestOptions" time="0.005"/>
+  <system-out><![CDATA[Fri May 31 21:42:32 EEST 2019 INFO:Configurations saved to a file : /tmp/junit6241837942570691488/testGemwars.properties
+Fri May 31 21:42:32 EEST 2019 INFO:Starting loading configurations from /home/yaamboo/Ohjelmointi/gemwars/gem-wars/testGemwars.properties
+Fri May 31 21:42:32 EEST 2019 INFO:Configurations:
+Fri May 31 21:42:32 EEST 2019 INFO:soundvolume=2.1
+Fri May 31 21:42:32 EEST 2019 INFO:musicvolume=3.0
+Fri May 31 21:42:32 EEST 2019 INFO:isfullscreeninuse=false
+Fri May 31 21:42:32 EEST 2019 INFO:screenwidth=999
+Fri May 31 21:42:32 EEST 2019 INFO:screenheight=888
+Fri May 31 21:42:32 EEST 2019 INFO:targetFrameRate=60
+Fri May 31 21:42:32 EEST 2019 INFO:gemwarsFormUrl=http://teemuki.eu/gemwars/
+Fri May 31 21:42:32 EEST 2019 INFO:Configuration are now loaded from file :/home/yaamboo/Ohjelmointi/gemwars/gem-wars/testGemwars.properties
+Fri May 31 21:42:32 EEST 2019 INFO:Configurations saved to a file : /home/yaamboo/Ohjelmointi/gemwars/gem-wars/testGemwars.properties
+Fri May 31 21:42:32 EEST 2019 INFO:Starting loading configurations from /home/yaamboo/Ohjelmointi/gemwars/gem-wars/testGemwars.properties
+Fri May 31 21:42:32 EEST 2019 INFO:Configurations:
+Fri May 31 21:42:32 EEST 2019 INFO:soundvolume=2.1
+Fri May 31 21:42:32 EEST 2019 INFO:musicvolume=3.0
+Fri May 31 21:42:32 EEST 2019 INFO:isfullscreeninuse=false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

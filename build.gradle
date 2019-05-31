@@ -8,15 +8,15 @@ repositories {
 sourceSets {
     main {
         java {
-            srcDir 'src'
+            srcDir 'src/main/java'
         }
         resources {
-            srcDir 'src/resources'
+            srcDir 'src/main/resources'
         }
     }
     test {
         java {
-            srcDir 'test'
+            srcDir 'src/test'
         }
     }
 }
