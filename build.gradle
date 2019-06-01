@@ -17,6 +17,8 @@ dependencies {
     testCompile "junit:junit:4.+"
 }
 
+// https://discuss.gradle.org/t/how-to-use-lwjgl-or-how-to-use-native-libraries/7498/9
+
 task natives {
     def resolvedArtifacts = configurations.compile.resolvedConfiguration.resolvedArtifacts
     osNatives('windows', resolvedArtifacts)

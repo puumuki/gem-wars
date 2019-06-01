@@ -1,21 +1,20 @@
 package fi.gemwars;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import fi.gemwars.event.GemwarsEvent;
-import fi.gemwars.event.GemwarsEventType;
-import fi.gemwars.event.GemwarsListener;
-import fi.gemwars.io.Options;
-import fi.gemwars.log.GemwarLogSystem;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
+
+import fi.gemwars.event.GemwarsEvent;
+import fi.gemwars.event.GemwarsEventType;
+import fi.gemwars.event.GemwarsListener;
+import fi.gemwars.io.Options;
+import fi.gemwars.log.GemwarLogSystem;
 
 /**
  * Jumalallisen suojeluksen saattelema aloitamme tämän pelin saattamisen

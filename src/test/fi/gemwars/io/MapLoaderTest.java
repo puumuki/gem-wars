@@ -2,23 +2,18 @@ package fi.gemwars.io;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import fi.gemwars.gameobjects.Item;
 import fi.gemwars.gameobjects.map.ItemTypes;
 import fi.gemwars.gameobjects.map.Map;
-import fi.gemwars.io.MapLoader;
-import fi.gemwars.io.ResourceManager;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.newdawn.slick.SlickException;
-
-public class TestMapLoader {
+public class MapLoaderTest {
 
 	private String RESOURCE_BASE_PATH = "src/main/resources";
 
@@ -37,8 +32,9 @@ public class TestMapLoader {
 		}
 	}
 
+	@Test
 	@Ignore
-	public void loadMaps() throws IOException, SlickException {
+	public void testLoadMaps() throws Exception {
 		Item item = new Item(ItemTypes.BLUE_GEM);
 
 		MapLoader mapLoader = new MapLoader();
@@ -67,7 +63,7 @@ public class TestMapLoader {
 
 	@Test
 	@Ignore
-	public void testCollisionInitialization() {
+	public void testCollisionInitialization() throws Exception {
 		Map map = new Map();
 		map.createCollision(1000, 1000);
 
@@ -79,8 +75,9 @@ public class TestMapLoader {
 
 	}
 
+	@Test
 	@Ignore
-	public void testFindingMaps() {
+	public void testFindingMaps() throws Exception {
 		List<File> files = MapLoader.findAvailableMaps(new File(RESOURCE_BASE_PATH + "maps/"));
 
 		Assert.assertTrue(files.contains(new File(RESOURCE_BASE_PATH + "/maps/e1l1.gem")));
