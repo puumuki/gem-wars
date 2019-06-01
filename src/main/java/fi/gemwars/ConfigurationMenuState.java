@@ -15,7 +15,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
-import fi.gemwars.gameobjects.GearPair;
+import fi.gemwars.gameobjects.menu.GearPair;
 import fi.gemwars.io.Options;
 import fi.gemwars.ui.components.menu.BasicMenuItem;
 import fi.gemwars.ui.components.menu.BooleanMenuItem;

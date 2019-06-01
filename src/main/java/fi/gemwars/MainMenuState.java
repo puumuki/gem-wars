@@ -14,7 +14,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import fi.gemwars.gameobjects.DiamondAnimation;
+import fi.gemwars.gameobjects.menu.DiamondAnimation;
 import fi.gemwars.io.Options;
 import fi.gemwars.io.ResourceManager;
 import fi.gemwars.ui.components.menu.ImageMenuItem;
