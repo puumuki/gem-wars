@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fi.gemwars.gameobjects.Item;
 import fi.gemwars.gameobjects.map.ItemTypes;
 import fi.gemwars.gameobjects.map.Map;
 
@@ -35,7 +34,6 @@ public class MapLoaderTest {
 	@Test
 	@Ignore
 	public void testLoadMaps() throws Exception {
-		Item item = new Item(ItemTypes.BLUE_GEM);
 
 		MapLoader mapLoader = new MapLoader();
 		Map map = mapLoader.loadMap(new File(RESOURCE_BASE_PATH + "/maps/e1l1.gem"));
