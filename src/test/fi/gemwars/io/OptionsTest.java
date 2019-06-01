@@ -18,7 +18,8 @@ public class OptionsTest {
 
 	@Test
 	public void testLoadingOptions() throws Exception {
-
+		// TODO refactor this test code so that it actually uses the Options.class that
+		// it tries to test
 		File target = testFolder.newFile("testGemwars.properties");
 
 		Options options = Options.getInstance();
@@ -42,8 +43,8 @@ public class OptionsTest {
 
 		options.load(new File("testGemwars.properties"));
 
-		Assert.assertEquals(3f, options.getMusicVolume());
-		Assert.assertEquals(3f, options.getMusicVolume());
+		Assert.assertEquals(3f, options.getMusicVolume(), 0.001f);
+		Assert.assertEquals(3f, options.getMusicVolume(), 0.001f);
 
 		Assert.assertEquals(new Integer(999), options.getScreenWitdh());
 		Assert.assertEquals(new Integer(888), options.getScreenHeight());

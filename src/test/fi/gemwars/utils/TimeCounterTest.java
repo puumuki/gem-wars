@@ -1,11 +1,9 @@
-package fi.gemwars;
+package fi.gemwars.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
-import fi.gemwars.utils.TimeCounter;
 
 public class TimeCounterTest {
 
@@ -25,7 +23,7 @@ public class TimeCounterTest {
 			timeCounter.stop();
 			timeCounter.reset();
 
-			assertEquals(0.0, (double) timeCounter.timeElapsedInSeconds());
+			assertEquals(0.0, timeCounter.timeElapsedInSeconds(), 0.001f);
 			assertEquals(0, timeCounter.timeElapsedInMilliseconds());
 
 			timeCounter.start();
