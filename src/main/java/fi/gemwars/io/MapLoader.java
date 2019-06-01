@@ -1,13 +1,10 @@
 package fi.gemwars.io;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import org.newdawn.slick.SlickException;
@@ -48,62 +45,70 @@ public class MapLoader {
 	 * @param file    map file to load
 	 * @param players links to the players (or null if no players)
 	 * @return the new map
-	 * @throws IOException
-	 * @throws SlickException
 	 */
 	public Map loadMap(File file, List<Player> players) throws SlickException {
 
 		Log.info("Loading level from a file : " + file.getName());
-
-		Map map = null;
-
-		if (file.isFile() == false) {
-			throw new SlickException("File not found ", new FileNotFoundException(file.getAbsolutePath()));
+		if (!file.isFile()) {
+			throw new IllegalArgumentException("File " + file.getName() + " not found at " + file.getAbsolutePath());
 		}
 
-		Scanner scanner = null;
+		try (Scanner scanner = new Scanner(ResourceLoader.getResourceAsStream(file.toString()))) {
 
-		try {
+			Map map = new Map();
+			// read the file one line at a time
+			for (; scanner.hasNextLine();) {
 
-			InputStream in = ResourceLoader.getResourceAsStream(file.toString());
-			scanner = new Scanner(in);
-
-			while (scanner.hasNextLine()) {
-
-				// read the file one line at a time
-				map = new Map();
-
+				// read the first 4 lines
 				readMapBasicInformations(file, map, scanner);
 
 				// Then layers, one at a time
+				// Layers consist of 4 metadata lines and then layer lines
 				for (int i = 0; i < 4; i++) {
 
-					String layerName = scanner.nextLine();
-
+					// First layer line contains the layer type
+					LayerTypes layerName = LayerTypes.valueOf(scanner.nextLine());
+					// next line: layer width
 					int layerWidth = readLayerSize(scanner);
+					// next line: layer height
 					int layerHeight = readLayerSize(scanner);
-
+					// next line is not needed for anything
+					scanner.nextLine();
 					// then we make a new layer from that information
-					if (LayerTypes.valueOf(layerName) == LayerTypes.LAYER_COLLISION) {
-						readCollisionLayer(map, scanner, layerWidth, layerHeight);
-					} else {
-						readMapLayer(map, scanner, layerName, layerWidth, layerHeight);
-					}
-				} // End of for
+					readLayer(scanner, map, layerName, layerWidth, layerHeight);
+				}
 
-			} // End of while
+			}
 
+			// for whatever reason we have game logic here
 			map.initPlayers(players);
 
-		} catch (NoSuchElementException e) {
-			throw new SlickException("Error loading map file", e);
+			return map;
 		} catch (RuntimeException e) {
+			// TODO why are we catching a runtime exception and wrapping it in a
+			// slickexception? Do we have a fallback somewhere?
 			throw new SlickException("Error loading map file", e);
-		} finally {
-			scanner.close();
 		}
 
-		return map;
+	}
+
+	/**
+	 * Reads layer data
+	 * 
+	 * @param scanner
+	 * @param map
+	 * @param layerName
+	 * @param layerWidth
+	 * @param layerHeight
+	 * @throws SlickException
+	 */
+	private void readLayer(Scanner scanner, Map map, LayerTypes layerName, int layerWidth, int layerHeight)
+			throws SlickException {
+		if (layerName.equals(LayerTypes.LAYER_COLLISION)) {
+			readCollisionLayer(map, scanner, layerWidth, layerHeight);
+		} else {
+			readMapLayer(map, scanner, layerName, layerWidth, layerHeight);
+		}
 	}
 
 	/**
@@ -119,6 +124,19 @@ public class MapLoader {
 		}
 	}
 
+	/**
+	 * Reads the first 4 lines from the map data, which contain:
+	 * <ul>
+	 * <li>The map name</li>
+	 * <li>The map creator</li>
+	 * <li>The gem count needed to clear the level</li>
+	 * <li>The time allowed to clear the level</li>
+	 * </ul>
+	 * 
+	 * @param file
+	 * @param map
+	 * @param scanner
+	 */
 	private void readMapBasicInformations(File file, Map map, Scanner scanner) {
 		// set the filename
 		map.setFilename(file.getName());
@@ -149,16 +167,17 @@ public class MapLoader {
 		map.setTime(time); // TODO: take Options.gameSpeed into account!
 	}
 
-	private void readMapLayer(Map map, Scanner scanner, String layerName, int layerWidth, int layerHeight)
+	private void readMapLayer(Map map, Scanner scanner, LayerTypes layerName, int layerWidth, int layerHeight)
 			throws SlickException {
 
 		// other layers
-		Layer l = new Layer(layerWidth, layerHeight, LayerTypes.valueOf(layerName));
+		Layer l = new Layer(layerWidth, layerHeight, layerName);
 
 		if (map.setLayer(l)) {
 
 			for (int y = 0; y < layerHeight; y++) {
 				StringBuffer line = new StringBuffer(scanner.nextLine());
+				System.out.println(line.toString());
 				int start = 0, end = 0;
 				for (int x = 0; x < layerWidth; x++) {
 					end = line.indexOf(" ", start);

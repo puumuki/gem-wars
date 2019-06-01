@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -14,29 +15,28 @@ import fi.gemwars.gameobjects.map.Map;
 
 public class MapLoaderTest {
 
-	private String RESOURCE_BASE_PATH = "src/main/resources";
+	private static final String RESOURCE_BASE_PATH = "src/main/resources";
+	private static final String TEST_RESOURCE_BASE_PATH = "src/test/resources";
+
+	private MapLoader mapLoader = new MapLoader();
 
 	// FIXME: Problems to make this to run, I had problems to initiaze the
 	// ResourceManager
 	// It had to be initialized inside the "game loop" have to make some kind
 	// mocketimock tha
 	// replaces the ResourceManager
-	public void loadResourceFile() {
-		try {
-			String path = RESOURCE_BASE_PATH + "/resources.xml";
-			InputStream stream = new FileInputStream(new File(path));
-			ResourceManager.getInstance().loadResources(stream);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	@Before
+	public void loadResourceFile() throws Exception {
+		String path = RESOURCE_BASE_PATH + "/resources.xml";
+		InputStream stream = new FileInputStream(new File(path));
+		ResourceManager.getInstance().loadResources(stream);
 	}
 
 	@Test
-	@Ignore
-	public void testLoadMaps() throws Exception {
+	@Ignore("This fails because it is tied to lwjgl code: needs to be refactored more")
+	public void testLoadMap_whenMapIsFound_itIsLoaded() throws Exception {
 
-		MapLoader mapLoader = new MapLoader();
-		Map map = mapLoader.loadMap(new File(RESOURCE_BASE_PATH + "/maps/e1l1.gem"));
+		Map map = mapLoader.loadMap(new File(TEST_RESOURCE_BASE_PATH + "/maps/e1l1.gem"));
 
 		Assert.assertEquals("Untitled", map.getName());
 		Assert.assertEquals("Unknown", map.getCreator());
@@ -57,6 +57,11 @@ public class MapLoaderTest {
 		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(22, 10).itemType);
 
 		Assert.assertEquals(ItemTypes.BROWN_WALL, map.getGroundLayer().getTile(2, 2).itemType);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testLoadMap_whenMapIsMissing_throwsException() throws Exception {
+		mapLoader.loadMap(new File(TEST_RESOURCE_BASE_PATH + "/maps/nonexistant.gem"));
 	}
 
 	@Test
