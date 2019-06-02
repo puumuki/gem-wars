@@ -192,10 +192,10 @@ public class Map extends AEntity {
 	 */
 	private void openGoal() {
 		goalOpen = true;
-		List<Point> goals = findItemPositions(specialLayer, ItemTypes.GOAL);
+		List<Point> goals = findItemPositions(specialLayer, ItemType.GOAL);
 		Point p = goals.get(0);
 		setCollision(p.x, p.y, false);
-		Item i = new Item(ItemTypes.GOAL_TILE);
+		Item i = new Item(ItemType.GOAL_TILE);
 		i.positionX = p.x;
 		i.positionY = p.y;
 		groundLayer.setTile(p.x, p.y, i);
@@ -242,14 +242,12 @@ public class Map extends AEntity {
 	/**
 	 * Find he starting positions from the map and creates Player-objects to those
 	 * starting positions.
-	 * 
-	 * @throws SlickException
 	 */
-	public void initPlayers() throws SlickException {
+	public void initPlayers() {
 		initPlayers(null);
 	}
 
-	public void initPlayers(List<Player> players) throws SlickException {
+	public void initPlayers(List<Player> players) {
 		if (players == null) {
 			for (Point startingPosition : getStartingPositions()) {
 				Log.debug("Creating player to position: " + startingPosition);
@@ -298,17 +296,17 @@ public class Map extends AEntity {
 	 * @return List<Point> all starting positions
 	 */
 	public List<Point> getStartingPositions() {
-		return findItemPositions(specialLayer, ItemTypes.START);
+		return findItemPositions(specialLayer, ItemType.START);
 	}
 
 	/**
 	 * @return all ending points from map.
 	 */
 	public List<Point> findEndingPoint() {
-		return findItemPositions(specialLayer, ItemTypes.GOAL);
+		return findItemPositions(specialLayer, ItemType.GOAL);
 	}
 
-	public List<Point> findItemPositions(Layer layer, ItemTypes type) {
+	public List<Point> findItemPositions(Layer layer, ItemType type) {
 		List<Point> positions = new ArrayList<Point>();
 
 		for (int x = 0; x < specialLayer.getWidth(); x++) {
@@ -414,8 +412,7 @@ public class Map extends AEntity {
 			return false;
 		}
 
-		if (!ItemTypes.isGem(objectLayer.getTile(x, y).itemType)
-				&& objectLayer.getTile(x, y).itemType != ItemTypes.EMPTY)
+		if (!ItemType.isGem(objectLayer.getTile(x, y).itemType) && objectLayer.getTile(x, y).itemType != ItemType.EMPTY)
 			return true;
 		else if (x >= 0 && x < collisionLayer[y].length && y >= 0 && y < collisionLayer.length)
 			return collisionLayer[y][x];
@@ -432,7 +429,7 @@ public class Map extends AEntity {
 	 */
 	public boolean isTileContainingGem(int x, int y) {
 		Item item = objectLayer.getTile(x, y);
-		return ItemTypes.isGem(item.itemType);
+		return ItemType.isGem(item.itemType);
 	}
 
 	/**
@@ -445,7 +442,7 @@ public class Map extends AEntity {
 	public boolean isTileContainingBoulder(int x, int y) {
 		Item item = objectLayer.getTile(x, y);
 
-		if (item.itemType == ItemTypes.WHITE_BOULDER || item.itemType == ItemTypes.DARK_BOULDER) {
+		if (item.itemType == ItemType.WHITE_BOULDER || item.itemType == ItemType.DARK_BOULDER) {
 
 			return true;
 		}
@@ -456,7 +453,7 @@ public class Map extends AEntity {
 	public boolean isTileContainingSand(int x, int y) {
 		Item item = groundLayer.getTile(x, y);
 
-		if (item.itemType == ItemTypes.SAND) {
+		if (item.itemType == ItemType.SAND) {
 			return true;
 		}
 
@@ -466,7 +463,7 @@ public class Map extends AEntity {
 	public boolean destroySand(int x, int y) {
 
 		if (isTileContainingSand(x, y)) {
-			Item item = new Item(ItemTypes.GROUND);
+			Item item = new Item(ItemType.GROUND);
 			groundLayer.setTile(x, y, item);
 
 			return true;
@@ -477,7 +474,7 @@ public class Map extends AEntity {
 
 	public void destroyGem(int x, int y) {
 		if (isTileContainingGem(x, y)) {
-			objectLayer.setTile(x, y, new Item(ItemTypes.EMPTY));
+			objectLayer.setTile(x, y, new Item(ItemType.EMPTY));
 		}
 	}
 
@@ -489,19 +486,19 @@ public class Map extends AEntity {
 	 * @return true, if unwalkable, false, if can be walked on
 	 */
 	public boolean isMonsterColliding(int x, int y) {
-		if (groundLayer.getTile(x, y).itemType != ItemTypes.GROUND)
+		if (groundLayer.getTile(x, y).itemType != ItemType.GROUND)
 			return true;
-		else if (objectLayer.getTile(x, y).itemType == ItemTypes.BLUE_GEM)
+		else if (objectLayer.getTile(x, y).itemType == ItemType.BLUE_GEM)
 			return true;
-		else if (objectLayer.getTile(x, y).itemType == ItemTypes.RED_GEM)
+		else if (objectLayer.getTile(x, y).itemType == ItemType.RED_GEM)
 			return true;
-		else if (objectLayer.getTile(x, y).itemType == ItemTypes.GREEN_GEM)
+		else if (objectLayer.getTile(x, y).itemType == ItemType.GREEN_GEM)
 			return true;
-		else if (objectLayer.getTile(x, y).itemType == ItemTypes.DARK_BOULDER)
+		else if (objectLayer.getTile(x, y).itemType == ItemType.DARK_BOULDER)
 			return true;
-		else if (objectLayer.getTile(x, y).itemType == ItemTypes.WHITE_BOULDER)
+		else if (objectLayer.getTile(x, y).itemType == ItemType.WHITE_BOULDER)
 			return true;
-		else if (specialLayer.getTile(x, y).itemType != ItemTypes.EMPTY)
+		else if (specialLayer.getTile(x, y).itemType != ItemType.EMPTY)
 			return true;
 		else if (x >= 0 && x < collisionLayer[y].length && y >= 0 && y < collisionLayer.length)
 			return collisionLayer[y][x];
@@ -515,15 +512,15 @@ public class Map extends AEntity {
 	 * @return true, if the layer was set correctly, false, if there was a problem
 	 */
 	public boolean setLayer(Layer l) {
-		if (l.getType() == LayerTypes.LAYER_GROUND.ordinal()) {
+		if (l.getType() == LayerType.LAYER_GROUND.ordinal()) {
 			groundLayer = l;
 			return true;
 		}
-		if (l.getType() == LayerTypes.LAYER_OBJECTS.ordinal()) {
+		if (l.getType() == LayerType.LAYER_OBJECTS.ordinal()) {
 			objectLayer = l;
 			return true;
 		}
-		if (l.getType() == LayerTypes.LAYER_SPECIAL.ordinal()) {
+		if (l.getType() == LayerType.LAYER_SPECIAL.ordinal()) {
 			specialLayer = l;
 			return true;
 		}
@@ -583,8 +580,8 @@ public class Map extends AEntity {
 		for (int x = posX - 1; x <= posX + 1; x++) {
 			for (int y = posY - 1; y <= posY + 1; y++) {
 				if (!isColliding(x, y)) {
-					Gem g = new Gem(ItemTypes.RED_GEM, this);
-					Item i = new Item(ItemTypes.GROUND);
+					Gem g = new Gem(ItemType.RED_GEM, this);
+					Item i = new Item(ItemType.GROUND);
 					g.initPosition(x, y);
 					i.initPosition(x, y);
 					groundLayer.setTile(x, y, i);
@@ -625,7 +622,7 @@ public class Map extends AEntity {
 	public void pushBoulder(int posX, int posY, Direction d) {
 		Item item = objectLayer.getTile(posX, posY);
 
-		if (item.itemType == ItemTypes.DARK_BOULDER || item.itemType == ItemTypes.WHITE_BOULDER) {
+		if (item.itemType == ItemType.DARK_BOULDER || item.itemType == ItemType.WHITE_BOULDER) {
 			Boulder b = (Boulder) item;
 			b.push(d);
 		}
@@ -660,7 +657,7 @@ public class Map extends AEntity {
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				if (ItemTypes.isGem(items[x][y].itemType)) {
+				if (ItemType.isGem(items[x][y].itemType)) {
 					Log.debug("Reseting gem to position in " + new Point(x, y));
 				}
 			}

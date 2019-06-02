@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fi.gemwars.gameobjects.map.ItemTypes;
+import fi.gemwars.gameobjects.map.ItemType;
 import fi.gemwars.gameobjects.map.Map;
 
 public class MapLoaderTest {
@@ -46,17 +46,17 @@ public class MapLoaderTest {
 		Assert.assertEquals(65, map.getTime());
 		Assert.assertEquals(9, map.getGemCount());
 
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(0, 0).itemType);
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(1, 0).itemType);
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(3, 0).itemType);
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(4, 0).itemType);
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(5, 0).itemType);
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(6, 0).itemType);
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(7, 0).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(0, 0).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(1, 0).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(3, 0).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(4, 0).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(5, 0).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(6, 0).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(7, 0).itemType);
 
-		Assert.assertEquals(ItemTypes.METAL_WALL, map.getGroundLayer().getTile(22, 10).itemType);
+		Assert.assertEquals(ItemType.METAL_WALL, map.getGroundLayer().getTile(22, 10).itemType);
 
-		Assert.assertEquals(ItemTypes.BROWN_WALL, map.getGroundLayer().getTile(2, 2).itemType);
+		Assert.assertEquals(ItemType.BROWN_WALL, map.getGroundLayer().getTile(2, 2).itemType);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

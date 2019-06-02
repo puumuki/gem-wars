@@ -1,41 +1,39 @@
 package fi.gemwars.gameobjects;
 
-
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import fi.gemwars.gameobjects.map.ItemTypes;
+import fi.gemwars.gameobjects.map.ItemType;
 import fi.gemwars.io.ResourceManager;
 
 /**
- * A magic wall! It is animated.
- * Some more magicks might be implemented later.
+ * A magic wall! It is animated. Some more magicks might be implemented later.
  *
  */
 public class MagicWall extends Item {
 
 	private Animation wall;
-	
-	public MagicWall(ItemTypes itemType) throws SlickException {
+
+	public MagicWall(ItemType itemType) throws SlickException {
 		super(itemType);
-		
+
 		wall = ResourceManager.fetchAnimation("MAGIC_WALL");
-	}	
-	
+	}
+
 	@Override
 	public void render(GameContainer cont, Graphics grap) throws SlickException {
 		grap.drawAnimation(wall, positionX * TILE_WIDTH, positionY * TILE_HEIGHT);
 	}
-	
-	public static ItemTypes getTransformedItemType(ItemTypes type) {
-		ItemTypes[] gems = {ItemTypes.BLUE_GEM, ItemTypes.RED_GEM, ItemTypes.GREEN_GEM};
-		ItemTypes[] boulders = {ItemTypes.DARK_BOULDER, ItemTypes.WHITE_BOULDER};
-		if(type == ItemTypes.DARK_BOULDER || type == ItemTypes.WHITE_BOULDER)
-			return gems[(int)Math.floor(Math.random()*gems.length)];
-		
-		return boulders[(int)Math.floor(Math.random()*boulders.length)];
+
+	public static ItemType getTransformedItemType(ItemType type) {
+		ItemType[] gems = { ItemType.BLUE_GEM, ItemType.RED_GEM, ItemType.GREEN_GEM };
+		ItemType[] boulders = { ItemType.DARK_BOULDER, ItemType.WHITE_BOULDER };
+		if (type == ItemType.DARK_BOULDER || type == ItemType.WHITE_BOULDER)
+			return gems[(int) Math.floor(Math.random() * gems.length)];
+
+		return boulders[(int) Math.floor(Math.random() * boulders.length)];
 	}
 
 }

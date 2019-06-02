@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import fi.gemwars.gameobjects.map.ItemTypes;
+import fi.gemwars.gameobjects.map.ItemType;
 import fi.gemwars.gameobjects.map.Map;
 import fi.gemwars.io.ResourceManager;
 import fi.gemwars.utils.GemwarsUtils;
@@ -31,19 +31,19 @@ public class Gem extends PhysicsObject implements IDynamic {
 	 * @param map     link to the map we are on
 	 * @throws SlickException if something goes wrong
 	 */
-	public Gem(ItemTypes gemtype, Map map) throws SlickException {
+	public Gem(ItemType gemtype, Map map) throws SlickException {
 
 		super(gemtype, map);
 
-		if (gemtype == ItemTypes.BLUE_GEM) {
+		if (gemtype == ItemType.BLUE_GEM) {
 			gemDown = ResourceManager.fetchAnimation("GEM_BLUE_DOWN");
 			gemRight = ResourceManager.fetchAnimation("GEM_BLUE_RIGHT");
 			gemLeft = GemwarsUtils.reverseAnimation(gemRight);
-		} else if (gemtype == ItemTypes.GREEN_GEM) {
+		} else if (gemtype == ItemType.GREEN_GEM) {
 			gemDown = ResourceManager.fetchAnimation("GEM_GREEN_DOWN");
 			gemRight = ResourceManager.fetchAnimation("GEM_GREEN_RIGHT");
 			gemLeft = GemwarsUtils.reverseAnimation(gemRight);
-		} else if (gemtype == ItemTypes.RED_GEM) {
+		} else if (gemtype == ItemType.RED_GEM) {
 			gemDown = ResourceManager.fetchAnimation("GEM_RED_DOWN");
 			gemRight = ResourceManager.fetchAnimation("GEM_RED_RIGHT");
 			gemLeft = GemwarsUtils.reverseAnimation(gemRight);

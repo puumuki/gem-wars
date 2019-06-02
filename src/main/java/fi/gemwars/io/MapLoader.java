@@ -17,9 +17,9 @@ import fi.gemwars.gameobjects.Item;
 import fi.gemwars.gameobjects.MagicWall;
 import fi.gemwars.gameobjects.Monster;
 import fi.gemwars.gameobjects.Player;
-import fi.gemwars.gameobjects.map.ItemTypes;
+import fi.gemwars.gameobjects.map.ItemType;
 import fi.gemwars.gameobjects.map.Layer;
-import fi.gemwars.gameobjects.map.LayerTypes;
+import fi.gemwars.gameobjects.map.LayerType;
 import fi.gemwars.gameobjects.map.Map;
 
 /**
@@ -67,7 +67,7 @@ public class MapLoader {
 				for (int i = 0; i < 4; i++) {
 
 					// First layer line contains the layer type
-					LayerTypes layerName = LayerTypes.valueOf(scanner.nextLine());
+					LayerType layerName = LayerType.valueOf(scanner.nextLine());
 					// next line: layer width
 					int layerWidth = readLayerSize(scanner);
 					// next line: layer height
@@ -102,9 +102,9 @@ public class MapLoader {
 	 * @param layerHeight
 	 * @throws SlickException
 	 */
-	private void readLayer(Scanner scanner, Map map, LayerTypes layerName, int layerWidth, int layerHeight)
+	private void readLayer(Scanner scanner, Map map, LayerType layerName, int layerWidth, int layerHeight)
 			throws SlickException {
-		if (layerName.equals(LayerTypes.LAYER_COLLISION)) {
+		if (layerName.equals(LayerType.LAYER_COLLISION)) {
 			readCollisionLayer(map, scanner, layerWidth, layerHeight);
 		} else {
 			readMapLayer(map, scanner, layerName, layerWidth, layerHeight);
@@ -167,7 +167,7 @@ public class MapLoader {
 		map.setTime(time); // TODO: take Options.gameSpeed into account!
 	}
 
-	private void readMapLayer(Map map, Scanner scanner, LayerTypes layerName, int layerWidth, int layerHeight)
+	private void readMapLayer(Map map, Scanner scanner, LayerType layerName, int layerWidth, int layerHeight)
 			throws SlickException {
 
 		// other layers
@@ -195,19 +195,19 @@ public class MapLoader {
 
 					Item tile = null;
 
-					if (item == ItemTypes.BLUE_GEM.ordinal() || item == ItemTypes.GREEN_GEM.ordinal()
-							|| item == ItemTypes.RED_GEM.ordinal()) {
+					if (item == ItemType.BLUE_GEM.ordinal() || item == ItemType.GREEN_GEM.ordinal()
+							|| item == ItemType.RED_GEM.ordinal()) {
 
-						tile = new Gem(ItemTypes.getType(item), map);
-					} else if (item == ItemTypes.DARK_BOULDER.ordinal() || item == ItemTypes.WHITE_BOULDER.ordinal()) {
+						tile = new Gem(ItemType.getType(item), map);
+					} else if (item == ItemType.DARK_BOULDER.ordinal() || item == ItemType.WHITE_BOULDER.ordinal()) {
 
-						tile = new Boulder(ItemTypes.getType(item), map);
-					} else if (item == ItemTypes.MAGIC_GREY_WALL.ordinal()) {
-						tile = new MagicWall(ItemTypes.getType(item));
-					} else if (item == ItemTypes.MONSTER.ordinal()) {
+						tile = new Boulder(ItemType.getType(item), map);
+					} else if (item == ItemType.MAGIC_GREY_WALL.ordinal()) {
+						tile = new MagicWall(ItemType.getType(item));
+					} else if (item == ItemType.MONSTER.ordinal()) {
 						map.add(new Monster(x, y, map));
 					} else {
-						tile = new Item(ItemTypes.getType(item));
+						tile = new Item(ItemType.getType(item));
 					}
 
 					if (tile != null) {
@@ -219,8 +219,8 @@ public class MapLoader {
 
 					// if we have a magic wall, we put it also in the special layer
 					try {
-						if (l.getType() == LayerTypes.LAYER_SPECIAL.ordinal()
-								&& map.getGroundLayer().getTile(x, y).itemType == ItemTypes.MAGIC_GREY_WALL) {
+						if (l.getType() == LayerType.LAYER_SPECIAL.ordinal()
+								&& map.getGroundLayer().getTile(x, y).itemType == ItemType.MAGIC_GREY_WALL) {
 							l.setTile(x, y, map.getGroundLayer().getTile(x, y));
 							// Log.debug("Setting a new magic wall on teh special layer at " +x+","+y);
 						}

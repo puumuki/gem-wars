@@ -7,29 +7,21 @@ import java.awt.Point;
  * Enumeration to indicate the direction where an entity is moving.
  */
 public enum Direction {
-	STATIONARY, LEFT, 
-	RIGHT, UP, DOWN;
-	
-	public static Point scanDirection( Direction direction ) {
-		
-		Point point = new Point();
-		
-		point.x = 0;
-		point.y = 0;
-				
-		if( direction == Direction.LEFT ) {		
-			point.x = -1;
-		}
-		if( direction == Direction.RIGHT ) {
-			point.x = 1;
-		}
-		if( direction == Direction.UP ) {
-			point.y = -1;
-		}
-		if( direction == Direction.DOWN ) {
-			point.y = 1;
-		}
-		
-		return point;
+	STATIONARY(0, 0), LEFT(-1, 0), RIGHT(1, 0), UP(0, -1), DOWN(0, 1);
+
+	private int delta_x;
+	private int delta_y;
+
+	private Direction(int delta_x, int delta_y) {
+		this.delta_x = delta_x;
+		this.delta_y = delta_y;
+	}
+
+	public static Point scanDirection(Direction direction) {
+		return direction.scanDirection();
+	}
+
+	public Point scanDirection() {
+		return new Point(delta_x, delta_y);
 	}
 }
